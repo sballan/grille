@@ -16,10 +16,11 @@ body {
 
 #main {
   padding-top: 60px;
-  width: 1200px;
   margin: 0 auto;
 }
 
+
+@import 'visual/main';
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';

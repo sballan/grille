@@ -1,4 +1,36 @@
-<section id="home">
-    <fullstack-logo></fullstack-logo>
-    <rando-greeting></rando-greeting>
+<!-- <p>123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890</p> -->
+<section>
+<div class="">
+<div class="">
+<button ng-click="addIssue()" class="btn btn-block btn-primary"> Add card</button>
+</div>
+<div class="">
+<button ng-click="open('lg')" class="btn btn-block btn-primary"> Add Lane</button>
+</div>
+<div class="">
+<button ng-click="addIssue()" class="btn btn-block btn-primary"> Add party</button>
+</div>
+</div>
+<div class="row">
+  <div class=" sidebar-toggle" ng-mouseover="hovered=true" ng-mouseleave="hovered=false">Menú</>
+  </div>
+
+  <div class=" sidebar-pos" ng-show="hovered">
+    <ul>
+      <li>test</li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="section row connectedItemsExample">
+      <div class="grid-divider hunned">
+        <div class="laneConfig"ng-repeat="lane in lanes">
+          <ul ui-sortable="sortableOptions" ng-model="lane.ownCards" class="list">
+            <li ng-repeat="card in lane.ownCards" class="item">{{card}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 </section>
