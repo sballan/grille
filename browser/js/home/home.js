@@ -7,27 +7,27 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('HomeCtrl', function($scope,$uibModal) {
+    angular.element('body').scrollLeft(50000); 
 	$scope.hovered = false;
-	$scope.leftArray = ['test1', 'test2' ] 
-	$scope.rightArray = ['test3', 'test4' ] 
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
     $scope.lanes=[{title:"YOLO",
     content:"yloswag",
-    label:"burnitwithfire"},{title:"YOLO",
+    label:"burnitwithfire",
+    ownCards:["card9","card10","card11","card12"]},
+    {title:"YOLO",
     content:"yloswag",
-    label:"burnitwithfire"},{title:"YOLO",
+    label:"burnitwithfire",
+    ownCards:["card5","card6","card7","card8"]},
+    {title:"YOLO",
     content:"yloswag",
-    label:"burnitwithfire"}]
+    label:"burnitwithfire",
+    ownCards:["card1","card2","card3","card4"]}]
     $scope.addIssue=function(){
         // going to need a modal or form and then submit that
     }
-    $scope.addLane =function(contentObj){
          // going to need a modal or form and then submit that
-         var spot=contentObj.position;
-        $scope.lanes.splice(spot, 0, contentObj);
-    }
     $scope.animationsEnabled = true;
     $scope.open = function (size) {
     var modalInstance = $uibModal.open({
@@ -42,10 +42,12 @@ app.controller('HomeCtrl', function($scope,$uibModal) {
       // }
     });
 
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
+    modalInstance.result.then(function (newLane) {
+        var spot=newLane.position;
+        $scope.lanes.splice(spot, 0, newLane);
+        console.table(newLane)
     }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
+      console.log('Modal dismissed at: ' + new Date());
     });
   };
 
@@ -58,8 +60,8 @@ app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
   //   item: $scope.items[0]
   // };
 
-  $scope.ok = function () {
-    $uibModalInstance.close(/*$scope.selected.item*/);
+  $scope.ok = function (lane) {
+    $uibModalInstance.close(lane);
   };
 
   $scope.cancel = function () {

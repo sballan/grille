@@ -11,6 +11,7 @@
 }
 
 
+
 @media ( min-width: 768px ) {
     .grid-divider {
         position: relative;
@@ -72,5 +73,15 @@
     top : 30%;
     left: 0;
 }
+.laneConfig{
+    width:500px;
+    display: inline-block;
+}
 
 
+.hunned{
+    display: inline-block;
+    width: 100%;
+    overflow: scroll;
+    white-space: nowrap;
+}

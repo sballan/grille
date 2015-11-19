@@ -1,9 +1,8 @@
 <div>
   <form name="form">
-    Title:
-    <input type="text" ng-model="lane.title"/>
+    Title:<input type="text" ng-model="lane.title" value="testing"/>
     <br />
-
+    Position index<input type="number" ng-model="lane.position"/>
 
     <input type="button" ng-click="reset(form)" value="Reset" />
     <input type="submit" ng-click="ok(lane)" value="OK" />
