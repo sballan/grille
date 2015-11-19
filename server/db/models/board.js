@@ -1,10 +1,22 @@
 'use strict';
 var mongoose = require('mongoose');
 
+var commentSchema = new mongoose.Schema({
+	body: String,
+	githubID: Number,
+	author: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
+	created_at: Date,
+	updated_at: Date
+})
+
 var cardSchema = new mongoose.Schema({
 	issueNumber: Number,
 	title: String,
 	body: String,
+	comments: [commentSchema],
 
 	state: String, //enum
 	assignee: {
@@ -19,13 +31,12 @@ var cardSchema = new mongoose.Schema({
 	closed_at: Date,
 	due_on: Date,
 
-
+	githubID: Number,
 	url: String,
 	labels_url: String,
 	comments_url: String,
 	events_url: String,
 	html_url: String
-
 
 })
 
@@ -43,13 +54,19 @@ var branchSchema = new mongoose.Schema({
 })
 
 var boardSchema = new mongoose.Schema({
-	name: String,
-	//branches: [branchSchema]
-	author: {
+	name: String,  //The name of the repo
+	githubID: Number,
+	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	},
-	cards: [cardSchema]
+	cards: [cardSchema],
+	html_url: String,
+	url: String, //---- API ----
+	collaborators_url: String,
+	teams_url: String,
+	hooks_url: String,
+
 
 });
 
