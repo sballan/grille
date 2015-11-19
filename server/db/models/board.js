@@ -5,12 +5,14 @@ var cardSchema = new mongoose.Schema({
 	issueNumber: Number,
 	title: String,
 	body: String,
+
 	state: String, //enum
 	assignee: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	},
 	milestone: String, //TODO check this out
+	priority: Number,
 
 	created_at: Date,
 	updated_at: Date,
