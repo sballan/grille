@@ -1,4 +1,21 @@
-<section id="home">
-    <fullstack-logo></fullstack-logo>
-    <rando-greeting></rando-greeting>
+
+
+<section>
+
+  <h1>Cards</h1>
+  <div class="section row connectedItemsExample">
+    <div class="row grid-divider">
+      <div class="col-sm-offset-2 col-sm-4">
+        <ul ui-sortable="sortableOptions" ng-model="leftArray" class="list">
+          <li ng-repeat="item in leftArray" class="item">{{item}}</li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <ul ui-sortable="sortableOptions" ng-model="rightArray" class="list">
+          <li ng-repeat="item in rightArray" class="item">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
 </section>
