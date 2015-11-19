@@ -7,10 +7,10 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('HomeCtrl', function($scope) {
-
- $scope.leftArray = ['test1', 'test2' ] 
-  $scope.rightArray = ['test3', 'test4' ] 
-  $scope.sortableOptions = {
-    connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
+	$scope.hovered = false;
+	$scope.leftArray = ['test1', 'test2' ] 
+	$scope.rightArray = ['test3', 'test4' ] 
+	$scope.sortableOptions = {
+    	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
   };
 })

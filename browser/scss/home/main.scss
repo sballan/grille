@@ -51,10 +51,26 @@
 	border: 2px solid #444;
 	border-radius: 5px;
 	background-color: #EA8A8A;
-
 	font-size: 1.1em;
 	font-weight: bold;
 	text-align: center;
 	cursor: move;
 }
+
+.sidebar-toggle {
+    position : absolute;
+    left : 60px;
+    background : rgba(3,159,244,.95);
+    color : white;
+    text-decoration : none;
+    padding : 20px;
+}
+
+.sidebar-pos {
+    position : absolute;
+    top : 0;
+    left: 0;
+    transition : 100ms left;
+}
+
 
