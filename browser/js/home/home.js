@@ -7,8 +7,7 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('HomeCtrl', function($scope) {
-	// $scope.items = ['test1', 'test2'];
-	// $scope.items2 = ['test3', 'test4'];
+
  $scope.leftArray = ['test1', 'test2' ] 
   $scope.rightArray = ['test3', 'test4' ] 
   $scope.sortableOptions = {
