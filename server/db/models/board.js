@@ -12,7 +12,7 @@ var cardSchema = new mongoose.Schema({
 		ref: 'User'
 	},
 	milestone: String, //TODO check this out
-	priority: Number,
+	priority: Number,  
 
 	created_at: Date,
 	updated_at: Date,
@@ -55,4 +55,4 @@ var boardSchema = new mongoose.Schema({
 
 
 
-mongoose.model('Board', schema);
+mongoose.model('Board', boardSchema);
