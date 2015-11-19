@@ -12,7 +12,7 @@ var schema = new mongoose.Schema({
     salt: {
         type: String
     },
-    twitter: {
+    github: {
         id: String,
         username: String,
         token: String,
