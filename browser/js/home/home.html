@@ -1,19 +1,28 @@
 
 
 <section>
-
-  <div class="col-sm-1 sidebar-toggle">
-    <button ng-click="hovered=!hovered">Menu</button>
+<div class="row">
+<div class="col-sm-3">
+<button ng-click="addIssue()" class="btn btn-block btn-primary"> Add card</button>
+</div>
+<div class="col-sm-3">
+<button ng-click="addLane()" class="btn btn-block btn-primary"> Add Lane</button>
+</div>
+<div class="col-sm-3">
+<button ng-click="addIssue()" class="btn btn-block btn-primary"> Add party</button>
+</div>
+</div>
+<div class="row">
+  <div class="col-sm-1 sidebar-toggle" ng-mouseover="hovered=true" ng-mouseleave="hovered=false">Menú</>
   </div>
 
-  <div class="col-sm-2 sidebar-pos" ng-if="hovered">
+  <div class="col-sm-2 sidebar-pos" ng-show="hovered">
     <ul>
       <li>test</li>
     </ul>
   </div>
 
   <div class="col-sm-11">
-    <h1>Cards</h1>
     <div class="section row connectedItemsExample">
       <div class="row grid-divider">
         <div class="col-sm-offset-2 col-sm-4">
@@ -28,6 +37,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 
 </section>

@@ -12,5 +12,13 @@ app.controller('HomeCtrl', function($scope) {
 	$scope.rightArray = ['test3', 'test4' ] 
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
-  };
+    };
+    $scope.addIssue=function(){
+        // going to need a modal or form and then submit that
+    }
+    $scope.addLane =function(){
+         // going to need a modal or form and then submit that
+    }
+
+
 })

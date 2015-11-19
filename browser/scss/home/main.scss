@@ -59,7 +59,7 @@
 
 .sidebar-toggle {
     position : absolute;
-    left : 60px;
+    left : 0px;
     background : rgba(3,159,244,.95);
     color : white;
     text-decoration : none;
@@ -67,10 +67,10 @@
 }
 
 .sidebar-pos {
+    background-color: lightgrey;
     position : absolute;
-    top : 0;
+    top : 30%;
     left: 0;
-    transition : 100ms left;
 }
 
 
