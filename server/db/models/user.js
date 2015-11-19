@@ -18,12 +18,7 @@ var schema = new mongoose.Schema({
         token: String,
         tokenSecret: String
     },
-    facebook: {
-        id: String
-    },
-    google: {
-        id: String
-    }
+
 });
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
