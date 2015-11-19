@@ -2,6 +2,7 @@
 var parser = require('../parsers')
 var mongoose = require('mongoose')
 var Board = mongoose.model('Board')
+var Card = mongoose.model('Card')
 
 // This function might be useful to call the various parse function all in one shot.
 function payloadParser(body) {
@@ -41,32 +42,29 @@ var EventHandler = {
 	},
 	issue_comment: function(body) {
 		var payload = payloadParser(body)
-		Board.find({githubID: payload.repo.githubID})
-		.then(function(board) {
-			if(!board.length) {
-				return Board.create(payload.repo)
-			}
+		console.log("issue.github", payload.issue.githubID)
 
-			var findCard = board.cards.filter(function(card) {
-				return card.githubID == payload.issue.githubID
+		Card.findOne({githubID: payload.issue.githubID})
+		.then(function(card) {
+			if(!card) console.error("No Issue Found!")
+
+			var found = false
+			card.comments.forEach(function(comment) {
+				if(comment && comment.githubID === payload.comment.githubID) {
+					comment = payload.comment
+					found = true
+				}
 			})
 
-
-
-				var comment = findCard[0].comments.filter(function(comment) {
-					return comment.githubID === payload.comment.githubID
-				})
-			} else {
-				board.cards.push(payload.issue)
-			}
-
+			if(!found) card.comments.push(payload.comment)
+				return card.save()
+		})
+		.then(function(card) {
+			console.log("-----", card.comments)
 
 		})
 
-		console.log("-----", comment)
 
-
-		return comment
 	},
 	issues: function(body) {
 

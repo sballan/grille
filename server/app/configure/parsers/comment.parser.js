@@ -13,7 +13,7 @@ function parse(body) {
 	comment.user = user(body.user) || null
 	comment.created_at = body.created_at || null
 	comment.updated_at = body.updated_at || null
-
+	console.log("-----------comment.parser", comment)
 	return comment;
 }
 
