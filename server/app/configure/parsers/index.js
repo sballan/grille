@@ -2,5 +2,6 @@
 module.exports = {
 	user: require('./user.parser'),
 	repo: require('./repo.parser'),
-	issue: require('./issue.parser')
+	issue: require('./issue.parser'),
+	comment: require('./comment.parser')
 }

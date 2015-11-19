@@ -3,7 +3,10 @@ var mongoose = require('mongoose');
 
 var commentSchema = new mongoose.Schema({
 	body: String,
-	githubID: Number,
+	githubID: {
+		type: Number,
+		unique: true
+	},
 	author: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
@@ -31,7 +34,10 @@ var cardSchema = new mongoose.Schema({
 	closed_at: Date,
 	due_on: Date,
 
-	githubID: Number,
+	githubID: {
+		type: Number,
+		unique: true
+	},
 	url: String,
 	labels_url: String,
 	comments_url: String,
@@ -40,22 +46,12 @@ var cardSchema = new mongoose.Schema({
 
 })
 
-var commitSchema = new mongoose.Schema({
-	sha: String,
-	author: String,
-	email: String,
-	date: Date
-})
-
-var branchSchema = new mongoose.Schema({
-	name: String,
-	commits: [commitSchema],
-
-})
-
 var boardSchema = new mongoose.Schema({
 	name: String,  //The name of the repo
-	githubID: Number,
+	githubID: {
+		type: Number,
+		unique: true
+	},
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
@@ -69,6 +65,30 @@ var boardSchema = new mongoose.Schema({
 
 
 });
+
+boardSchema.methods.commentUpdater = function(pComment, pCard) {
+	var foundCard = null
+
+	this.cards.forEach(function(card) {
+		if(pCard.githubID === card.githubID) {
+			foundCard = card
+		}
+	})
+
+	if(!foundCard) {
+		this.cards.push(pCard)
+		this.cards.forEach(function(card) {
+
+		})
+	}
+
+}
+
+boardSchema.methods.cardUpdater = function(newCard) {
+	this.cards.forEach(function(card) {
+		if(card.githubID === newCard.githubID) {}
+	})
+}
 
 
 
