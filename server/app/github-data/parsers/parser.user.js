@@ -14,8 +14,6 @@ function parse(body) {
   user.repos_url = user.repos_url || null
 
 
-
-
 	return user;
 }
 

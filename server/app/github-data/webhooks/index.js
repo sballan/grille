@@ -3,6 +3,8 @@ var parser = require('../parsers')
 var mongoose = require('mongoose')
 var Board = mongoose.model('Board')
 var Card = mongoose.model('Card')
+var Board = mongoose.model('Board')
+var User = mongoose.model('User')
 
 // This function might be useful to call the various parse function all in one shot.
 function payloadParser(body) {
@@ -11,6 +13,7 @@ function payloadParser(body) {
 	var payload = {}
 	payload.repo = parser.repo(body.repository) || null
 	payload.sender = parser.user(body.sender) || null
+	payload.assignee = parser.user(body.assignee) || null
 	payload.issue = parser.issue(body.issue) || null
 	payload.comment = parser.comment(body.comment) || null
 
@@ -45,54 +48,64 @@ var EventHandler = {
 	},
 	issue_comment: function(body) {
 		var payload = payloadParser(body)
+		if(payload.action !== 'created') console.error("Action for issue_comment should be 'created'")
 
 		Card.findOne({githubID: payload.issue.githubID})
 		.then(function(card) {
-			if(!card) console.error("No Issue Found!")
+			if(!card) console.error("Cannot add comment to a card that does not exist")
 
-			var found = false
-			card.comments.forEach(function(comment) {
-				if(comment && comment.githubID === payload.comment.githubID) {
-					// FIXME Currently just replaces comment, fix this
-					comment = payload.comment
-					found = true
-				}
-			})
-
-			if(!found) card.comments.push(payload.comment)
-				return card.save()
+			card.comments.push(payload.comment)
 		})
-		.then(function(card) {
-			console.info("-----issue_comment", card.comments)
-
-		})
-
+		.then(funciton(null, next))
 
 	},
 	issues: function(body) {
 		var payload = payloadParser(body)
+		var action = payload.action
 
-		Card.findOne({githubID: payload.issue.githubID})
-		.then(function(card) {
-			if(!card) console.error("No Issue Found!")
 
-			var found = false
-			card.comments.forEach(function(comment) {
-				if(comment && comment.githubID === payload.comment.githubID) {
-					// FIXME Currently just replaces comment, fix this
-					comment = payload.comment
-					comment.labels.push(payload.label)
-					found = true
-				}
+		this.assigned = function(payload) {
+			var card;
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard) {
+				console.log('------The Care', theCard, )
+				card = theCard;
+				return User.findOne({githubID: payload.assignee.githubID})
 			})
+			.then(function(user) {
+				console.log('-----We made it to assign', card)
+				card.assignee = user._id
+				card.save()
+			})
+		}
 
-			if(!found) card.comments.push(payload.comment)
-				return card.save()
-		})
-		.then(function(card) {
-			console.info("-----issues", card.comments)
+		this.unassigned = function(payload) {
 
-		})
+		}
+
+		this.labeled = function(payload) {
+
+		}
+
+		this.unlabeled = function(payload) {
+
+		}
+
+		this.opened = function(payload) {
+
+		}
+
+		this.closed = function(payload) {
+
+		}
+
+		this.reopened = function(payload) {
+
+		}
+
+		// This is where we actually call the function chosen by the action. It needs to appear after the function declarations
+		this[action](payload)
+
 	},
 	member: function(body) {
 
