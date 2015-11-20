@@ -1,6 +1,7 @@
 var user = require('./user.parser')
 
 function parse(body) {
+	if(!body) return null
 	var repo = {}
 
 	repo.githubID = body.id || null

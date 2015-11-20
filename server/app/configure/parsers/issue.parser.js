@@ -1,6 +1,7 @@
 var user = require('./user.parser')
 
 function parse(body) {
+	if(!body) return null
 	var issue = {}
 
 	issue.url = body.url || null
@@ -12,8 +13,10 @@ function parse(body) {
 
 	issue.title = body.title || null
 	issue.body = body.body || null
+	issue.labels = body.labels || null
 
 	issue.user = user(body.user) || null
+	issue.state = body.state || null
 	issue.assignee = body.assignee || null
 	issue.created_at = body.created_at || null
 	issue.updated_at = body.updated_at || null

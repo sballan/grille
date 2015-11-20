@@ -15,5 +15,10 @@ module.exports = {
     "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
     "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
+  },
+  "GITHUB":{
+    "clientID":"fbc0ebd88ac5115be05a",
+    "clientSecret": "d0f3dd93d6e53fa8873548d3f8c33ea3c6c3638a",
+    "callbackURL":"https://mmknupolin.localtunnel.me/auth/github/callback"
   }
 };

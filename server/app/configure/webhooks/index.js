@@ -6,13 +6,16 @@ var Card = mongoose.model('Card')
 
 // This function might be useful to call the various parse function all in one shot.
 function payloadParser(body) {
+	console.log("------Payload Function", body)
 
 	var payload = {}
-	payload.repo = parser.repo(body.repository)
-	payload.sender = parser.user(body.sender)
-	payload.issue = parser.issue(body.issue)
-	payload.comment = parser.comment(body.comment)
+	payload.repo = parser.repo(body.repository) || null
+	payload.sender = parser.user(body.sender) || null
+	payload.issue = parser.issue(body.issue) || null
+	payload.comment = parser.comment(body.comment) || null
 
+	payload.action = body.action || null
+	payload.label = body.label || null
 	return payload
 }
 
@@ -42,7 +45,6 @@ var EventHandler = {
 	},
 	issue_comment: function(body) {
 		var payload = payloadParser(body)
-		console.log("issue.github", payload.issue.githubID)
 
 		Card.findOne({githubID: payload.issue.githubID})
 		.then(function(card) {
@@ -51,6 +53,7 @@ var EventHandler = {
 			var found = false
 			card.comments.forEach(function(comment) {
 				if(comment && comment.githubID === payload.comment.githubID) {
+					// FIXME Currently just replaces comment, fix this
 					comment = payload.comment
 					found = true
 				}
@@ -60,14 +63,36 @@ var EventHandler = {
 				return card.save()
 		})
 		.then(function(card) {
-			console.log("-----", card.comments)
+			console.info("-----issue_comment", card.comments)
 
 		})
 
 
 	},
 	issues: function(body) {
+		var payload = payloadParser(body)
 
+		Card.findOne({githubID: payload.issue.githubID})
+		.then(function(card) {
+			if(!card) console.error("No Issue Found!")
+
+			var found = false
+			card.comments.forEach(function(comment) {
+				if(comment && comment.githubID === payload.comment.githubID) {
+					// FIXME Currently just replaces comment, fix this
+					comment = payload.comment
+					comment.labels.push(payload.label)
+					found = true
+				}
+			})
+
+			if(!found) card.comments.push(payload.comment)
+				return card.save()
+		})
+		.then(function(card) {
+			console.info("-----issues", card.comments)
+
+		})
 	},
 	member: function(body) {
 

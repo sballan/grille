@@ -4,27 +4,28 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
     name: String,
-    username: String,
+    username: {
+        type: String,
+        unique: true
+    },
+    accessToken:{
+        type:String,
+        unique:true
+    },
     githubID: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
 
     email: {
-        type: String,
-        required: true
+        type: String
     },
     password: {
         type: String
     },
     salt: {
         type: String
-    },
-    github: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
     },
 
     url: String,

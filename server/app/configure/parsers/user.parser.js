@@ -1,4 +1,5 @@
 function parse(body) {
+	if(!body) return null
 	var user = {}
 
 	user.name = body.name || null
