@@ -3,8 +3,16 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
+    name: String,
+    username: String,
+    githubID: {
+        type: String,
+        require: true
+    },
+
     email: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
         type: String
@@ -18,6 +26,11 @@ var schema = new mongoose.Schema({
         token: String,
         tokenSecret: String
     },
+
+    url: String,
+    html_url: String,
+    organizations_url: String,
+    repos_url: String
 
 });
 
