@@ -1,0 +1,39 @@
+
+<section>
+<!-- Buttons -->
+<div class="">
+<button ng-click="addCard()" class="btn btn-primary"> Add card</button>
+<button ng-click="addLane()" class="btn btn-primary"> Add Lane</button>
+<button ng-click="addIssue()" class="btn btn-primary"> Add party</button>
+</div>
+
+<div class="row">
+  <!-- SideBar Menu -->
+  <div class=" sidebar-toggle" ng-mouseover="hovered=true" ng-mouseleave="hovered=false">Menú</>
+  </div>
+
+  <div class=" sidebar-pos" ng-show="hovered">
+    <ul>
+      <li>test</li>
+    </ul>
+  </div>
+
+<!-- Card Lanes -->
+  <div>
+    <div class="section row connectedItemsExample">
+      <div class="lateral">
+        <div class="laneConfig"ng-repeat="lane in lanes">
+          <h7> {{ lane.title }} </h7>
+          <ul ui-sortable="sortableOptions" ng-model="lane.ownCards" class="list">
+            <div ng-repeat="card in lane.ownCards" class="item">
+              <li > Priority/Tags/Other </li>  
+              <li>{{card}}</li>
+              <li > Icons </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
