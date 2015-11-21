@@ -56,7 +56,7 @@ var EventHandler = {
 
 			card.comments.push(payload.comment)
 		})
-		.then(funciton(null, next))
+
 
 	},
 	issues: function(body) {
@@ -75,6 +75,7 @@ var EventHandler = {
 				card.assignee = user._id
 				card.save()
 			})
+			.then(null, next)
 		}
 
 		this.unassigned = function(payload) {
@@ -86,9 +87,9 @@ var EventHandler = {
 			})
 			.then(function(user) {
 				card.assignee = null;
-				card.save();
+				card.save()
 			})
-			.then(function(null, next))
+			.then(null, next)
 		}
 
 		this.labeled = function(payload) {
