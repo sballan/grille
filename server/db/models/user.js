@@ -3,6 +3,21 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
+    name: String,
+    username: {
+        type: String,
+        unique: true
+    },
+    accessToken:{
+        type:String,
+        unique:true
+    },
+    githubID: {
+        type: String,
+        require: true,
+        unique: true
+    },
+
     email: {
         type: String
     },
@@ -12,12 +27,11 @@ var schema = new mongoose.Schema({
     salt: {
         type: String
     },
-    github: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
-    },
+
+    url: String,
+    html_url: String,
+    organizations_url: String,
+    repos_url: String
 
 });
 

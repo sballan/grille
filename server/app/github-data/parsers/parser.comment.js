@@ -1,6 +1,7 @@
-var user = require('./user.parser')
+var user = require('./parser.user')
 
 function parse(body) {
+	if(!body) return null
 	var comment = {}
 
 	comment.url = body.url || null

@@ -1,4 +1,5 @@
 function parse(body) {
+	if(!body) return null
 	var user = {}
 
 	user.name = body.name || null
@@ -11,8 +12,6 @@ function parse(body) {
 	user.html_url = body.html_url || null
 	user.organizations_url = body.organizations_url || null
   user.repos_url = user.repos_url || null
-
-
 
 
 	return user;

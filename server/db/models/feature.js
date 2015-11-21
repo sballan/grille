@@ -12,7 +12,13 @@ var featureSchema = new mongoose.Schema({
 	board: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Board'
-	}
+	},
+
+	created_at: {
+		type: Date,
+		default: new Date()
+	},
+	updated_at: Date
 
 });
 

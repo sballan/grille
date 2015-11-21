@@ -12,6 +12,22 @@ require('./configure')(app);
 // /api so they are isolated from our GET /* wildcard.
 app.use('/api', require('./routes'));
 
+// Tester route for github auth
+app.use('/test', function(req, res, next) {
+	console.log(req.session)
+	res.send("<p>We Hit The Route</p>")
+})
+
+app.use('/getUser', function(req, res, next) {
+    var repo = require('./github-data').repo
+    res.send(repo.getUser())
+})
+
+app.use('/logout', function(req, res, next) {
+	req.logout()
+	res.redirect('/')
+})
+
 
 /*
  This middleware will catch any URLs resembling a file extension
@@ -38,3 +54,4 @@ app.use(function (err, req, res, next) {
     console.error(err, typeof next);
     res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
+
