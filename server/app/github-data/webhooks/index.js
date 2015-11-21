@@ -68,19 +68,27 @@ var EventHandler = {
 			var card;
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard) {
-				console.log('------The Care', theCard)
 				card = theCard;
 				return User.findOne({githubID: payload.assignee.githubID})
 			})
 			.then(function(user) {
-				console.log('-----We made it to assign', card)
 				card.assignee = user._id
 				card.save()
 			})
 		}
 
 		this.unassigned = function(payload) {
-
+			var card;
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard) {
+				card = theCard;
+				return User.findOne({githubID: payload.assignee.githubID})
+			})
+			.then(function(user) {
+				card.assignee = null;
+				card.save();
+			})
+			.then(function(null, next))
 		}
 
 		this.labeled = function(payload) {
