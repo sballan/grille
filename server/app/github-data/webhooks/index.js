@@ -68,7 +68,7 @@ var EventHandler = {
 			var card;
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard) {
-				console.log('------The Care', theCard, )
+				console.log('------The Care', theCard)
 				card = theCard;
 				return User.findOne({githubID: payload.assignee.githubID})
 			})
