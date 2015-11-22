@@ -31,8 +31,9 @@ var cardSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	},
-	milestone: String, //TODO check this out
 	priority: Number,  
+	milestone: String, //TODO check this out
+	labels: [mongoose.Schema.Types.Mixed],
 
 	created_at: Date,
 	updated_at: Date,

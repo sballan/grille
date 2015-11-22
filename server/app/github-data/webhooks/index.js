@@ -8,7 +8,7 @@ var User = mongoose.model('User')
 
 // This function might be useful to call the various parse function all in one shot.
 function payloadParser(body) {
-	console.log("------Payload Function", body)
+	//console.log("------Payload Function", body)
 
 	var payload = {}
 	payload.repo = parser.repo(body.repository) || null
@@ -93,11 +93,23 @@ var EventHandler = {
 		}
 
 		this.labeled = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard) {
+				console.log('-----Payload', payload.issue.labels)
+				console.log('-----Card', card.labels)
+				// Replaces a card's labels with the ones from the payload
+				card.labels = payload.issue.labels
+				card.save()
+			})
 		}
 
 		this.unlabeled = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard) {
+				// Replaces a card's labels with the ones from the payload
+				card.labels = payload.issue.labels
+				card.save()
+			})
 		}
 
 		this.opened = function(payload) {
