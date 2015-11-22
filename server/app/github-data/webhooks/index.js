@@ -96,10 +96,11 @@ var EventHandler = {
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard) {
 				console.log('-----Payload', payload.issue.labels)
-				console.log('-----Card', card.labels)
+				console.log('-----Card', theCard)
+				console.log('-----Card labels', theCard.labels)
 				// Replaces a card's labels with the ones from the payload
-				card.labels = payload.issue.labels
-				card.save()
+				theCard.labels = payload.issue.labels
+				theCard.save()
 			})
 		}
 
@@ -107,8 +108,8 @@ var EventHandler = {
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard) {
 				// Replaces a card's labels with the ones from the payload
-				card.labels = payload.issue.labels
-				card.save()
+				theCard.labels = payload.issue.labels
+				theCard.save()
 			})
 		}
 
