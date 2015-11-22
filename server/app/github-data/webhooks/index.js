@@ -56,6 +56,7 @@ var EventHandler = {
 
 			card.comments.push(payload.comment)
 		})
+		.then(null, next)
 
 
 	},
@@ -102,6 +103,7 @@ var EventHandler = {
 				theCard.labels = payload.issue.labels
 				theCard.save()
 			})
+			.then(null, next)
 		}
 
 		this.unlabeled = function(payload) {
@@ -111,18 +113,25 @@ var EventHandler = {
 				theCard.labels = payload.issue.labels
 				theCard.save()
 			})
+			.then(null, next)
 		}
 
 		this.opened = function(payload) {
-
+			Card.create(payload.issue)
 		}
 
 		this.closed = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard){
+					theCard.status = 'closed'
+			})
 		}
 
 		this.reopened = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard){
+					theCard.status = 'opened'
+			})
 		}
 
 		// This is where we actually call the function chosen by the action. It needs to appear after the function declarations
