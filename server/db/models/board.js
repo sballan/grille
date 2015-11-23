@@ -15,6 +15,10 @@ var boardSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}],
+	lanes: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Lane'
+	}],
 	html_url: String,
 	url: String, //---- API ----
 	collaborators_url: String,
