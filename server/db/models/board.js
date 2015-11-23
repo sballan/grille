@@ -12,7 +12,7 @@ var boardSchema = new mongoose.Schema({
 		ref: 'User'
 	},
 	collaborators: [{
-		type: mongoose.Schema.Types.ObjectID,
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}],
 	html_url: String,
