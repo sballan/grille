@@ -96,9 +96,6 @@ var EventHandler = {
 		this.labeled = function(payload) {
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard) {
-				console.log('-----Payload', payload.issue.labels)
-				console.log('-----Card', theCard)
-				console.log('-----Card labels', theCard.labels)
 				// Replaces a card's labels with the ones from the payload
 				theCard.labels = payload.issue.labels
 				theCard.save()
