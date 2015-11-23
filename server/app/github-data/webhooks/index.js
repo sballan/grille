@@ -192,7 +192,44 @@ var EventHandler = {
 	push: function(body) {
 
 	},
-	repository: function(body) {
+	repository: function(payload) {
+
+		this.created = function(payload){
+			var repo = payload.repository;
+			//payload.epository has a name and owner on it, and a bunch of other extra stuff that will be ignored by mongoose
+			
+			//Attempt 1.
+			//this would be nice...but board.owner is a reference-ID to a user, not an actual name-object like it is in payload.repository.owner
+			//Board.create(payload.repository)
+
+			//Attempt 2.
+			var theUser = user;
+			User.find({ githubID: payload.owner.id})
+			.then(function(user){
+				theUser = user;
+			})
+
+			Board.create(
+				{ 
+					name: repo.name,
+					githubID: repo.id,
+					owner: theUser,
+
+					html_url: payload.html_url,
+					url: payload.url,
+					collaborators_url: payload.collaborators_url,
+					teams_url: payload.teams_url,
+					hooks_url: payload.hooks_url
+				}
+			)
+
+			//Attempt 3. - IDEAL
+			//have a pre-save hook that sets the Owner to the one in payload.owner.id, so that card.owner stays as a reference
+			//and the rest of the fields will get their values from payload.repository
+			//Board.create(payload.repository);
+
+		}
+		this.created(payload);
 
 	},
 	release: function(body) {
