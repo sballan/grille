@@ -6,6 +6,11 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory) {
     socket.on('update', function(data){
       console.log("WEBHOOK DATA RECEIVED. The data is:", data)
     })
+  $scope.items = [
+      { label: 'Home', state: 'home' },
+      { label: 'Admin', state: 'membersOnly', auth: true },
+      { label: 'Charts', state:'visual'}
+  ];
 
 	$scope.hovered = false;
 	$scope.sortableOptions = {
@@ -14,20 +19,7 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory) {
 
     $scope.lanes= HomeFactory.loadLanes();
 
-    $scope.addCard=function(){
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'js/home/template.cardModal.html',
-        controller: 'HomeModalCtrl'
-      });
 
-      modalInstance.result.then(function (newCard) {
-          $scope.lanes[0].ownCards.push(newCard.title)
-      }, function () {
-        console.log('Modal dismissed at: ' + new Date());
-      });
-
-    }
 
     $scope.animationsEnabled = true;
 

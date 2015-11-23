@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, HomeFactory) {
 
     return {
         restrict: 'E',
@@ -39,7 +39,27 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
+            
+            scope.lanes = HomeFactory.loadLanes();
+            
+            scope.addCard=function(){
+                console.log("ADDING CARD")
+              var modalInstance = $uibModal.open({
+                animation: scope.animationsEnabled,
+                templateUrl: 'js/home/template.cardModal.html',
+                controller: 'HomeModalCtrl'
+              });
 
+              modalInstance.result.then(function (newCard) {
+
+                  scope.lanes[0].ownCards.push(newCard.title)
+                  // console.log("scopelanes", scope.lanes[0])
+                  // scope.$digest()
+              }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+              });
+
+            }
         }
 
     };
