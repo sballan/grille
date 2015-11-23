@@ -19,6 +19,7 @@ function payloadParser(body) {
 
 	payload.action = body.action || null
 	payload.label = body.label || null
+	payload.member = parser.user(body.member) || null
 	return payload
 }
 
@@ -136,6 +137,41 @@ var EventHandler = {
 
 	},
 	member: function(body) {
+		var board;
+		var payload = payloadParser(body)
+
+		if(payload.action !== 'added') console.error("Action for membership should be 'added'")
+
+		// Find the repo
+		Board.findOne({githubID: payload.repo.githubID})
+		.populate('collaborators')
+		.then(function(theBoard) {
+			board = theBoard;
+			// Find the member
+			return User.findOne({githubID: payload.member})
+		})
+		.then(function(theUser) {
+			if(theUser) {
+				// If the member is in our database, find out if it's already added to the collaborators list
+				board.collaborators.forEach(function(collaborator) {
+					// If it's already there, just return
+					if(theUser.githubID === collaborator.githubID) {
+						return;
+					} else {
+						// If it's not, add the member to the list
+						board.collaborators.push(theUser)
+					}
+				})
+			} else {
+				// If the member isn't in the database, create it
+				return User.create(payload.member)
+			}
+		})
+		// Add member to list
+		.then(function(theUser) {
+			board.collaborators.push(theUser)
+		})
+		.then(null, next)
 
 	},
 	membership: function(body) {
