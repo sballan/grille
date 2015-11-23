@@ -8,7 +8,7 @@ var User = mongoose.model('User')
 var io = require('../../../io')
 // This function might be useful to call the various parse function all in one shot.
 function payloadParser(body) {
-	console.log("------Payload Function", body)
+	//console.log("------Payload Function", body)
 
 	var payload = {}
 	payload.repo = parser.repo(body.repository) || null
@@ -56,7 +56,8 @@ var EventHandler = {
 
 			card.comments.push(payload.comment)
 		})
-		.then(funciton(null, next))
+		.then(null, next)
+
 
 	},
 	issues: function(body) {
@@ -68,39 +69,66 @@ var EventHandler = {
 			var card;
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard) {
-				console.log('------The Care', theCard)
 				card = theCard;
 				return User.findOne({githubID: payload.assignee.githubID})
 			})
 			.then(function(user) {
-				console.log('-----We made it to assign', card)
 				card.assignee = user._id
 				card.save()
 			})
+			.then(null, next)
 		}
 
 		this.unassigned = function(payload) {
-
+			var card;
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard) {
+				card = theCard;
+				return User.findOne({githubID: payload.assignee.githubID})
+			})
+			.then(function(user) {
+				card.assignee = null;
+				card.save()
+			})
+			.then(null, next)
 		}
 
 		this.labeled = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard) {
+				// Replaces a card's labels with the ones from the payload
+				theCard.labels = payload.issue.labels
+				theCard.save()
+			})
+			.then(null, next)
 		}
 
 		this.unlabeled = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard) {
+				// Replaces a card's labels with the ones from the payload
+				theCard.labels = payload.issue.labels
+				theCard.save()
+			})
+			.then(null, next)
 		}
 
 		this.opened = function(payload) {
-
+			Card.create(payload.issue)
 		}
 
 		this.closed = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard){
+					theCard.status = 'closed'
+			})
 		}
 
 		this.reopened = function(payload) {
-
+			Card.findOne({githubID: payload.issue.githubID})
+			.then(function(theCard){
+					theCard.status = 'opened'
+			})
 		}
 
 		// This is where we actually call the function chosen by the action. It needs to appear after the function declarations

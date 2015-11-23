@@ -9,7 +9,7 @@ function parse(body) {
 	issue.comments_url = body.comments_url || null
 	issue.html_url = body.html_url || null
 	issue.githubID = body.id || null
-	issue.number = body.number || null
+	issue.number = 0 + body.number || null
 
 	issue.title = body.title || null
 	issue.body = body.body || null
