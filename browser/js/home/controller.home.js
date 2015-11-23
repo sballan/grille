@@ -40,4 +40,23 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory) {
       });
   };
 
+    $scope.addCard=function(){
+        console.log("ADDING CARD")
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'js/home/template.cardModal.html',
+        controller: 'HomeModalCtrl'
+      });
+
+      modalInstance.result.then(function (newCard) {
+
+          $scope.lanes[0].ownCards.push(newCard.title)
+          console.log("scopelanes", $scope.lanes[0])
+          // scope.$digest()
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+
+    }
+
 });

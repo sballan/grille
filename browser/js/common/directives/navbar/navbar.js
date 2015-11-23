@@ -40,26 +40,9 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
             
-            scope.lanes = HomeFactory.loadLanes();
-            
-            scope.addCard=function(){
-                console.log("ADDING CARD")
-              var modalInstance = $uibModal.open({
-                animation: scope.animationsEnabled,
-                templateUrl: 'js/home/template.cardModal.html',
-                controller: 'HomeModalCtrl'
-              });
+            // scope.lanes = HomeFactory.loadLanes();
 
-              modalInstance.result.then(function (newCard) {
 
-                  scope.lanes[0].ownCards.push(newCard.title)
-                  // console.log("scopelanes", scope.lanes[0])
-                  // scope.$digest()
-              }, function () {
-                console.log('Modal dismissed at: ' + new Date());
-              });
-
-            }
         }
 
     };
