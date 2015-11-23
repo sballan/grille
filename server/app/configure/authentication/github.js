@@ -16,6 +16,7 @@ module.exports = function (app) {
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
+        console.log("-------profile", profile)
         UserModel.findOne({ githubID: profile.id }).exec()
             .then(function (user) {
 
@@ -23,7 +24,7 @@ module.exports = function (app) {
                     if(user.accessToken === accessToken) return user;
                     else {
                         user.accessToken = accessToken
-                        user.save()
+                        return user.save()
                     }
                 } else {
                     return UserModel.create({
@@ -43,8 +44,6 @@ module.exports = function (app) {
 
     };
 
-
-
     passport.use(new GithubStrategy(githubCredentials, verifyCallback));
 
     // app.post('/loginGitHub', function(req, res, next) {
@@ -56,6 +55,11 @@ module.exports = function (app) {
     app.get('/auth/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),
         function (req, res) {
+            //Do Login/Signup Logic
+
+
+
+
             res.redirect('/test');
         });
 

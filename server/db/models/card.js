@@ -22,14 +22,6 @@ var cardSchema = new mongoose.Schema({
 	body: String,
 	comments: [commentSchema],
 
-	board: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Board'
-	},
-	lane: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Lane'
-	},
 	state: String, //enum
 	assignee: {
 		type: mongoose.Schema.Types.ObjectId,

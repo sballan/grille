@@ -3,6 +3,9 @@ var path = require('path');
 var express = require('express');
 var app = express();
 var GitHubApi = require("github");
+var mongoose = require('mongoose')
+var payloadParser = require('./github-data/parsers')
+var Board = mongoose.model('Board')
 module.exports = app;
 
 // Pass our express application pipeline into the configuration
@@ -25,17 +28,24 @@ app.use('/test', function(req, res, next) {
         token: req.user.accessToken
     });
 
-		github.issues.createComment({
-			user: 'sballan',
-			repo: 'grille',
-			number: 5,
-			body: "YES MOTHERFUCKER"
-		},
-			function(err, data) {
-				console.log("err", err, "res", data)
-				res.send("<p>We Hit The Route</p>")
-			}
-		);
+    github.repos.getAll({}, function(err, data) {
+    	data.forEach(function(repo) {
+    		repo = payloadParser.repo(repo)
+    		Board.create(repo)
+    	})
+    })
+
+		// github.issues.createComment({
+		// 	user: 'sballan',
+		// 	repo: 'grille',
+		// 	number: 5,
+		// 	body: "YES MOTHERFUCKER"
+		// },
+		// 	function(err, data) {
+		// 		console.log("err", err, "res", data)
+		// 		res.send("<p>We Hit The Route</p>")
+		// 	}
+		// );
 
 })
 
