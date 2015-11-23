@@ -6,6 +6,9 @@ section {
     margin-left: 5%;
 }
 
+h4 {
+    text-align: center;
+}
 hr {
     height: 12px;
     border: 0;
@@ -63,12 +66,14 @@ hr {
 .sidebar-pos {
     background-color: lightgrey;
     position : absolute;
-    top : 10%;
     left: 0;
     height: 100%;
 
 }
 
+#navbarDiv {
+    padding-top: 10px;
+}
 .sidebar-pos li {
     list-style-type: none;
     text-align:left;
