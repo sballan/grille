@@ -1,5 +1,12 @@
 app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory) {
     // angular.element('body').scrollLeft(50000); 
+    
+    //We should consider putting this in a Factory since its for updating data
+    var socket = io();
+    socket.on('update', function(data){
+      console.log("WEBHOOK DATA RECEIVED. The data is:", data)
+    })
+
 	$scope.hovered = false;
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
