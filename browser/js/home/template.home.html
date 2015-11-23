@@ -1,22 +1,40 @@
 
-<section>
-<!-- Buttons -->
-<div class="">
-<button ng-click="addCard()" class="btn btn-primary"> Add card</button>
-<button ng-click="addLane()" class="btn btn-primary"> Add Lane</button>
-<button ng-click="addIssue()" class="btn btn-primary"> Add party</button>
+<div class="row">
+    <div id="navbarDiv" class="container">
+        <h4>GRILLE</h4>
+
+        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
+        <div ng-show="user" class="welcome">
+            <span>Welcome, {{ user.email }}!</span>
+            <a ng-click="logout()">Logout</a>
+        </div>
+
+
+        <div class="">
+        <button ng-click="addCard()" class="btn btn-primary"> Add card</button>
+        <button ng-click="addLane()" class="btn btn-primary"> Add Lane</button>
+        <button ng-click="addIssue()" class="btn btn-primary"> Add party</button>
+        </div>
+
+    </div>
+
+    <hr>
 </div>
 
-<div class="row">
-  <!-- SideBar Menu -->
-  <div class=" sidebar-toggle" ng-mouseover="hovered=true" ng-mouseleave="hovered=false">Menú</>
-  </div>
+<div class=" sidebar-pos">
+  <ul>
+    <li ng-repeat="item in items"
+      <a ui-sref="{{ item.state }}"> {{item.label}}</a>
+    </li>
+  </ul>
+</div>
 
-  <div class=" sidebar-pos" ng-show="hovered">
-    <ul>
-      <li>test</li>
-    </ul>
-  </div>
+
+
+<section>
+  <!-- SideBar Menu -->
+<!--   <div class="sidebar-toggle" ng-mouseover="hovered=true" ng-show="!hovered" >Menú</>
+  </div> -->
 
 <!-- Card Lanes -->
   <div>
@@ -35,7 +53,7 @@
       </div>
     </div>
   </div>
-  </div>
+
 </section>
 <!--
     <script>
