@@ -24,7 +24,7 @@ module.exports = function (app) {
             });
     };
 
-    passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, strategyFn));
+    passport.use(new LocalStrategy({ usernameField: 'username', passwordField: 'password' }, strategyFn));
 
     // A POST /login route is created to handle login.
     app.post('/login', function (req, res, next) {

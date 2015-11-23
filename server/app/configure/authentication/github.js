@@ -12,8 +12,7 @@ module.exports = function (app) {
     var githubCredentials = {
         clientID: githubConfig.clientID,
         clientSecret: githubConfig.clientSecret,
-        callbackURL: githubConfig.callbackURL,
-        userAgent: 'https://dnvxoehyzu.localtunnel.me'
+        callbackURL: githubConfig.callbackURL
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
@@ -44,9 +43,15 @@ module.exports = function (app) {
 
     };
 
+
+
     passport.use(new GithubStrategy(githubCredentials, verifyCallback));
 
-    app.get('/auth/github', passport.authenticate('github', {scope: ['user', 'repo', 'public_repo'], userAgent: 'https://dnvxoehyzu.localtunnel.me'}));
+    // app.post('/loginGitHub', function(req, res, next) {
+
+    // })
+
+    app.get('/auth/github', passport.authenticate('github', {scope: ['user', 'repo', 'public_repo']}));
 
     app.get('/auth/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),

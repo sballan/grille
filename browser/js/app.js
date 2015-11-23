@@ -5,11 +5,21 @@ app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider
+    .when('/auth/github', '/auth/github')
+    .otherwise('/');
 });
 
+app.config(function ($stateProvider) {
+    $stateProvider.state('auth', {
+        url: '/auth/github',
+        external: true,
+    });
+});
+
+
 // This app.run is for controlling access to specific states.
-app.run(function ($rootScope, AuthService, $state) {
+app.run(function ($rootScope, AuthService, $state, $window) {
 
     // The given state requires an authenticated user.
     var destinationStateRequiresAuth = function (state) {
@@ -19,6 +29,11 @@ app.run(function ($rootScope, AuthService, $state) {
     // $stateChangeStart is an event fired
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+
+        if (toState.external) {
+            event.preventDefault();
+            $window.open(toState.url, '_self');
+          }
 
         if (!destinationStateRequiresAuth(toState)) {
             // The destination state does not require authentication

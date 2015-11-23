@@ -3,7 +3,7 @@
     <div id="navbarDiv" class="container">
         <h4>GRILLE</h4>
 
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
+        <button ui-sref="auth" ng-show="!user" class="btn login-button">Login</button>
         <div ng-show="user" class="welcome">
             <span>Welcome, {{ user.email }}!</span>
             <a ng-click="logout()">Logout</a>
@@ -46,7 +46,7 @@
           <h7> {{ lane.title }} </h7>
           <ul ui-sortable="sortableOptions" ng-model="lane.ownCards" class="list">
             <div ng-repeat="card in lane.ownCards" class="item">
-              <li > Priority/Tags/Other </li>  
+              <li > Priority/Tags/Other </li>
               <li>{{card}}</li>
               <li > Icons </li>
             </div>

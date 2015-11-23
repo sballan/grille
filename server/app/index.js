@@ -39,10 +39,6 @@ app.use('/test', function(req, res, next) {
 
 })
 
-app.use('/getUser', function(req, res, next) {
-		var repo = require('./github-data').repo
-		res.send(repo.getUser())
-})
 
 app.use('/logout', function(req, res, next) {
 	req.logout()

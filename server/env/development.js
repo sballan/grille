@@ -19,6 +19,6 @@ module.exports = {
   "GITHUB":{
     "clientID":"3d0e3c131975003b52ca",
     "clientSecret": "070218ad1b7125d706594000879e6a169e0328d0",
-    "callbackURL":"https://dnvxoehyzu.localtunnel.me/auth/github/callback"
+    "callbackURL":"https://ruvyfbbopx.localtunnel.me/auth/github/callback"
   }
 };
