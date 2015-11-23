@@ -17,8 +17,8 @@ module.exports = {
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
   },
   "GITHUB":{
-    "clientID":"fbc0ebd88ac5115be05a",
-    "clientSecret": "d0f3dd93d6e53fa8873548d3f8c33ea3c6c3638a",
-    "callbackURL":"https://mmknupolin.localtunnel.me/auth/github/callback"
+    "clientID":"3d0e3c131975003b52ca",
+    "clientSecret": "4896180b3502587b0212b075b1ad8f130c894c61",
+    "callbackURL":"https://ybtvjkwlin.localtunnel.me/auth/github/callback"
   }
 };

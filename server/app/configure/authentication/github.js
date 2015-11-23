@@ -3,6 +3,7 @@ var passport = require('passport');
 var GithubStrategy = require('passport-github').Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var github = require('octonode');
 
 module.exports = function (app) {
 
@@ -11,7 +12,8 @@ module.exports = function (app) {
     var githubCredentials = {
         clientID: githubConfig.clientID,
         clientSecret: githubConfig.clientSecret,
-        callbackURL: githubConfig.callbackURL
+        callbackURL: githubConfig.callbackURL,
+        scope: ['user', 'repo']
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
@@ -27,7 +29,6 @@ module.exports = function (app) {
                         username: profile.username,
                         url: profile.profileUrl,
                         accessToken: accessToken,
-
                     });
                 }
 
@@ -47,7 +48,6 @@ module.exports = function (app) {
     app.get('/auth/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),
         function (req, res) {
-            console.log(req.user)
             res.redirect('/test');
         });
 

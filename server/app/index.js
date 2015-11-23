@@ -2,6 +2,7 @@
 var path = require('path');
 var express = require('express');
 var app = express();
+var github = require('octonode')
 module.exports = app;
 
 // Pass our express application pipeline into the configuration
@@ -14,7 +15,20 @@ app.use('/api', require('./routes'));
 
 // Tester route for github auth
 app.use('/test', function(req, res, next) {
-	console.log(req.session)
+	console.log('----REQ.USER',req.user)
+
+    var client = github.client(req.user.accessToken)
+    var ghme = client.me()
+    // ghme.info(function(err, data, headers) {
+    //     console.log("err", err, "data", data)
+    // })
+    ghme.emails(function(err, data, headers) {
+        console.log("-----Here is the stuff", data)
+    })
+    // client.get('/sballan/repos/grille', {}, function(err, status, body, headers) {
+    //     console.log('-------THIS IS THE GITHUB RESPONSE',body)
+    // })
+
 	res.send("<p>We Hit The Route</p>")
 })
 
