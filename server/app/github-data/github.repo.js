@@ -18,7 +18,7 @@ var http = require('http')
 
 
 module.exports = {
-  	getUser: function() {
+  	getUser: function(accessToken) {
   		return client.get('/user', function(err, status, body) {
 	  		ghuser.info(function(stuff){
 	  		console.log(stuff)
