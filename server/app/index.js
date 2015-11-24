@@ -19,9 +19,8 @@ app.use('/api', require('./routes'));
 // Tester route for github auth
 app.use('/test', function(req, res, next) {
 	console.log('----REQ.USER',req.user)
-		var github = new GitHubApi({ debug: true, version: "3.0.0" });
+		var github = new GitHubApi({ debug: true, version: "3.0.0" } );
 
-    console.log('user', req.user)
 
 		github.authenticate({
         type: "oauth",
@@ -29,11 +28,18 @@ app.use('/test', function(req, res, next) {
     });
 
     github.repos.getAll({}, function(err, data) {
-    	data.forEach(function(repo) {
-    		repo = payloadParser.repo(repo)
-    		Board.create(repo)
-    	})
+    		var parsedData = data.map(function(repo) {
+    			return payloadParser.repo(repo)
+    		})
+    			console.log(parsedData)
+		    	Board.find({githubID: parsedData[0].githubID})
+		    	.then(function(repo) {
+		    		return Board.update({_id: repo._id}, parsedData[0], {upsert: true})
+		    	})
+    			// parsedData.forEach(function(repo) {
+    			// })
     })
+    next()
 
 		// github.issues.createComment({
 		// 	user: 'sballan',
