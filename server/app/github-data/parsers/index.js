@@ -13,6 +13,10 @@ var payload = function (body) {
 	var data = {}
 	data.repo = obj.repo(body.repository)
 	data.sender = obj.user(body.sender)
+	// obj.user(body.sender)
+	// .then(functino(sender){
+	// 	data.sender = sender
+	// })
 	data.assignee = obj.user(body.assignee)
 	data.issue = obj.issue(body.issue)
 	data.comment = obj.comment(body.comment)

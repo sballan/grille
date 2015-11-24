@@ -1,3 +1,5 @@
+var User = require('mongoose').model('User')
+var _ = require('lodash')
 function parse(body) {
 	if(!body) return null
 	var user = {}
@@ -13,7 +15,18 @@ function parse(body) {
 	user.organizations_url = body.organizations_url || null
   user.repos_url = user.repos_url || null
 
-	return user;
+  return User.find({githubID: user.githubID}, function(err, theUser) {
+  	if(!theUser) {
+  		return User.create(user)
+  	} else {
+  		// _.extend(theUser, user)
+  		return User.findByIdAndUpdate(theUser._id, user, {upsert: true, new: true}, function() {})
+  	}
+  })
+
+
+  // .then(function(theUser) {
+  // })
 }
 
 module.exports = parse

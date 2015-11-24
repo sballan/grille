@@ -7,6 +7,8 @@ module.exports = router;
 
 router.use('/members', require('./members'));
 
+router.use('/github', require('./github'));
+
 router.post('/webhooks', function(req, res, next) {
 	//emit to a board via room
 	//var socket = io()

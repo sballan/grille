@@ -3,7 +3,9 @@ app.config(function ($stateProvider) {
         url: '/test',
         templateUrl: 'js/test/template.test.html',
         controller: function($scope) {
+        	$scope.getRepos = function() {
 
+        	}
         },
 
     });
