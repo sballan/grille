@@ -56,9 +56,8 @@ var EventHandler = {
 			if(!card) console.error("Cannot add comment to a card that does not exist")
 
 			card.comments.push(payload.comment)
+			return card.save()
 		})
-		.then(null, next)
-
 
 	},
 	issues: function(body) {
@@ -75,9 +74,9 @@ var EventHandler = {
 			})
 			.then(function(user) {
 				card.assignee = user._id
-				card.save()
+				return card.save()
 			})
-			.then(null, next)
+
 		}
 
 		this.unassigned = function(payload) {
@@ -89,9 +88,9 @@ var EventHandler = {
 			})
 			.then(function(user) {
 				card.assignee = null;
-				card.save()
+				return card.save()
 			})
-			.then(null, next)
+
 		}
 
 		this.labeled = function(payload) {
@@ -99,9 +98,9 @@ var EventHandler = {
 			.then(function(theCard) {
 				// Replaces a card's labels with the ones from the payload
 				theCard.labels = payload.issue.labels
-				theCard.save()
+				return theCard.save()
 			})
-			.then(null, next)
+
 		}
 
 		this.unlabeled = function(payload) {
@@ -109,9 +108,9 @@ var EventHandler = {
 			.then(function(theCard) {
 				// Replaces a card's labels with the ones from the payload
 				theCard.labels = payload.issue.labels
-				theCard.save()
+				return theCard.save()
 			})
-			.then(null, next)
+
 		}
 
 		this.opened = function(payload) {
@@ -122,6 +121,7 @@ var EventHandler = {
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard){
 					theCard.status = 'closed'
+					return theCard.save()
 			})
 		}
 
@@ -129,6 +129,7 @@ var EventHandler = {
 			Card.findOne({githubID: payload.issue.githubID})
 			.then(function(theCard){
 					theCard.status = 'opened'
+					return theCard.save()
 			})
 		}
 
@@ -160,6 +161,7 @@ var EventHandler = {
 					} else {
 						// If it's not, add the member to the list
 						board.collaborators.push(theUser)
+						return board.save()
 					}
 				})
 			} else {
@@ -170,8 +172,9 @@ var EventHandler = {
 		// Add member to list
 		.then(function(theUser) {
 			board.collaborators.push(theUser)
+			return board.save()
 		})
-		.then(null, next)
+
 
 	},
 	membership: function(body) {

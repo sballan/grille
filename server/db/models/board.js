@@ -1,6 +1,15 @@
 'use strict';
 var mongoose = require('mongoose');
 
+var laneSchema = new mongoose.Schema({
+	name: String,
+	color: String,
+	cards: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Card'
+	}]
+})
+
 var boardSchema = new mongoose.Schema({
 	name: String,  //The name of the repo
 	githubID: {
@@ -15,10 +24,7 @@ var boardSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}],
-	lanes: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Lane'
-	}],
+	lanes: [laneSchema],
 	html_url: String,
 	url: String, //---- API ----
 	collaborators_url: String,

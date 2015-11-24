@@ -8,12 +8,16 @@ module.exports = router;
 router.use('/members', require('./members'));
 
 router.post('/webhooks', function(req, res, next) {
-	var socket = io()
+	//emit to a board via room
+	//var socket = io()
 	//Can emit this after Webhooks exectues, or inside of Webhooks EventHandler
-	socket.emit('update', {name: "UPDATED sample DATA"})
-	
+	//socket.emit('update', {name: "UPDATED sample DATA"})
+
 	Webhooks[req.headers['x-github-event']](req.body)
-	res.send()
+	.then(function(){
+		res.send()
+	})
+	.then(null,next)
 
 })
 

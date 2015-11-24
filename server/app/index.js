@@ -3,6 +3,9 @@ var path = require('path');
 var express = require('express');
 var app = express();
 var GitHubApi = require("github");
+var mongoose = require('mongoose')
+var payloadParser = require('./github-data/parsers')
+var Board = mongoose.model('Board')
 module.exports = app;
 
 // Pass our express application pipeline into the configuration
@@ -16,33 +19,42 @@ app.use('/api', require('./routes'));
 // Tester route for github auth
 app.use('/test', function(req, res, next) {
 	console.log('----REQ.USER',req.user)
-		var github = new GitHubApi({ debug: true, version: "3.0.0" });
+		var github = new GitHubApi({ debug: true, version: "3.0.0" } );
 
-    console.log('user', req.user)
 
 		github.authenticate({
         type: "oauth",
         token: req.user.accessToken
     });
 
-		github.issues.createComment({
-			user: 'sballan',
-			repo: 'grille',
-			number: 5,
-			body: "YES MOTHERFUCKER"
-		},
-			function(err, data) {
-				console.log("err", err, "res", data)
-				res.send("<p>We Hit The Route</p>")
-			}
-		);
+    github.repos.getAll({}, function(err, data) {
+    		var parsedData = data.map(function(repo) {
+    			return payloadParser.repo(repo)
+    		})
+    			console.log(parsedData)
+		    	Board.find({githubID: parsedData[0].githubID})
+		    	.then(function(repo) {
+		    		return Board.update({_id: repo._id}, parsedData[0], {upsert: true})
+		    	})
+    			// parsedData.forEach(function(repo) {
+    			// })
+    })
+    next()
+
+		// github.issues.createComment({
+		// 	user: 'sballan',
+		// 	repo: 'grille',
+		// 	number: 5,
+		// 	body: "YES MOTHERFUCKER"
+		// },
+		// 	function(err, data) {
+		// 		console.log("err", err, "res", data)
+		// 		res.send("<p>We Hit The Route</p>")
+		// 	}
+		// );
 
 })
 
-app.use('/getUser', function(req, res, next) {
-		var repo = require('./github-data').repo
-		res.send(repo.getUser())
-})
 
 app.use('/logout', function(req, res, next) {
 	req.logout()

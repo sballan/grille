@@ -13,7 +13,6 @@ function parse(body) {
 	user.organizations_url = body.organizations_url || null
   user.repos_url = user.repos_url || null
 
-
 	return user;
 }
 
