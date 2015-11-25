@@ -7,19 +7,25 @@ function parse(body) {
 	repo.githubID = body.id || null
 	repo.name = body.name || null
 	repo.description = body.description || null
-	// repo.owner = user(body.owner) || null
+	// Change this to a field, not a user.  Use presave hook to populate a username/etc
 
-	// repo.url = body.url || null
+	repo.owner = {
+		username: body.owner.login,
+		githubID: body.owner.id,
+		url: body.owner.url
+	}
+
+	repo.url = body.url || null
 	// repo.html_url = body.html_url || null
 	// repo.forks_url = body.forks_url || null
 	// repo.keys_url = body.keys_url || null
-	repo.collaborators_url = body.collaborators_url || null
-	repo.teams_url = body.teams_url || null
-	repo.hooks_url = body.hooks_url || null
-	repo.issue_events_url = body.issue_events_url || null
-	repo.events_url = body.events_url || null
-	repo.assignees_url = body.assignees_url || null
-	repo.branches_url = body.branches_url || null
+	// repo.collaborators_url = body.collaborators_url || null
+	// repo.teams_url = body.teams_url || null
+	// repo.hooks_url = body.hooks_url || null
+	// repo.issue_events_url = body.issue_events_url || null
+	// repo.events_url = body.events_url || null
+	// repo.assignees_url = body.assignees_url || null
+	// repo.branches_url = body.branches_url || null
 	// repo.tags_url = body.tags_url || null
 	// repo.blobs_url = body.blobs_url || null
 	// repo.git_tags_url = body.git_tags_url	|| null

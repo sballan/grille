@@ -1,19 +1,20 @@
+var User = require('mongoose').model('User')
+var _ = require('lodash')
 function parse(body) {
 	if(!body) return null
 	var user = {}
 
-	user.name = body.name || null
-	user.email = body.email || null
-	user.username = body.username || null
+	user.name = body.name
+	user.email = body.email
+	user.username = body.username || body.login
 
-	user.login = body.login || null
-	user.githubID = body.id || null
-	user.url = body.url || null
-	user.html_url = body.html_url || null
-	user.organizations_url = body.organizations_url || null
-  user.repos_url = user.repos_url || null
+	user.githubID = body.id
+	user.url = body.url
+	user.html_url = body.html_url
+	user.organizations_url = body.organizations_url
+  user.repos_url = user.repos_url
 
-	return user;
+  return user
 }
 
 module.exports = parse
