@@ -5,7 +5,7 @@ app.factory('GitHubFactory', function($http) {
 
 	var GitHubFactory = {
 		getAllRepos: function() {
-			return $http.get('/api/github/repos/getAll')
+			return $http.get('/api/github/repos/get/all')
 			.then(toData)
 		},
 		getRepo: function(repo) {

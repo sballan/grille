@@ -8,7 +8,7 @@ var Board = require('mongoose').model('Board')
 module.exports = router;
 
 
-router.get('/getAll', function(req, res, next) {
+router.get('/get/all', function(req, res, next) {
   var github = new GitHubApi({ debug: true, version: "3.0.0" } );
 
   github.authenticate({
@@ -42,6 +42,8 @@ router.get('/getAll', function(req, res, next) {
   })
 
 });
+
+
 
 router.get('/get/:repo', function(req, res, next) {
   var github = new GitHubApi({ debug: true, version: "3.0.0" } );
