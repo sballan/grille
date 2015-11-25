@@ -3,7 +3,8 @@ var router = require('express').Router();
 var GitHubApi = require('github')
 var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
-var Board = require('mongoose').model('Board')
+var Board = require('mongoose').model('Board');
+var Card = require('mongoose').model('Card');
 
 module.exports = router;
 
@@ -16,7 +17,7 @@ router.get('/getAll', function(req, res, next) {
       token: req.user.accessToken
   });
 
-  github.repos.getAll({}, function(err, data) {
+  github.repos.getAll({per_page: 100}, function(err, data) {
     if(err) console.error(err)
 
      data = data.map(function(repo) {
@@ -50,18 +51,36 @@ router.get('/get/:repo', function(req, res, next) {
       type: "oauth",
       token: req.user.accessToken
   });
-  console.log("----req user", req.user)
 
-  github.repos.get({user: req.user.username, repo: req.params.repo}, function(err, data) {
-    if(err) console.error(err)
+  Board.findOne({name: req.params.repo})
+  .then(function (repo) {
+    //get repo issues
+    github.issues.repoIssues({user: repo.owner.username, repo: req.params.repo, per_page: 100, state: "all"}, 
+        function(err, issues) {
+          if(err) {
+            console.error(err)
+          }
 
-    data = payloadParser.repo(data)
+          //console.log('ISSUE DATA - ', issues);
+          //save all issues
 
-    Board.findOneAndUpdate({ githubID: data.githubID}, data, {upsert: true, new: true})
-    .then(function(board) {
-      console.log("Updated Board", board)
-      res.send(board)
+          var promise_arr = [];
+          issues.forEach(function(issue) {
+            var parsed_issue = payloadParser.issue(issue);
+            console.log('ISSUE - ', parsed_issue);
+            promise_arr.push(Card.findOneAndUpdate({ githubID: parsed_issue.githubID}, parsed_issue, {upsert: true, new: true}));
+          })
+
+          return Promise.all(promise_arr);   
     })
   })
+  .then(function(data) {
+    console.log("Updated Issues", data);
+    res.send(data);
+  })
+  .then(null, function(err) {
+    console.log("ERROR - ", err);
+    res.send(err);
+  });
 
 });

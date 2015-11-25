@@ -1,32 +1,38 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var commentSchema = new mongoose.Schema({
-	body: String,
+// var commentSchema = new mongoose.Schema({
+// 	body: String,
+// 	githubID: {
+// 		type: Number,
+// 		unique: true
+// 	},
+// 	author: {
+// 		type: mongoose.Schema.Types.ObjectId,
+// 		ref: 'User'
+// 	},
+// 	created_at: Date,
+// 	updated_at: Date
+// })
+
+
+var cardSchema = new mongoose.Schema({
 	githubID: {
 		type: Number,
 		unique: true
 	},
-	author: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
-	},
-	created_at: Date,
-	updated_at: Date
-})
-
-
-var cardSchema = new mongoose.Schema({
 	issueNumber: Number,
 	title: String,
 	body: String,
-	comments: [commentSchema],
+	//comments: [commentSchema],
 
 	state: String, //enum
-	assignee: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+	owner: {
+		githubID: Number,
+		url: String,
+		username: String
 	},
+	assignee: String,
 	priority: Number,  
 	milestone: String, //TODO check this out
 	labels: [mongoose.Schema.Types.Mixed],
@@ -36,16 +42,12 @@ var cardSchema = new mongoose.Schema({
 	closed_at: Date,
 	due_on: Date,
 
-	githubID: {
-		type: Number,
-		unique: true
-	},
 	url: String,
 	labels_url: String,
 	comments_url: String,
 	events_url: String,
-	html_url: String
-
+	html_url: String,
+	isPullRequest: {type: Boolean, default: false}
 })
 
 mongoose.model('Card', cardSchema);

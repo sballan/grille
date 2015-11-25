@@ -10,6 +10,8 @@ var laneSchema = new mongoose.Schema({
 	}]
 })
 
+mongoose.model('Lane', laneSchema);
+
 var boardSchema = new mongoose.Schema({
 	name: String,  //The name of the repo
 	githubID: {
@@ -34,10 +36,12 @@ var boardSchema = new mongoose.Schema({
 	url: String, //---- API ----
 	collaborators_url: String,
 	teams_url: String,
-	hooks_url: String,
-
+	hooks_url: String
 });
 
+boardSchema.pre('init', function() {
+
+})
 
 
 mongoose.model('Board', boardSchema);
