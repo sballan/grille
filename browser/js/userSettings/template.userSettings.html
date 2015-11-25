@@ -1,18 +1,20 @@
-<h5>GrilleBoards</h5>
+<h3>GrilleBoards</h3>
 <div>
 <ul>
-	<li ng-repeat="board in active">
+	<li ng-repeat="board in activeBoards()">
 		{{ board.name }}
 	</li>
 
 </ul>
 
-<h5>RawBoards</h5>
+<h3>RawBoards</h3>
 <ul>
-	<h3>Choose One to put on your Grille</h3>
-	<li ng-repeat="board in inActive">
+	<h6>Choose One to put on your Grille</h6>
+	<li ng-repeat="board in inActiveBoards()">
 		<!-- { board: board.githubID } -->
-		<a ui-sref="home()">{{ board.name }}</a>
+		<!-- <a ui-sref="home()">{{ board.name }}</a> -->
+		<p ng-click="setActive(board.githubID)">{{ board.name }}</p>
+
 	</li>
 
 </ul>
