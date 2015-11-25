@@ -4,6 +4,7 @@ var obj = {
 	repo: require('./parser.repo'),
 	issue: require('./parser.issue'),
 	comment: require('./parser.comment'),
+	promise: require('./parser.promise')
 }
 
 // This function might be useful to call the various parse function all in one shot.

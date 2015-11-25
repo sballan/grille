@@ -7,9 +7,15 @@ function parse(body) {
 	repo.githubID = body.id || null
 	repo.name = body.name || null
 	repo.description = body.description || null
-	repo.owner = user(body.owner) || null
+	// Change this to a field, not a user.  Use presave hook to populate a username/etc
 
-	// repo.url = body.url || null
+	repo.owner = {
+		username: body.owner.login,
+		githubID: body.owner.id,
+		url: body.owner.url
+	}
+
+	repo.url = body.url || null
 	// repo.html_url = body.html_url || null
 	// repo.forks_url = body.forks_url || null
 	// repo.keys_url = body.keys_url || null

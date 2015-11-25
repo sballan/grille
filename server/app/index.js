@@ -36,28 +36,22 @@ app.use('/test', function(req, res, next) {
   github.repos.getAll({}, function(err, data) {
   	if(err) console.error(err)
 
-		var parsedData = data.map(function(repo) {
+		 data = data.map(function(repo) {
 			return payloadParser.repo(repo)
 		})
 
-
-		var promises = parsedData.map(function(repo) {
-			return Board.find({githubID: repo.githubID})
+		Promise.map(data, function(board) {
+			console.log("Finding the Board, it is: ", board)
+			return Board.findOne({githubID: board.githubID})
 		})
-		console.log("-----Parsed Data", parsedData)
-
-
-		Promise.all(promises)
 		.then(function(boards) {
-			var updates = boards.map(function(board, index) {
-				return Board.update({githubID: board.githubID}, parsedData[index], {upsert: true})
-				// _.extend(board, parsedData[index])
-				// return board.save()
+			console.log("Found the Boards, they are: ", boards)
+			return Promise.map(boards, function(board, index) {
+				return Board.update({ githubID: board.githubID}, data[index], {upsert: true, new: true})
 			})
-			return Promise.all(updates)
 		})
-		.then(function(processed) {
-			console.log(processed)
+		.then(function(boards) {
+			console.log("Updated Boards", boards)
 		})
 
 	})

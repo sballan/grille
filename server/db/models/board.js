@@ -17,8 +17,9 @@ var boardSchema = new mongoose.Schema({
 		unique: true
 	},
 	owner: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+		githubID: Number,
+		url: String,
+		username: String
 	},
 	collaborators: [{
 		type: mongoose.Schema.Types.ObjectId,
