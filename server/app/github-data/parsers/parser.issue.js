@@ -1,27 +1,39 @@
-var user = require('./parser.user')
+var user = require('./parser.user');
+var _ = require('lodash');
 
 function parse(body) {
-	if(!body) return null
-	var issue = {}
+	if(!body) return null;
+	var issue = {};
 
-	issue.url = body.url || null
-	issue.labels_url = body.labels_url || null
-	issue.comments_url = body.comments_url || null
-	issue.html_url = body.html_url || null
-	issue.githubID = body.id || null
-	issue.number = 0 + body.number || null
+	issue.githubID = body.id;
+	issue.issueNumber = 0 + body.number;
+	issue.title = body.title;
+	issue.body = body.body;
+	issue.state = body.state;
+	//issue.milestone = body.milestone;
+	issue.labels = body.labels;
+	issue.created_at = body.created_at;
+	issue.updated_at = body.updated_at;
+	issue.closed_at = body.closed_at;
+	issue.due_on = body.due_on;
 
-	issue.title = body.title || null
-	issue.body = body.body || null
-	issue.labels = body.labels || null
+	issue.url = body.url;
+	issue.labels_url = body.labels_url;
+	issue.comments_url = body.comments_url;
+	issue.events_url = body.events_url;
+	issue.html_url = body.html_url;
 
-	issue.user = user(body.user) || null
-	issue.state = body.state || null
-	issue.assignee = body.assignee || null
-	issue.created_at = body.created_at || null
-	issue.updated_at = body.updated_at || null
-	issue.closed_at = body.closed_at || null
+	issue.owner = {
+		username: body.user.login,
+		githubID: body.user.id,
+		url: body.user.url
+	}
 
+	if (body.assignee) {
+		issue.assignee =  body.assignee.login;
+		//console.log('ASSIGNEE - ', issue.assignee);
+	}
+	if (body.pull_request) issue.isPullRequest = true;
 
 	return issue;
 }
