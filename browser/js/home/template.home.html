@@ -3,7 +3,7 @@
     <div id="navbarDiv" class="container">
         <h4>GRILLE</h4>
 
-        <button ui-sref="auth" ng-show="!user" class="btn login-button">Login</button>
+        <button ui-sref="auth" ng-show="!user" class="btn login-button">Login/Sign-Up</button>
         <div ng-show="user" class="welcome">
             <span>Welcome, {{ user.email }}!</span>
             <a ng-click="logout()">Logout</a>

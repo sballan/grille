@@ -1,48 +1,43 @@
 'use strict';
 var router = require('express').Router();
 var GitHubApi = require('github')
+var payloadParser = require('../../github-data/parsers')
+var Promise = require('bluebird')
+var Board = require('mongoose').model('Board')
 module.exports = router;
 
+
 router.get('/repos/getAll', function(req, res, next) {
+  var github = new GitHubApi({ debug: true, version: "3.0.0" } );
 
-	var github = new GitHubApi({ debug: true, version: "3.0.0" } );
-
-
-	github.authenticate({
+  github.authenticate({
       type: "oauth",
       token: req.user.accessToken
   });
 
-  github.repos.getAllAsync({}, function(err, data) {
-  		var parsedData = data.map(function(repo) {
-  			return payloadParser.repo(repo)
-  		})
-			console.log(parsedData)
-    	Board.find({githubID: parsedData[0].githubID})
-    	.then(function(repo) {
-    		return Board.update({_id: repo._id}, parsedData[0], {upsert: true})
-    	})
-    	.then(function(board) {
-    		console.log('-----This is the board', board)
-    	})
+  github.repos.getAll({}, function(err, data) {
+    if(err) console.error(err)
+
+     data = data.map(function(repo) {
+      return payloadParser.repo(repo)
+    })
+
+    Promise.map(data, function(board) {
+      console.log("Finding the Board, it is: ", board)
+      return Board.findOne({githubID: board.githubID})
+    })
+    .then(function(boards) {
+      console.log("Found the Boards, they are: ", boards)
+      return Promise.map(boards, function(board, index) {
+        return Board.findOneAndUpdate({ githubID: board.githubID}, data[index], {upsert: true, new: true})
+      })
+    })
+    .then(function(boards) {
+      console.log("Updated Boards", boards)
+      res.send(boards)
+    })
 
   })
-  .then(function(board) {
-
-  })
-  next()
-
-	// github.issues.createComment({
-	// 	user: 'sballan',
-	// 	repo: 'grille',
-	// 	number: 5,
-	// 	body: "YES MOTHERFUCKER"
-	// },
-	// 	function(err, data) {
-	// 		console.log("err", err, "res", data)
-	// 		res.send("<p>We Hit The Route</p>")
-	// 	}
-	// );
 
 
 });
