@@ -32,42 +32,9 @@ app.use('/test', function(req, res, next) {
       type: "oauth",
       token: req.user.accessToken
   });
-
-  github.repos.getAll({}, function(err, data) {
-  	if(err) console.error(err)
-
-		 data = data.map(function(repo) {
-			return payloadParser.repo(repo)
-		})
-
-		Promise.map(data, function(board) {
-			console.log("Finding the Board, it is: ", board)
-			return Board.findOne({githubID: board.githubID})
-		})
-		.then(function(boards) {
-			console.log("Found the Boards, they are: ", boards)
-			return Promise.map(boards, function(board, index) {
-				return Board.update({ githubID: board.githubID}, data[index], {upsert: true, new: true})
-			})
-		})
-		.then(function(boards) {
-			console.log("Updated Boards", boards)
-		})
-
-	})
   next()
 
-	// github.issues.createComment({
-	// 	user: 'sballan',
-	// 	repo: 'grille',
-	// 	number: 5,
-	// 	body: "YES MOTHERFUCKER"
-	// },
-	// 	function(err, data) {
-	// 		console.log("err", err, "res", data)
-	// 		res.send("<p>We Hit The Route</p>")
-	// 	}
-	// );
+
 
 })
 

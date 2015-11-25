@@ -29,6 +29,7 @@ router.get('/repos/getAll', function(req, res, next) {
     .then(function(boards) {
       console.log("Found the Boards, they are: ", boards)
       return Promise.map(boards, function(board, index) {
+        if(!board) board = {githubID: null}
         return Board.findOneAndUpdate({ githubID: board.githubID}, data[index], {upsert: true, new: true})
       })
     })
