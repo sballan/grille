@@ -1,4 +1,4 @@
-<h5>RawBoards</h5>
+<h5>GrilleBoards</h5>
 <div>
 <ul>
 	<li ng-repeat="board in active">
@@ -7,16 +7,14 @@
 
 </ul>
 
-<h5>GrilleBoards</h5>
+<h5>RawBoards</h5>
 <ul>
+	<h3>Choose One to put on your Grille</h3>
 	<li ng-repeat="board in inActive">
-		{{ board.name }}
+		<!-- { board: board.githubID } -->
+		<a ui-sref="home()">{{ board.name }}</a>
 	</li>
 
 </ul>
 
 </div>
-
-<p>
-	 textmate
-</p>

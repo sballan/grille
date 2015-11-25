@@ -1,4 +1,4 @@
-app.controller('UserSettingsCtrl', function($scope, GitHubFactory){
+app.controller('UserSettingsCtrl', function($scope, GitHubFactory, inActiveBoards){
 
 	$scope.active;
 
@@ -17,18 +17,19 @@ app.controller('UserSettingsCtrl', function($scope, GitHubFactory){
 
 	$scope.activeBoards();
 
-	$scope.inActiveBoards = function(){
-		return GitHubFactory.getAllRepos()
-		.then(function(boards){
-			console.log("boards:", boards)
-			$scope.inActive = boards.filter(function(board){
-					if (!board.isActive){
-						return board;
-					}
-				})
+	$scope.inActive = inActiveBoards;
+	// $scope.inActiveBoards = function(){
+	// 	return GitHubFactory.getAllRepos()
+	// 	.then(function(boards){
+	// 		console.log("boards:", boards)
+	// 		$scope.inActive = boards.filter(function(board){
+	// 				if (!board.isActive){
+	// 					return board;
+	// 				}
+	// 			})
 
 		
-		})
-	}
-	$scope.inActiveBoards();
+	// 	})
+	// }
+	// $scope.inActiveBoards();
 })
