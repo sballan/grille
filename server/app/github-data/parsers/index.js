@@ -3,8 +3,7 @@ var obj = {
 	user: require('./parser.user'),
 	repo: require('./parser.repo'),
 	issue: require('./parser.issue'),
-	comment: require('./parser.comment'),
-	promise: require('./parser.promise')
+	comment: require('./parser.comment')
 }
 
 // This function might be useful to call the various parse function all in one shot.
