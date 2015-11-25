@@ -9,7 +9,7 @@ var Card = require('mongoose').model('Card');
 module.exports = router;
 
 
-router.get('/getAll', function(req, res, next) {
+router.get('/get/all', function(req, res, next) {
   var github = new GitHubApi({ debug: true, version: "3.0.0" } );
 
   github.authenticate({
@@ -44,13 +44,18 @@ router.get('/getAll', function(req, res, next) {
 
 });
 
-router.get('/get/:repo', function(req, res, next) {
-  var github = new GitHubApi({ debug: true, version: "3.0.0" } );
 
-  github.authenticate({
-      type: "oauth",
-      token: req.user.accessToken
-  });
+
+router.get('/get/:repo', function(req, res, next) {
+	var github = new GitHubApi({ debug: true, version: "3.0.0" } );
+
+	github.authenticate({
+			type: "oauth",
+			token: req.user.accessToken
+	});
+	console.log("----req user", req.user)
+
+  //TODO - get and update repo info
 
   Board.findOne({name: req.params.repo})
   .then(function (repo) {
@@ -84,3 +89,20 @@ router.get('/get/:repo', function(req, res, next) {
   });
 
 });
+
+
+router.put('/put/:boardID/active', function(req,res,next){
+	var github = new GitHubApi({ debug: true, version: "3.0.0" } );
+
+	github.authenticate({
+			type: "oauth",
+			token: req.user.accessToken
+	});
+
+	Board.findOneAndUpdate({ githubID: req.params.boardID}, { isActive: true}, {new : true})
+	.then(function(board){
+		console.log("board updated:", board)
+		res.send(board)
+	})
+
+})
