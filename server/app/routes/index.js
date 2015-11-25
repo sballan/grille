@@ -1,7 +1,7 @@
 'use strict';
 var router = require('express').Router();
 var Webhooks = require('../github-data/webhooks')
-var io = require('../../io')
+// var io = require('../../io')
 
 module.exports = router;
 
