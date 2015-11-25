@@ -16,6 +16,10 @@ var boardSchema = new mongoose.Schema({
 		type: Number,
 		unique: true
 	},
+	isActive: {
+		type: Boolean,
+		default: false
+	},
 	owner: {
 		githubID: Number,
 		url: String,
