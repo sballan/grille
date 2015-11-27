@@ -73,6 +73,8 @@ router.get('/get/:repo', function(req, res, next) {
           issues.forEach(function(issue) {
             var parsed_issue = payloadParser.issue(issue);
             console.log('ISSUE - ', parsed_issue);
+            // You might get weird async issues if you do it this way.  For instance, if the returned array somehow has the same card twice.
+            // This is partially why we did a .find() once before we did a .findOneAndUpdate for the getAll function.
             promise_arr.push(Card.findOneAndUpdate({ githubID: parsed_issue.githubID}, parsed_issue, {upsert: true, new: true}));
           })
 
