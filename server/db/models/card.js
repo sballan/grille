@@ -1,19 +1,19 @@
 'use strict';
 var mongoose = require('mongoose');
 
-// var commentSchema = new mongoose.Schema({
-// 	body: String,
-// 	githubID: {
-// 		type: Number,
-// 		unique: true
-// 	},
-// 	author: {
-// 		type: mongoose.Schema.Types.ObjectId,
-// 		ref: 'User'
-// 	},
-// 	created_at: Date,
-// 	updated_at: Date
-// })
+var commentSchema = new mongoose.Schema({
+	body: String,
+	githubID: {
+		type: Number,
+		unique: true
+	},
+	author: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
+	created_at: Date,
+	updated_at: Date
+})
 
 
 var cardSchema = new mongoose.Schema({
@@ -24,7 +24,7 @@ var cardSchema = new mongoose.Schema({
 	issueNumber: Number,
 	title: String,
 	body: String,
-	//comments: [commentSchema],
+	comments: [commentSchema],
   board: {type: mongoose.Schema.Types.ObjectId, ref: 'Board'},
   lane: {type: mongoose.Schema.Types.ObjectId, ref: 'Lane'},
 

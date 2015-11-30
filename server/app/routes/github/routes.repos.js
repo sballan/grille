@@ -82,50 +82,86 @@ router.get('/get/:repo', function(req, res, next) {
 	//console.log("----req user", req.user)
 	var theRepo;
 	var theLane;
+	var theIssues;
 
 
 	function makeIssues(repo, currentPage, theIssues) {
 		//get repo issues
-		github.issues.repoIssues(
+		return github.issues.repoIssues(
 		{
 				user: repo.owner.username,
 				repo: theRepo.name,
 				per_page: 100,
+				page: currentPage,
 				state: "all"
 			},
 			function(err, issues) {
 				// if (err) console.error(err)
-
-				console.log('The Issues: ', issues)
 
 				var hasNextPage = github.hasNextPage(issues.meta.link)
 
 				issues = theIssues.concat(issues)
 
 				if(hasNextPage) {
-					return makeIssues(repo, currentPage + 1, issues)
+					return makeIssues(repo, currentPage + 1, issues);
 				}
 
-
-				var promise_arr = [];
-				issues.forEach(function(issue) {
+				Promise.map(issues, function(issue) {
 					var parsed_issue = payloadParser.issue(issue);
 					parsed_issue.lane = theLane._id
 					parsed_issue.board = theRepo._id
 
-					console.log('ISSUE - ', parsed_issue);
-					promise_arr.push(Card.findOneAndUpdate({
+					return Card.findOneAndUpdate({
 						githubID: parsed_issue.githubID
 					}, parsed_issue, {
 						upsert: true,
 						new: true
-					}));
+					})
 				})
+				.then(function(boardIssues) {
+					theIssues = boardIssues;
+					var getCommentsAsync = Promise.promisify(github.issues.getComments)
+					return Promise.map(boardIssues, function(issue) {
+						return getCommentsAsync({user: theRepo.owner.username, repo: theRepo.name, number: issue.issueNumber, per_page: 100})
+						.then(function(comments) {
+							console.log("----------------THIS IS", issue.issueNumber, comments)
+							comments.forEach(function(comment) {
+								comment = payloadParser.comment(comment)
+							})
+							return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
+							.populate('comments')
+						})
+					})
+				})
+				// var promise_arr = [];
+				// 	issues.forEach(function(issue) {
+				// 	var parsed_issue = payloadParser.issue(issue);
+				// 	parsed_issue.lane = theLane._id
+				// 	parsed_issue.board = theRepo._id
 
-				Promise.all(promise_arr)
-				.then(function(data) {
-					console.log("Updated Issues", data);
-					res.send(data);
+				// 	// console.log('ISSUE - ', parsed_issue);
+				// 	promise_arr.push(Card.findOneAndUpdate({
+				// 		githubID: parsed_issue.githubID
+				// 	}, parsed_issue, {
+				// 		upsert: true,
+				// 		new: true
+				// 	}));
+				// })
+
+
+				// Promise.all(promise_arr)
+				// .then(function(issues) {
+				// 	github.issues.getComments = Promise.promisify(github.issues.getComments)
+				// 	github.issues.getComments({user: theRepo.owner.username, repo: theRepo.name, number: 36})
+				// 	.then(function(stuff) {
+				// 		console.log('-------------WE GOT TO STUFF', stuff)
+				// 	})
+
+				// })
+				.then(function(boardIssues) {
+					console.log(boardIssues)
+					// console.log("Updated Issues", data);
+					res.send(boardIssues);
 				})
 				.then(null, function(err) {
 					console.log("ERROR - ", err);
