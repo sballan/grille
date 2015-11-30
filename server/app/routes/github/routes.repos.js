@@ -71,9 +71,6 @@ router.get('/get/all', function(req, res, next) {
 
 	})
 
-
-
-
 router.get('/get/:repo', function(req, res, next) {
 	var github = new GitHubApi({
 		debug: true,
