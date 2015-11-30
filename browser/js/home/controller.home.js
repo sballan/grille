@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket) {
+app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket) { //displayBoard
     // angular.element('body').scrollLeft(50000);
 
     //We should consider putting this in a Factory since its for updating data
@@ -18,6 +18,8 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket) {
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
 
+    //soon to be something like $scope.lanes =  displayBoard .... which has an updated repoCache
+    //$scope.lanes = displayBoard
     $scope.lanes= HomeFactory.loadLanes();
 
 

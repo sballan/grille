@@ -39,9 +39,9 @@ var boardSchema = new mongoose.Schema({
 	hooks_url: String
 });
 
-boardSchema.pre('init', function() {
+// boardSchema.pre('init', function() {
 
-})
+// })
 
 
 mongoose.model('Board', boardSchema);

@@ -1,7 +1,7 @@
 <h3>GrilleBoards</h3>
 <div>
 <ul>
-	<li ng-repeat="board in activeBoards()">
+	<li ui-sref="home(board)" ng-repeat="board in activeBoards()">
 		{{ board.name }}
 	</li>
 
@@ -10,7 +10,9 @@
 <h3>RawBoards</h3>
 <ul>
 	<h6>Choose One to put on your Grille</h6>
-	<li ng-repeat="board in inActiveBoards()">
+	<label>Search: <input ng-model="searchText"></label>
+
+	<li ng-repeat="board in inActiveBoards() | filter:searchText">
 		<!-- { board: board.githubID } -->
 		<!-- <a ui-sref="home()">{{ board.name }}</a> -->
 		<p ng-click="setActive(board.githubID)">{{ board.name }}</p>
