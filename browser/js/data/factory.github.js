@@ -21,12 +21,14 @@ app.factory('GitHubFactory', function($http) {
 			return $http.get('api/github/repos/get/' + repo)
 			.then(toData)
 			.then(function(repo){
+				var returnRepo;
 				repoCache.forEach(function(cachedRepo){
 					if (cachedRepo.githubID === repo.githubID){
 						cachedRepo = repo;
+						returnRepo = cachedRepo
 					}
 				})
-				return repoCache;
+				return returnRepo;
 			})
 		},
 		setRepoActive: function(boardID){
@@ -38,7 +40,7 @@ app.factory('GitHubFactory', function($http) {
 						cachedRepo.isActive = repo.isActive;
 					}
 				})
-				return repoCache;			
+				return repoCache;
 			})
 		}
 	}
