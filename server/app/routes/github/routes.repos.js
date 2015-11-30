@@ -7,6 +7,7 @@ var GitHubApi = require('github')
 
 var Board = require('mongoose').model('Board');
 var Card = require('mongoose').model('Card');
+var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
@@ -58,7 +59,6 @@ router.get('/get/all', function(req, res, next) {
 					})
 				})
 				.then(function(boards) {
-					console.log("Updated Boards", boards)
 					res.send(boards)
 				})
 			}
@@ -83,17 +83,6 @@ router.get('/get/:repo', function(req, res, next) {
 	var theRepo;
 	var theLane;
 
-	Board.findOne({
-			githubId: req.params.repo
-		})
-		.then(function(repo) {
-			theRepo = repo
-			return Lane.findOne({board: repo._id, title: 'Backlog'})
-		})
-		.then(function(lane){
-			theLane = lane;
-			makeIssues(repo, 1, [])
-		})
 
 	function makeIssues(repo, currentPage, theIssues) {
 		//get repo issues
@@ -143,6 +132,20 @@ router.get('/get/:repo', function(req, res, next) {
 			})
 	}
 
+	Board.findOne({
+			githubID: req.params.repo
+		})
+		.then(function(repo) {
+			console.log("The REPO we care about", repo)
+			theRepo = repo
+			return Lane.findOne({board: repo, title: 'Backlog'})
+		})
+		.then(function(lane){
+			console.log("The LANE we care about:", lane)
+			theLane = lane;
+			makeIssues(repo, 1, [])
+		})
+
 });
 
 
@@ -160,7 +163,7 @@ router.put('/put/:boardID/active', function(req, res, next) {
 
 	Board.findOneAndUpdate({ githubID: req.params.boardID}, { isActive: true}, {new : true})
 	.then(function(board){
-		console.log("board updated:", board)
+		//  console.info("board updated:", board)
 		res.send(board)
 	})
 
