@@ -148,16 +148,11 @@ router.put('/put/:boardID/active', function(req, res, next) {
 		token: req.user.accessToken
 	});
 
-	Board.findOneAndUpdate({
-			githubID: req.params.boardID
-		}, {
-			isActive: true
-		}, {
-			new: true
-		})
-		.then(function(board) {
-			console.log("board updated:", board)
-			res.send(board)
-		})
+
+	Board.findOneAndUpdate({ githubID: req.params.boardID}, { isActive: true}, {new : true})
+	.then(function(board){
+		console.log("board updated:", board)
+		res.send(board)
+	})
 
 })
