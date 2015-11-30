@@ -124,40 +124,14 @@ router.get('/get/:repo', function(req, res, next) {
 					return Promise.map(boardIssues, function(issue) {
 						return getCommentsAsync({user: theRepo.owner.username, repo: theRepo.name, number: issue.issueNumber, per_page: 100})
 						.then(function(comments) {
-							console.log("----------------THIS IS", issue.issueNumber, comments)
 							comments.forEach(function(comment) {
 								comment = payloadParser.comment(comment)
 							})
 							return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
-							.populate('comments')
+							.populate('comments lane')
 						})
 					})
 				})
-				// var promise_arr = [];
-				// 	issues.forEach(function(issue) {
-				// 	var parsed_issue = payloadParser.issue(issue);
-				// 	parsed_issue.lane = theLane._id
-				// 	parsed_issue.board = theRepo._id
-
-				// 	// console.log('ISSUE - ', parsed_issue);
-				// 	promise_arr.push(Card.findOneAndUpdate({
-				// 		githubID: parsed_issue.githubID
-				// 	}, parsed_issue, {
-				// 		upsert: true,
-				// 		new: true
-				// 	}));
-				// })
-
-
-				// Promise.all(promise_arr)
-				// .then(function(issues) {
-				// 	github.issues.getComments = Promise.promisify(github.issues.getComments)
-				// 	github.issues.getComments({user: theRepo.owner.username, repo: theRepo.name, number: 36})
-				// 	.then(function(stuff) {
-				// 		console.log('-------------WE GOT TO STUFF', stuff)
-				// 	})
-
-				// })
 				.then(function(boardIssues) {
 					console.log(boardIssues)
 					// console.log("Updated Issues", data);
