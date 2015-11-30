@@ -58,5 +58,22 @@ navbar {
       cursor: pointer;
     }
   }
+  #navAdd{
+    height:50%;
+    background-color: gray;
+    padding:0px auto;
+  }
+  .navButton{
+    height:50%;
+    width: 100px;
+    background-color: green;
+  }
+  .appName{
+    display: inline-block;
+    text-align: center;
+    padding-left: 20%;
+    font-weight: bold;
+    font-size: 2em;
+  }
 
 }

@@ -1,11 +1,5 @@
 app.factory('HomeFactory', function(){
-	return {
-		loadLanes: function(){
-			/*
-			call to $http to check DB if the lanes have already been created. load that data
-			If not, then do what is below..
-			*/
-			return [
+	var fillLanes = [
 				{
 					title:"Backlog",
 				    content:"content..",
@@ -24,6 +18,13 @@ app.factory('HomeFactory', function(){
 				    label:"label for it",
 				    ownCards:["card13","card14","card15","card16"]}
     		]
+	return {
+		loadLanes: function(){
+			/*
+			call to $http to check DB if the lanes have already been created. load that data
+			If not, then do what is below..
+			*/
+			return fillLanes
 		}
 	}
 })
