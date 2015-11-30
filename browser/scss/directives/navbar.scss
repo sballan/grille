@@ -36,6 +36,11 @@ navbar {
       background: none;
     }
   }
+   .dropper{
+    float: right;
+    padding-right: 10%;
+    padding-left: 5%;
+  }
 
   .login-button {
     float: right;
@@ -60,8 +65,10 @@ navbar {
   }
   #navAdd{
     height:50%;
-    background-color: gray;
+    background-color: white;
     padding:0px auto;
+    color: black;
+    border-color: black;
   }
   .navButton{
     height:50%;
@@ -72,9 +79,9 @@ navbar {
     font-family: 'Share Tech Mono';
     display: inline-block;
     text-align: center;
-    padding-left: 20%;
+    padding-left: 25%;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 3em;
   }
 
 }

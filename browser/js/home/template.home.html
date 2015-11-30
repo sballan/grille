@@ -7,12 +7,15 @@
 
         <div class="laneConfig"ng-repeat="lane in lanes">
 
-          <h7 class="laneHeading"> {{ lane.title }} </h7>
+          <h3 class="laneHeading"> {{ lane.title }} </h3>
           <ul ui-sortable="sortableOptions" ng-model="lane.ownCards" class="list">
             <div ng-repeat="card in lane.ownCards" class="item">
-              <li > Priority/Tags/Other </li>
-              <li>{{card}}</li>
-              <li > Icons </li>
+              <textarea ng-model="card" class="cardText"></textarea>
+              <div>
+              <button><i class="fa fa-github" ng-click="githubLink()"></i></button>
+
+              <button><i class="fa fa-comment"></i></button>
+              </div>
             </div>
           </ul>
 
