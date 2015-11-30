@@ -10,10 +10,8 @@ var Card = require('mongoose').model('Card');
 
 module.exports = router;
 
-
 // TODO Save owners and collaborators
 router.get('/get/all', function(req, res, next) {
-
 
 	var github = new GitHubApi({
 		debug: true,
@@ -81,55 +79,69 @@ router.get('/get/:repo', function(req, res, next) {
 		type: "oauth",
 		token: req.user.accessToken
 	});
-	console.log("----req user", req.user)
+	//console.log("----req user", req.user)
+	var theRepo;
+	var theLane;
 
-	//TODO - get and update repo info
-
-	// FIXME The problem here is that it doesn't account for cases where two different users have repos that have the same name
 	Board.findOne({
-			name: req.params.repo
+			githubId: req.params.repo
 		})
 		.then(function(repo) {
-			//get repo issues
-			github.issues.repoIssues({
-					user: repo.owner.username,
-					repo: req.params.repo,
-					per_page: 100,
-					state: "all"
-				},
-				function(err, issues) {
-					if (err) {
-						console.error(err)
-					}
+			theRepo = repo
+			return Lane.findOne({board: repo._id, title: 'Backlog'})
+		})
+		.then(function(lane){
+			theLane = lane;
+			makeIssues(repo, 1, [])
+		})
 
-					//console.log('ISSUE DATA - ', issues);
-					//save all issues
+	function makeIssues(repo, currentPage, theIssues) {
+		//get repo issues
+		return github.issues.repoIssues({
+				user: repo.owner.username,
+				repo: req.params.repo,
+				per_page: 100,
+				state: "all"
+			},
+			function(err, issues) {
+				if (err) console.error(err)
 
-					var promise_arr = [];
-					issues.forEach(function(issue) {
-						var parsed_issue = payloadParser.issue(issue);
-						// You might get weird async issues if you do it this way.  For instance, if the returned array somehow has the same card twice.
-						// This is partially why we did a .find() once before we did a .findOneAndUpdate for the getAll function.
-						console.log('ISSUE - ', parsed_issue);
-						promise_arr.push(Card.findOneAndUpdate({
-							githubID: parsed_issue.githubID
-						}, parsed_issue, {
-							upsert: true,
-							new: true
-						}));
-					})
+				var hasNextPage = github.hasNextPage(issues.meta.link)
 
-					return Promise.all(promise_arr);
+				issues = theIssues.concat(issues)
+
+				if(hasNextPage) {
+					return makeIssues(repo, currentPage + 1, issues)
+				}
+
+
+				var promise_arr = [];
+				issues.forEach(function(issue) {
+					var parsed_issue = payloadParser.issue(issue);
+					parsed_issue.lane = theLane._id
+					parsed_issue.board = theRepo._id
+
+					console.log('ISSUE - ', parsed_issue);
+					promise_arr.push(Card.findOneAndUpdate({
+						githubID: parsed_issue.githubID
+					}, parsed_issue, {
+						upsert: true,
+						new: true
+					}));
 				})
-		})
-		.then(function(data) {
-			console.log("Updated Issues", data);
-			res.send(data);
-		})
-		.then(null, function(err) {
-			console.log("ERROR - ", err);
-			res.send(err);
-		});
+
+				Promise.all(promise_arr)
+				.then(function(data) {
+					console.log("Updated Issues", data);
+					res.send(data);
+				})
+				.then(null, function(err) {
+					console.log("ERROR - ", err);
+					res.send(err);
+				});
+
+			})
+	}
 
 });
 
