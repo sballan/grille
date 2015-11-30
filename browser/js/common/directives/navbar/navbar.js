@@ -8,10 +8,10 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
 
             scope.items = [
                 { label: 'Home', state: 'home' },
-                { label: 'Members Only', state: 'membersOnly', auth: true },
-                { label: 'Visualizations', state:'visual'}
+                { label: 'Admin', state: 'membersOnly', auth: true },
+                { label: 'Charts', state:'visual'}
             ];
-
+            scope.isOpen = false;
             scope.user = null;
 
             scope.isLoggedIn = function () {
@@ -43,8 +43,55 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
             // scope.lanes = HomeFactory.loadLanes();
 
 
+    scope.hovered = false;
+    scope.sortableOptions = {
+        connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
+    };
+
+    scope.lanes= HomeFactory.loadLanes();
+
+
+
+    scope.animationsEnabled = true;
+
+    scope.addLane = function () {
+      var modalInstance = $uibModal.open({
+        animation: scope.animationsEnabled,
+        templateUrl: 'js/home/template.laneModal.html',
+        controller: 'HomeModalCtrl'
+        // size: size
+      });
+
+      modalInstance.result.then(function (newLane) {
+          var spot=newLane.position;
+          newLane.ownCards = [];
+          scope.lanes.splice(spot, 0, newLane);
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+  };
+
+    scope.addCard=function(){
+        console.log("ADDING CARD")
+      var modalInstance = $uibModal.open({
+        animation: scope.animationsEnabled,
+        templateUrl: 'js/home/template.cardModal.html',
+        controller: 'HomeModalCtrl'
+      });
+
+      modalInstance.result.then(function (newCard) {
+
+          scope.lanes[0].ownCards.push(newCard.title)
+          console.log("scopelanes", scope.lanes[0])
+          // scope.$digest()
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+
+    }
         }
 
     };
+
 
 });
