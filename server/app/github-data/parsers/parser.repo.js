@@ -16,10 +16,10 @@ function parse(body) {
 	}
 
 	repo.url = body.url || null
+	repo.collaborators_url = body.collaborators_url || null
 	// repo.html_url = body.html_url || null
 	// repo.forks_url = body.forks_url || null
 	// repo.keys_url = body.keys_url || null
-	// repo.collaborators_url = body.collaborators_url || null
 	// repo.teams_url = body.teams_url || null
 	// repo.hooks_url = body.hooks_url || null
 	// repo.issue_events_url = body.issue_events_url || null

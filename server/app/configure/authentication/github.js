@@ -46,9 +46,6 @@ module.exports = function (app) {
 
     passport.use(new GithubStrategy(githubCredentials, verifyCallback));
 
-    // app.post('/loginGitHub', function(req, res, next) {
-
-    // })
 
     app.get('/auth/github', passport.authenticate('github', {scope: ['user', 'repo', 'public_repo']}));
 
@@ -60,7 +57,7 @@ module.exports = function (app) {
 
 
 
-            res.redirect('/test');
+            res.redirect('/userSettings');
         });
 
 };
