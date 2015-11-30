@@ -4,7 +4,7 @@ var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
 
 var GitHubApi = require('github')
-Promise.promisifyAll(GitHubApi)
+
 var Board = require('mongoose').model('Board');
 var Card = require('mongoose').model('Card');
 
@@ -20,9 +20,6 @@ router.get('/get/all', function(req, res, next) {
 		version: "3.0.0"
 	} );
 
-	Promise.promisifyAll(github)
-	Promise.promisifyAll(github.repos.getAll)
-
 	github.authenticate({
 		type: "oauth",
 		token: req.user.accessToken
@@ -35,7 +32,7 @@ router.get('/get/all', function(req, res, next) {
 		if (err) console.error(err)
 			var hasNextPage = github.hasNextPage(data.meta.link)
 
-		data = data.concat(theData)
+		data = theData.concat(data)
 
 			if(hasNextPage) {
 				return getPages(currentPage + 1, data)
@@ -46,43 +43,31 @@ router.get('/get/all', function(req, res, next) {
 			})
 
 			if(!hasNextPage) {
-				console.log(data.length)
+				Promise.map(data, function(board) {
+					return Board.findOne({
+						githubID: board.githubID
+					})
+				})
+				.then(function(boards) {
+					return Promise.map(boards, function(board, index) {
+						if (!board) board = { githubID: null }
+						return Board.findOneAndUpdate({
+							githubID: board.githubID
+						}, data[index], {
+							upsert: true,
+							new: true
+						})
+					})
+				})
+				.then(function(boards) {
+					console.log("Updated Boards", boards)
+					res.send(boards)
+				})
 			}
 		})
 	}
+	// The function calls itself recursively to get data from each of the pages received from github
 	getPages(1, [])
-
-	// .then(function(stuff) {
-	// 	console.log("Here is the stuff, async?", stuff)
-	// })
-
-	// data = data.map(function(repo) {
-	// 	return payloadParser.repo(repo)
-	// })
-
-	// Promise.map(data, function(board) {
-	// 		//console.log("Finding the Board, it is: ", board)
-	// 		return Board.findOne({
-	// 			githubID: board.githubID
-	// 		})
-	// 	})
-	// 	.then(function(boards) {
-	// 		// console.log("Promise Boards")
-	// 		// console.log("Found the Boards, they are: ", boards)
-	// 		return Promise.map(boards, function(board, index) {
-	// 			if (!board) board = { githubID: null }
-	// 			return Board.findOneAndUpdate({
-	// 				githubID: board.githubID
-	// 			}, data[index], {
-	// 				upsert: true,
-	// 				new: true
-	// 			})
-	// 		})
-	// 	})
-	// 	.then(function(boards) {
-	// 		// console.log("Updated Boards", boards)
-	// 		res.send(boards)
-	// 	})
 
 	})
 
