@@ -86,14 +86,17 @@ router.get('/get/:repo', function(req, res, next) {
 
 	function makeIssues(repo, currentPage, theIssues) {
 		//get repo issues
-		return github.issues.repoIssues({
+		github.issues.repoIssues(
+		{
 				user: repo.owner.username,
-				repo: req.params.repo,
+				repo: theRepo.name,
 				per_page: 100,
 				state: "all"
 			},
 			function(err, issues) {
-				if (err) console.error(err)
+				// if (err) console.error(err)
+
+				console.log('The Issues: ', issues)
 
 				var hasNextPage = github.hasNextPage(issues.meta.link)
 
@@ -136,14 +139,12 @@ router.get('/get/:repo', function(req, res, next) {
 			githubID: req.params.repo
 		})
 		.then(function(repo) {
-			console.log("The REPO we care about", repo)
 			theRepo = repo
 			return Lane.findOne({board: repo, title: 'Backlog'})
 		})
 		.then(function(lane){
-			console.log("The LANE we care about:", lane)
 			theLane = lane;
-			makeIssues(repo, 1, [])
+			makeIssues(theRepo, 1, [])
 		})
 
 });
