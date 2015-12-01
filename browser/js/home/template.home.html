@@ -5,14 +5,12 @@
 
       <div class="lateral">
 
-        <div class="laneConfig"ng-repeat="lane in lanes">
+        <div class="laneConfig"ng-repeat="theLane in lanes">
 
-          <h7 class="laneHeading"> {{ lane.title }} </h7>
-          <ul ui-sortable="sortableOptions" ng-model="lane.ownCards" class="list">
-            <div ng-repeat="card in cards | filter: card.lane._id === lane._id" class="item">
-              <li > {{card.title}} </li>
-              <li>{{card.body}}</li>
-              <li > Icons </li>
+          <h7 class="laneHeading"> {{ theLane.title }} </h7>
+          <ul ui-sortable="sortableOptions" ng-model="theLane.ownCards" class="list">
+            <div ng-repeat="card in cards | filter: {lane: {_id: theLane._id}}" class="item">
+              <li > {{card.title.substring(0, 20)}} </li>
             </div>
           </ul>
 
