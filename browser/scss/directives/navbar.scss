@@ -39,8 +39,8 @@ navbar {
   }
    .dropper{
 
-    padding-right: 10%;
-    padding-left: 20%;
+    float:right;
+    margin-top:10px;
     display:inline-block;
   }
 
@@ -68,7 +68,6 @@ navbar {
   #navAdd{
     height:50%;
     background-color: white;
-    padding:0px auto;
     color: black;
     border-color: black;
   }
@@ -80,12 +79,20 @@ navbar {
   .appName{
     font-family: 'Share Tech Mono';
     display: inline-block;
-    text-align: center;
-    padding-left: 25%;
+    float:right;
+    padding-left: 0%;
+    margin-bottom: 0px;
     font-weight: bold;
     font-size: 3em;
+    background-color:none;
   }
   .navbar-static-top{
   margin-bottom:0px;
+  }
+  .noMarg{
+    margin: 0 auto;
+  }
+  .navbar-header{
+    width:700px;
   }
 }

@@ -37,8 +37,8 @@ hr {
 	list-style: none outside none;
 	margin: 10px;
 	padding: 10px;
-    max-height:calc(100vh - 60px);
-    min-height: calc(100vh - 60px);
+    height:calc(100vh - 60px);
+    overflow: scroll;
 }
 
 .item {
@@ -46,7 +46,7 @@ hr {
 	margin: 5px 0;
 	border: 2px solid #444;
 	border-radius: 5px;
-	background-color: #009999;
+	background-color: white;
 	font-size: 1.1em;
 	font-weight: bold;
 	text-align: center;
@@ -85,6 +85,7 @@ hr {
 textarea{
     resize:none;
     width: 100%;
+    border-style: none;
 }
 .cardNumber{
 }
