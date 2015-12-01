@@ -9,9 +9,9 @@
 
           <h7 class="laneHeading"> {{ lane.title }} </h7>
           <ul ui-sortable="sortableOptions" ng-model="lane.ownCards" class="list">
-            <div ng-repeat="card in lane.ownCards" class="item">
-              <li > Priority/Tags/Other </li>
-              <li>{{card}}</li>
+            <div ng-repeat="card in cards | filter: card.lane.githubID === lane.githubID" class="item">
+              <li > {{card.title}} </li>
+              <li>{{card.body}}</li>
               <li > Icons </li>
             </div>
           </ul>

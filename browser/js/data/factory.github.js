@@ -2,6 +2,7 @@ app.factory('GitHubFactory', function($http) {
 	var repoCache = [];
 
 	function toData(res) {
+		console.log("THE RES", res)
 		return res.data
 	}
 
@@ -20,15 +21,20 @@ app.factory('GitHubFactory', function($http) {
 		getRepo: function(repo) {
 			return $http.get('api/github/repos/get/' + repo)
 			.then(toData)
-			.then(function(repo){
-				var returnRepo;
+			.then(function(data){
+				console.log("FIRST DATA", data)
+				var repo = data.board
+
 				repoCache.forEach(function(cachedRepo){
 					if (cachedRepo.githubID === repo.githubID){
 						cachedRepo = repo;
-						returnRepo = cachedRepo
+						repo = cachedRepo
+						repo.lanes = data.lanes
+						repo.cards = data.cards
 					}
 				})
-				return returnRepo;
+				console.log("return repo", repo)
+				return repo;
 			})
 		},
 		setRepoActive: function(boardID){

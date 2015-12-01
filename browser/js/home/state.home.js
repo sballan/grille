@@ -10,7 +10,10 @@ app.config(function ($stateProvider) {
                 //return GitHubFactory.getRepo($stateParams)
                     //repoCache is the result...
                     //map/parse results of .getRepo so it matches to $scope.lanes appropriately, and/or re-do $scope.lanes
-        	}
+        	},
+            testGrille: function(GitHubFactory){
+                return GitHubFactory.getRepo(46445588)
+            }
         }
     });
 });
