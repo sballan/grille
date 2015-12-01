@@ -11,7 +11,6 @@ var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
-// TODO Save owners and collaborators
 router.get('/get/all', function(req, res, next) {
 
 	var github = new GitHubApi({
@@ -24,13 +23,17 @@ router.get('/get/all', function(req, res, next) {
 		token: req.user.accessToken
 	});
 
-
+	// This function is called recursively; theData is an array made up of all the repos from all the pages; it grows each time the function recurses (using tail recursion).
 	function getPages(currentPage, theData) {
+		var getAllAsync = Promise.promisify(github.repos.getAll)
 
-		return github.repos.getAll({ per_page: 100, page: currentPage, sort: 'updated'	}, function(err, data) {
-		if (err) console.error(err)
-			var hasNextPage = github.hasNextPage(data.meta.link)
+		// returns all 100 repos from the currentPage
+		return getAllAsync({ per_page: 100, page: currentPage, sort: 'updated'	})
+		.then(function(data) {
 
+		var hasNextPage = github.hasNextPage(data.meta.link)
+
+		// Here the list of repos is concatenated with the list from the previous recursion
 		data = theData.concat(data)
 
 			if(hasNextPage) {
@@ -42,12 +45,14 @@ router.get('/get/all', function(req, res, next) {
 			})
 
 			if(!hasNextPage) {
+				// This puts all the boards from our database that correspond to the github repos in an array
 				Promise.map(data, function(board) {
 					return Board.findOne({
 						githubID: board.githubID
 					})
 				})
 				.then(function(boards) {
+					// returns an array of the boards after they have been updated with the data from the github repos. Any new repos will be inserted to the database and returned as new boards.
 					return Promise.map(boards, function(board, index) {
 						if (!board) board = { githubID: null }
 						return Board.findOneAndUpdate({
@@ -82,6 +87,7 @@ router.get('/get/:repo', function(req, res, next) {
 	//console.log("----req user", req.user)
 	var theRepo;
 	var theLane;
+	var theLanes;
 	var theIssues;
 
 
@@ -119,6 +125,7 @@ router.get('/get/:repo', function(req, res, next) {
 					})
 				})
 				.then(function(boardIssues) {
+					//console.log("Board issues:", boardIssues)
 					theIssues = boardIssues;
 					var getCommentsAsync = Promise.promisify(github.issues.getComments)
 					return Promise.map(boardIssues, function(issue) {
@@ -126,20 +133,26 @@ router.get('/get/:repo', function(req, res, next) {
 						.then(function(comments) {
 							comments.forEach(function(comment) {
 								comment = payloadParser.comment(comment)
+								if(!comment.githubID) comment = undefined
 							})
+							//console.log("All the comments", comments)
 							return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
 							.populate('comments lane')
 						})
 					})
 				})
-				.then(function(boardIssues) {
-					console.log(boardIssues)
-					// console.log("Updated Issues", data);
-					res.send(boardIssues);
+				.then(function(cards) {
+					var sendData = {
+						board: theRepo,
+						cards: cards,
+						lanes: theLanes
+					}
+					console.log("FINISHED", sendData);
+					res.send(sendData);
 				})
 				.then(null, function(err) {
 					console.log("ERROR - ", err);
-					res.send(err);
+					res.status(404).send(err);
 				});
 
 			})
@@ -150,7 +163,11 @@ router.get('/get/:repo', function(req, res, next) {
 		})
 		.then(function(repo) {
 			theRepo = repo
-			return Lane.findOne({board: repo, title: 'Backlog'})
+			return Lane.find({board: repo})
+		})
+		.then(function(lanes) {
+			theLanes = lanes
+			return Lane.findOne({board: theRepo, title: 'Backlog'})
 		})
 		.then(function(lane){
 			theLane = lane;
