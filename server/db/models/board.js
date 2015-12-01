@@ -2,15 +2,15 @@
 var mongoose = require('mongoose');
 
 var laneSchema = new mongoose.Schema({
-	name: String,
-	color: String,
-	cards: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Card'
-	}]
-})
+	title: {type: String, required: true},
+	active: Boolean,
+	board: {type: mongoose.Schema.Types.ObjectId, ref: 'Board'}
+});
 
 mongoose.model('Lane', laneSchema);
+
+
+var Lane = mongoose.model('Lane')
 
 var boardSchema = new mongoose.Schema({
 	name: String,  //The name of the repo
@@ -31,7 +31,6 @@ var boardSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}],
-	lanes: [laneSchema],
 	html_url: String,
 	url: String, //---- API ----
 	collaborators_url: String,
@@ -39,9 +38,13 @@ var boardSchema = new mongoose.Schema({
 	hooks_url: String
 });
 
-// boardSchema.pre('init', function() {
-
-// })
+boardSchema.post('init', function() {
+	var lanes = ['Backlog', 'Ready', 'Active', 'Done'];
+	var self = this;
+	lanes.forEach(function(laneTitle) {
+		Lane.create({title: laneTitle, active: true, board: self._id});
+	})
+})
 
 
 mongoose.model('Board', boardSchema);
