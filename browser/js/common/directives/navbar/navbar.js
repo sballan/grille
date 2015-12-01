@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, HomeFactory) {
+app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, GitHubFactory) {
 
     return {
         restrict: 'E',
@@ -47,8 +47,14 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
     scope.sortableOptions = {
         connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
+    scope.lanes;
+    scope.cards;
 
-    scope.lanes= HomeFactory.loadLanes();
+    GitHubFactory.getRepo(46445588)
+    .then(function(data) {
+      scope.lanes = data.lanes
+      scope.cards = data.cards
+    })
 
 
 

@@ -132,7 +132,7 @@ router.get('/get/:repo', function(req, res, next) {
 						return getCommentsAsync({user: theRepo.owner.username, repo: theRepo.name, number: issue.issueNumber, per_page: 100})
 						.then(function(comments) {
 							comments.forEach(function(comment) {
-								comment = payloadParser.comment(comment) || undefined
+								comment = payloadParser.comment(comment)
 								if(!comment.githubID) comment = undefined
 							})
 							//console.log("All the comments", comments)
