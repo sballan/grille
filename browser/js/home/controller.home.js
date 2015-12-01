@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket) { //displayBoard
+app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket, testGrille) { //displayBoard
     // angular.element('body').scrollLeft(50000);
 
     //We should consider putting this in a Factory since its for updating data
@@ -20,7 +20,9 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket) { //d
 
     //soon to be something like $scope.lanes =  displayBoard .... which has an updated repoCache
     //$scope.lanes = displayBoard
-    $scope.lanes= HomeFactory.loadLanes();
+    console.log("Test Grille", testGrille)
+    $scope.cards = testGrille.cards;
+    $scope.lanes= testGrille.lanes;
 
 
 

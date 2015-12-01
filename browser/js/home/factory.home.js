@@ -19,12 +19,16 @@ app.factory('HomeFactory', function(){
 				    ownCards:["card13","card14","card15","card16"]}
     		]
 	return {
-		loadLanes: function(){
+		loadCards: function(){
 			/*
 			call to $http to check DB if the lanes have already been created. load that data
 			If not, then do what is below..
 			*/
-			return fillLanes
+
+			return 3
+		},
+		loadLanes: function() {
+			return 3
 		}
 	}
 })
