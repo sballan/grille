@@ -1,7 +1,5 @@
-app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket, testGrille) { //displayBoard
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, Socket, testGrille) { //displayBoard
     // angular.element('body').scrollLeft(50000);
-
-    //We should consider putting this in a Factory since its for updating data
 
     // var socket = io();
     // Socket.on('update', function(data){
@@ -18,12 +16,13 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket, testG
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
 
-    //soon to be something like $scope.lanes =  displayBoard .... which has an updated repoCache
-    //$scope.lanes = displayBoard
     console.log("Test Grille", testGrille)
     $scope.cards = testGrille.cards;
     $scope.lanes= testGrille.lanes;
-
+    $rootScope.currentBoard = {
+      cards: $scope.cards,
+      lanes: $scope.lanes
+    }
 
 
     $scope.animationsEnabled = true;

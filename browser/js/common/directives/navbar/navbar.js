@@ -50,11 +50,11 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
     scope.lanes;
     scope.cards;
 
-    GitHubFactory.getRepo(46445588)
-    .then(function(data) {
-      scope.lanes = data.lanes
-      scope.cards = data.cards
-    })
+    // GitHubFactory.getRepo(46445588)
+    // .then(function(data) {
+    //   scope.lanes = data.lanes
+    //   scope.cards = data.cards
+    // })
 
 
 
