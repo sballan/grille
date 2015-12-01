@@ -4,6 +4,7 @@
 
 body {
   background: #D3D3D3;
+  height:calc(100vh - 60px);
 }
 
 @mixin clearfix {
