@@ -38,11 +38,17 @@ var boardSchema = new mongoose.Schema({
 	hooks_url: String
 });
 
-boardSchema.post('init', function() {
-	var lanes = ['Backlog', 'Ready', 'Active', 'Done'];
-	var self = this;
-	lanes.forEach(function(laneTitle) {
-		Lane.create({title: laneTitle, active: true, board: self._id});
+boardSchema.post('init', function(doc) {
+	Lane.find({board: doc._id})
+	.then(function(theLanes) {
+
+		if(!theLanes.length) {
+			var lanes = ['Backlog', 'Ready', 'Active', 'Done'];
+			lanes.forEach(function(laneTitle) {
+				Lane.create({title: laneTitle, active: true, board: doc._id});
+			})
+		}
+
 	})
 })
 
