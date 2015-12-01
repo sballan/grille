@@ -10,7 +10,7 @@
           <h3 class="laneHeading"> {{ lane.title }} </h3>
           <ul ui-sortable="sortableOptions" ng-model="lane.ownCards" class="list">
             <div ng-repeat="card in lane.ownCards" class="item">
-              <!-- <span class="cardNumber">Card.Number</span> -->
+              <div class="cardNumber"><p>Card.Number</p></div>
               <textarea rows="1" ng-model="card" class="cardText"></textarea>
               <div>
               <button><i class="fa fa-github" ng-click="githubLink()"></i></button>
