@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, Socket, setGrille) { //displayBoard
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, Socket, loadGrille) {
     // angular.element('body').scrollLeft(50000);
 
     // var socket = io();
@@ -18,20 +18,12 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, S
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
     //1
-    $scope.cards = setGrille.cards;
-    $scope.lanes= setGrille.lanes;
+    $scope.cards = loadGrille.cards;
+    $scope.lanes= loadGrille.lanes;
     $rootScope.currentBoard = {
       cards: $scope.cards,
       lanes: $scope.lanes
     }
-    //or 2
-    // $rootScope.currentBoard = {
-    //   cards: testGrille.cards,
-    //   lanes: testGrille.lanes
-    // }
-    // $scope.cards = $rootScope.currentBoard.cards;
-    // $scope.lanes = $rootScope.currentBoard.lanes;
-
 
     $scope.animationsEnabled = true;
 

@@ -1,4 +1,4 @@
-app.factory('GitHubFactory', function($http) {
+app.factory('GitHubFactory', function($http, BoardFactory, $rootScope) {
 	var repoCache = [];
 
 	function toData(res) {
@@ -28,12 +28,21 @@ app.factory('GitHubFactory', function($http) {
 					if (cachedRepo.githubID === repo.githubID){
 						cachedRepo = repo;
 						repo = cachedRepo
+
 						repo.lanes = data.lanes
 						repo.cards = data.cards
+
 					}
 				})
 				console.log("return repo", repo)
 				return repo;
+			})
+		},
+		getRepoAndMakeCurrent: function(repo) {
+			return this.getRepo(repo)
+			.then(function(board) {
+				BoardFactory.setCurrent(board)
+				return board
 			})
 		},
 		setRepoActive: function(boardID){
