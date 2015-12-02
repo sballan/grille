@@ -4,7 +4,7 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/home/template.home.html',
         controller: 'HomeCtrl',
         resolve: {
-            testGrille: function(GitHubFactory, $stateParams){
+            setGrille: function(GitHubFactory, $stateParams){
                 return GitHubFactory.getRepo($stateParams.githubID)
             }
         }

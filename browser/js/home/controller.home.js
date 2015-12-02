@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, Socket, testGrille) { //displayBoard
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, Socket, setGrille) { //displayBoard
     // angular.element('body').scrollLeft(50000);
 
     // var socket = io();
@@ -17,14 +17,20 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, S
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
-
-    console.log("Test Grille", testGrille)
-    $scope.cards = testGrille.cards;
-    $scope.lanes= testGrille.lanes;
+    //1
+    $scope.cards = setGrille.cards;
+    $scope.lanes= setGrille.lanes;
     $rootScope.currentBoard = {
       cards: $scope.cards,
       lanes: $scope.lanes
     }
+    //or 2
+    // $rootScope.currentBoard = {
+    //   cards: testGrille.cards,
+    //   lanes: testGrille.lanes
+    // }
+    // $scope.cards = $rootScope.currentBoard.cards;
+    // $scope.lanes = $rootScope.currentBoard.lanes;
 
 
     $scope.animationsEnabled = true;
@@ -45,24 +51,5 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, S
         console.log('Modal dismissed at: ' + new Date());
       });
   };
-
-    $scope.addCard=function(){
-        console.log("ADDING CARD")
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'js/home/template.cardModal.html',
-        controller: 'HomeModalCtrl'
-      });
-
-      modalInstance.result.then(function (newCard) {
-
-          $scope.lanes[0].ownCards.push(newCard.title)
-          console.log("scopelanes", $scope.lanes[0])
-          // scope.$digest()
-      }, function () {
-        console.log('Modal dismissed at: ' + new Date());
-      });
-
-    }
 
 });

@@ -82,7 +82,6 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
   };
 
     scope.addCard=function(){
-        console.log("ADDING CARD")
       var modalInstance = $uibModal.open({
         animation: scope.animationsEnabled,
         templateUrl: 'js/home/template.cardModal.html',
@@ -90,10 +89,14 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
       });
 
       modalInstance.result.then(function (newCard) {
+          newCard.lane = {};
+          newCard.lane._id = $rootScope.currentBoard.lanes[0]._id
+          $rootScope.currentBoard.cards.push(newCard)
+          console.log("currentBoardCARDS:", $rootScope.currentBoard.cards)
+          // scope.lanes[0].ownCards.push(newCard.title)
+          // console.log("rootscopelanes", $rootScope.currentBoards.cards[length-1])
+          
 
-          scope.lanes[0].ownCards.push(newCard.title)
-          console.log("scopelanes", scope.lanes[0])
-          // scope.$digest()
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });

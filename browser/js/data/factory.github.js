@@ -2,7 +2,6 @@ app.factory('GitHubFactory', function($http) {
 	var repoCache = [];
 
 	function toData(res) {
-		console.log("THE RES", res)
 		return res.data
 	}
 
