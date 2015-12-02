@@ -14,10 +14,10 @@ module.exports = router;
 var github;
 var getAllAsync;
 var response;
+var data;
 
 router.get('/', function(req, res, next) {
-	var response = res;
-	console.log("GET ALL HIT")
+	response = res;
 	github = new GitHubApi({
 		debug: true,
 		version: "3.0.0"
@@ -36,8 +36,6 @@ router.get('/', function(req, res, next) {
 })
 
 function getPages(currentPage, theData) {
-	var data
-
 	// returns all 100 repos from the currentPage
 	return getAllAsync({ per_page: 100, page: currentPage, sort: 'updated' })
 		.then(function(d) {
@@ -53,7 +51,6 @@ function getPages(currentPage, theData) {
 				return payloadParser.repo(repo)
 			})
 
-
 		// This puts all the boards from our database that correspond to the github repos in an array
 			return Promise.map(data, function(board) {
 				return Board.findOne({
@@ -61,19 +58,20 @@ function getPages(currentPage, theData) {
 				})
 			})
 		})
-		.then(function(boards) {
-			// returns an array of the boards after they have been updated with the data from the github repos. Any new repos will be inserted to the database and returned as new boards.
-			return Promise.map(boards, function(board, index) {
-				if (!board) board = { githubID: null }
-				return Board.findOneAndUpdate({
-					githubID: board.githubID
-				}, data[index], {
-					upsert: true,
-					new: true
-				})
-			})
-		})
+		.then(dataUpsert)
 		.then(function(boards) {
 			response.send(boards)
+		})
+}
+
+function dataUpsert(boards) {
+	return Promise.map(boards, function(board, index) {
+			if (!board) board = { githubID: null }
+			return Board.findOneAndUpdate({
+				githubID: board.githubID
+			}, data[index], {
+				upsert: true,
+				new: true
+			})
 		})
 }
