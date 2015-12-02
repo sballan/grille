@@ -35,6 +35,34 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, S
 
     $scope.animationsEnabled = true;
 
+    $scope.editCard = function (card) {
+      console.log("editting card:", card)
+          var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'js/home/template.editCardModal.html',
+            controller: function($scope){
+              $scope.theCard = card;
+            }
+          });
+
+          modalInstance.result.then(function (edittedCard) {
+            //SAVE editted card changes
+              // var spot=newLane.position;
+              // newLane.ownCards = [];
+              // $scope.lanes.splice(spot, 0, newLane);
+          }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+          });
+    };
+  $scope.ok = function (data) {
+    $uibModalInstance.close(data);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };    
+
+
     $scope.addLane = function () {
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
