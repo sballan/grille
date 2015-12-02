@@ -11,6 +11,11 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
                 { label: 'Admin', state: 'membersOnly', auth: true },
                 { label: 'Charts', state:'visual'}
             ];
+            if (AuthService.isAuthenticated){
+              console.log("ISAUTHED")
+              scope.items[0].state = 'home({ githubID: $rootScope.currentBoard.githubID })'
+              console.log($rootScope.currentBoard)
+            }
             scope.isOpen = false;
             scope.user = null;
 

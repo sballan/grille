@@ -5,6 +5,8 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, S
     // Socket.on('update', function(data){
       // console.log("WEBHOOK DATA RECEIVED. The data is:", data)
     // })
+
+  //if loggedin/authenticated, then state.go
   $scope.items = [
       { label: 'Home', state: 'home' },
       { label: 'Admin', state: 'membersOnly', auth: true },
