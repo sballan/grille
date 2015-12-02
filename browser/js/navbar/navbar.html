@@ -2,6 +2,7 @@
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
+            <span>Menu</span>
       <ul class="nav navbar-nav">
         <li ng-repeat="item in items">
           <a ui-sref="{{ item.state }}"> {{item.label}}</a>
@@ -10,12 +11,13 @@
       </ul>
       <p class="appName"class="noMarg">Grille</p>
     </div>
+     <div class="dropper"><button ng-click="addCard()" class="btn btn-primary">Add card</button> </div>
      <div class="dropper" uib-dropdown is-open="status.isopen">
         <button id="navAdd" type="button" class="btn btn-primary" uib-dropdown-toggle>
           + Add
         </button>
         <div class="uib-dropdown-menu navButton" role="add" aria-labelledby="single-button">
-          <div><button ng-click="addCard()" class="btn btn-primary">Add card</button> </div>
+         
           <div><button ng-click="addLane()" class="btn btn-primary">Add Lane</button></div>
           <div><button ng-click="addIssue()" class="btn btn-primary">Add party</button></div>
         </div>

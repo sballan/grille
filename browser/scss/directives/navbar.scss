@@ -4,6 +4,10 @@ navbar {
   background: white;
   border-bottom: 1px solid black;
   box-shadow: 1px 1px 14px -3px black;
+ 
+ .navbar{
+  min-height: 40px;
+ }
 
   .container {
     width: 91%;
@@ -13,7 +17,6 @@ navbar {
   }
 
   fullstack-logo {
-    margin-top: 5px;
     margin-right: 20px;
     width: 40px;
   }
@@ -40,21 +43,18 @@ navbar {
    .dropper{
 
     float:right;
-    margin-top:10px;
     display:inline-block;
   }
 
   .login-button {
-    
+    height: 100% ;
     border: 1px solid black;
-    margin-top: 10px;
     background: none;
     outline: none !important;
   }
 
   .welcome {
     float: right;
-    margin-top: 12px;
     span {
       color: black;
       font-size: 16px;
@@ -71,11 +71,7 @@ navbar {
     color: black;
     border-color: black;
   }
-  .navButton{
-    height:50%;
-    width: 100px;
-    background-color: green;
-  }
+ 
   .appName{
     font-family: 'Share Tech Mono';
     display: inline-block;
@@ -83,8 +79,7 @@ navbar {
     padding-left: 0%;
     margin-bottom: 0px;
     font-weight: bold;
-    font-size: 3em;
-    background-color:none;
+    font-size: 2em;
   }
   .navbar-static-top{
   margin-bottom:0px;

@@ -3,7 +3,7 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
     return {
         restrict: 'E',
         scope: {},
-        templateUrl: 'js/common/directives/navbar/navbar.html',
+        templateUrl: 'js/navbar/navbar.html',
         link: function (scope) {
 
             scope.items = [
