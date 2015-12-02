@@ -1,7 +1,8 @@
 <h3>GrilleBoards</h3>
 <div>
 <ul>
-	<li ui-sref="home(board)" ng-repeat="board in activeBoards()">
+	<!-- home(board) works too :) -->
+	<li ui-sref="home({ githubID: board.githubID })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
 		{{ board.name }}
 	</li>
 

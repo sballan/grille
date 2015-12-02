@@ -1,12 +1,12 @@
-app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket, testGrille) { //displayBoard
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, Socket, setGrille) { //displayBoard
     // angular.element('body').scrollLeft(50000);
-
-    //We should consider putting this in a Factory since its for updating data
 
     // var socket = io();
     // Socket.on('update', function(data){
       // console.log("WEBHOOK DATA RECEIVED. The data is:", data)
     // })
+
+  //if loggedin/authenticated, then state.go
   $scope.items = [
       { label: 'Home', state: 'home' },
       { label: 'Admin', state: 'membersOnly', auth: true },
@@ -17,13 +17,20 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket, testG
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
-
-    //soon to be something like $scope.lanes =  displayBoard .... which has an updated repoCache
-    //$scope.lanes = displayBoard
-    console.log("Test Grille", testGrille)
-    $scope.cards = testGrille.cards;
-    $scope.lanes= testGrille.lanes;
-
+    //1
+    $scope.cards = setGrille.cards;
+    $scope.lanes= setGrille.lanes;
+    $rootScope.currentBoard = {
+      cards: $scope.cards,
+      lanes: $scope.lanes
+    }
+    //or 2
+    // $rootScope.currentBoard = {
+    //   cards: testGrille.cards,
+    //   lanes: testGrille.lanes
+    // }
+    // $scope.cards = $rootScope.currentBoard.cards;
+    // $scope.lanes = $rootScope.currentBoard.lanes;
 
 
     $scope.animationsEnabled = true;
@@ -44,24 +51,5 @@ app.controller('HomeCtrl', function($scope,$uibModal, HomeFactory, Socket, testG
         console.log('Modal dismissed at: ' + new Date());
       });
   };
-
-    $scope.addCard=function(){
-        console.log("ADDING CARD")
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'js/home/template.cardModal.html',
-        controller: 'HomeModalCtrl'
-      });
-
-      modalInstance.result.then(function (newCard) {
-
-          $scope.lanes[0].ownCards.push(newCard.title)
-          console.log("scopelanes", $scope.lanes[0])
-          // scope.$digest()
-      }, function () {
-        console.log('Modal dismissed at: ' + new Date());
-      });
-
-    }
 
 });
