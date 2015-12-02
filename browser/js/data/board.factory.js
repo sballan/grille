@@ -1,6 +1,6 @@
 app.factory('BoardFactory', function(GitHubFactory) {
 	var currentBoard;
-	var movingCard;
+	//var movingCard;
 	var viewLanes = {};
 
 	var BoardFactory = {
