@@ -9,6 +9,16 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 		getCache: function(){
 			return repoCache;
 		},
+		// FIXME This doesn't work
+		getRepoFromCache: function(repoID) {
+			var repo;
+			repoCache.forEach(function(theRepo) {
+				if(theRepo.githubID === repoID) {
+					repo = theRepo
+				}
+			})
+			return repo
+		},
 		getAllRepos: function() {
 			return $http.get('/api/github/repos/get/all')
 			.then(toData)
@@ -17,11 +27,11 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 				return repoCache;
 			})
 		},
-		getRepo: function(repo) {
-			return $http.get('api/github/repos/get/' + repo)
+		// TODO make this use getRepoFromCache
+		getRepo: function(repoID) {
+			return $http.get('api/github/repos/get/' + repoID)
 			.then(toData)
 			.then(function(data){
-				console.log("FIRST DATA", data)
 				var repo = data.board
 
 				repoCache.forEach(function(cachedRepo){
@@ -34,7 +44,6 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 
 					}
 				})
-				console.log("return repo", repo)
 				return repo;
 			})
 		},

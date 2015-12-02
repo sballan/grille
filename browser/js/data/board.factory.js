@@ -1,4 +1,4 @@
-app.factory('BoardFactory', function(GitHubFactory, $rootScope) {
+app.factory('BoardFactory', function(GitHubFactory) {
 	var currentBoard;
 	var movingCard;
 	var viewLanes = {};
@@ -7,13 +7,20 @@ app.factory('BoardFactory', function(GitHubFactory, $rootScope) {
 		getCurrentBoard: function() {
 			return currentBoard;
 		},
+		setCurrentBoard: function(board) {
+			currentBoard = board
+			//this.readLanes()
+			return currentBoard;
+		},
+		refreshCurrentBoard: function() {
+			var self = this;
+			getRepo(currentBoard.githubID)
+			.then(function(board) {
+				self.setCurrentBoard(board)
+			})
+		},
 		getViewLanes: function() {
 			return viewLanes;
-		},
-		setCurrentBoard: function(board) {
-			currentBoard = board;
-			this.readLanes()
-			return currentBoard;
 		},
 		// Writes the position of the cards in the lanes to the priority field on each card
 		writeLanes: function() {
@@ -27,7 +34,7 @@ app.factory('BoardFactory', function(GitHubFactory, $rootScope) {
 		// Reads the priority of the card and places it in the right lane in the right place
 		readLanes: function() {
 			viewLanes = {}
-
+			console.log("CurrentBoard", currentBoard)
 			currentBoard.lanes.forEach(function(boardLane) {
 				viewLanes[boardLane.title] = [];
 				var currentLane = viewLanes[boardLane.title]
@@ -61,10 +68,11 @@ app.factory('BoardFactory', function(GitHubFactory, $rootScope) {
 			var self = this;
 			return GitHubFactory.getRepo(repoID)
 			.then(function(board) {
-				self.setCurrentBoard(board)
-				return board
+				console.log("GetBoardMakeCurrent", board)
+				return self.setCurrentBoard(board)
 			})
-		},
+
+		}
 	}
 
 	return BoardFactory
