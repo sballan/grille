@@ -3,13 +3,16 @@ app.factory('BoardFactory', function(GitHubFactory, $rootScope) {
 	var movingCard;
 	var viewLanes = {};
 
-	BoardFactory = {
+	var BoardFactory = {
 		getCurrentBoard: function() {
 			return currentBoard;
 		},
+		getViewLanes: function() {
+			return viewLanes;
+		},
 		setCurrentBoard: function(board) {
 			currentBoard = board;
-			readLanes()
+			this.readLanes()
 			return currentBoard;
 		},
 		// Writes the position of the cards in the lanes to the priority field on each card
@@ -36,7 +39,7 @@ app.factory('BoardFactory', function(GitHubFactory, $rootScope) {
 				})
 			})
 			return viewLanes
-		}
+		},
 		sendAllToBacklog: function() {
 			var backLog;
 
@@ -53,7 +56,15 @@ app.factory('BoardFactory', function(GitHubFactory, $rootScope) {
 		},
 		moveCard: function(card, lane, index) {
 
-		}
+		},
+		getBoardAndMakeCurrent: function(repoID) {
+			var self = this;
+			return GitHubFactory.getRepo(repoID)
+			.then(function(board) {
+				self.setCurrentBoard(board)
+				return board
+			})
+		},
 	}
 
 	return BoardFactory

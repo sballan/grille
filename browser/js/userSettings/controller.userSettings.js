@@ -1,8 +1,8 @@
-app.controller('UserSettingsCtrl', function($scope, GitHubFactory, getCache){
+app.controller('UserSettingsCtrl', function($scope, BoardFactory, getCache){
 	$scope.repoCache = getCache;
 	$scope.setActive = function(boardID){
 		GitHubFactory.setRepoActive(boardID)
-		//GitHubFactory.getRepo(boardID)
+		GitHubFactory.getRepo(boardID)
 	}
 
 
