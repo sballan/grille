@@ -13,6 +13,8 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
             ];
             scope.isOpen = false;
             scope.user = null;
+          
+
 
             scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();

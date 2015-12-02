@@ -1,37 +1,43 @@
 
-    <nav class="navbar navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-            <span>Menu</span>
-      <ul class="nav navbar-nav">
-        <li ng-repeat="item in items">
-          <a ui-sref="{{ item.state }}"> {{item.label}}</a>
-        </li>
-        
-      </ul>
-      <p class="appName"class="noMarg">Grille</p>
-    </div>
-     <div class="dropper"><button ng-click="addCard()" class="btn btn-primary">Add card</button> </div>
-     <div class="dropper" uib-dropdown is-open="status.isopen">
-        <button id="navAdd" type="button" class="btn btn-primary" uib-dropdown-toggle>
-          + Add
-        </button>
-        <div class="uib-dropdown-menu navButton" role="add" aria-labelledby="single-button">
-         
-          <div><button ng-click="addLane()" class="btn btn-primary">Add Lane</button></div>
-          <div><button ng-click="addIssue()" class="btn btn-primary">Add party</button></div>
-        </div>
-        </div>
+      <nav class="navbar navbar-static-top">
+          <div class="container">
+              <div class="navbar-header">
+    <div class='dropper'>
+    <md-menu-bar >
+    <md-menu>
+     <button ng-click="$mdOpenMenu()" class="md-raised">
+      <span class="appName">Grille</span> <i class="fa fa-caret-down"></i>
+     </button>
+     <md-menu-content>
+          <md-menu-item><md-button ng-click="addCard()">Add Card</md-button></md-menu-item>
+          <md-menu-item><md-button ng-click="addLane()">Add Lane </md-button></md-menu-item>
+          <md-menu-item>
+          <md-button ui-sref="home">Home</md-button>
+          </md-menu-item>
+           <md-menu-item>
+          <md-button ui-sref="membersOnly">Admin</md-button>
+          </md-menu-item>
+           <md-menu-item>
+          <md-button ui-sref="visual">Charts</md-button>
+          </md-menu-item>
+                      
+    
+     </md-menu-content>
 
-            <!-- <button ng-click="addCard()" class="btn btn-primary"> Add card</button>
-            <button ng-click="addLane()" class="btn btn-primary"> Add Lane</button>
-            <button ng-click="addIssue()" class="btn btn-primary"> Add party</button> -->
+   </md-menu>
+  </md-menu-bar>
+  </div>
 
-            <button ng-show="!user" ui-sref="auth" class="btn login-button">Login</button>
-            <div ng-show="user" class="welcome">
-                <span>Welcome, {{ user.email }}!</span>
-                <a ng-click="logout()">Logout</a>
-            </div>
 
-        </div>
-    </nav>
+
+              <!-- <button ng-click="addCard()" class="btn btn-primary"> Add card</button>
+              <button ng-click="addLane()" class="btn btn-primary"> Add Lane</button>
+              <button ng-click="addIssue()" class="btn btn-primary"> Add party</button> -->
+
+              <md-button ng-show="!user" ui-sref="auth" class="btn login-button">Login</md-button>
+              <div ng-show="user" class="welcome">
+                  <md-button ng-click="logout()"><p class="appName">Logout</p></md-button>
+              </div>
+
+          </div>
+      </nav>
