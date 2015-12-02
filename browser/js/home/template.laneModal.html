@@ -1,11 +1,35 @@
-<div>
-  <form name="addLaneForm" id="addLaneForm">
-	<h7>Add Lane Information</h7>
-	<p>Title:<input type="text" ng-model="data.title" value="testing"/></p>
-    <p>Position index<input type="number" ng-model="data.position"/></p>
-	<br />
-    <input type="button" ng-click="reset(form)" value="Reset" />
-    <input type="submit" ng-click="ok(data)" value="OK" />
 
-  </form>
+
+<div  layout="column" ng-cloak class="md-inline-form">
+  <md-content md-theme="docs-dark" layout-padding layout="row" layout-sm="column">
+   
+    </md-input-container>
+  </md-content>
+  <md-content layout-padding>
+    <form name="laneForm">
+    
+ 
+      <md-input-container class="md-block">
+        <label>Title</label>
+        <input ng-model="lane.title" placeholder="Whatsa lane">
+      </md-input-container>
+
+      <md-input-container md-no-float class="md-block">
+      <label>Position</label>
+        <input ng-model="lane.description" placeholder="Descriptor">
+      </md-input-container>
+	<div layout layout-sm="column">
+	<md-input-container flex>
+    <md-button> <input type="button" ng-click="reset(form)" value="Reset"></md-button>
+    </md-input-container>
+    <md-input-container flex>
+    <md-button> <input type="submit" ng-click="ok(data)" value="Submit"></md-button>
+    </md-input-container>
+    </div>
+
+ 
+      </div>
+    </form>
+  </md-content>
+
 </div>

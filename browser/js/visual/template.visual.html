@@ -4,4 +4,19 @@
 		<svg class="tripled"id="visualisation" ></svg>
 	</div>
 
+<md-input-container>
+        <label>Current Repo</label>
+        <md-select ng-model="ctrl.userState">
+          <md-option  value="{{state.abbrev}}">
+            {{state.abbrev}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+	
+
+      <p> use option with async search for assigning to users
+      https://material.angularjs.org/HEAD/demo/select</p>
+
+ 
 </div>

@@ -1,0 +1,43 @@
+
+      <nav class="navbar navbar-static-top">
+          <div class="container">
+              <div class="navbar-header">
+    <div class='dropper'>
+    <md-menu-bar >
+    <md-menu>
+     <button ng-click="$mdOpenMenu()" class="md-raised">
+      <span class="appName">Grille</span> <i class="fa fa-caret-down"></i>
+     </button>
+     <md-menu-content>
+          <md-menu-item><md-button ng-click="addCard()">Add Card</md-button></md-menu-item>
+          <md-menu-item><md-button ng-click="addLane()">Add Lane </md-button></md-menu-item>
+          <md-menu-item>
+          <md-button ui-sref="home">Home</md-button>
+          </md-menu-item>
+           <md-menu-item>
+          <md-button ui-sref="membersOnly">Admin</md-button>
+          </md-menu-item>
+           <md-menu-item>
+          <md-button ui-sref="visual">Charts</md-button>
+          </md-menu-item>
+                      
+    
+     </md-menu-content>
+
+   </md-menu>
+  </md-menu-bar>
+  </div>
+
+
+
+              <!-- <button ng-click="addCard()" class="btn btn-primary"> Add card</button>
+              <button ng-click="addLane()" class="btn btn-primary"> Add Lane</button>
+              <button ng-click="addIssue()" class="btn btn-primary"> Add party</button> -->
+
+              <md-button ng-show="!user" ui-sref="auth" class="btn login-button">Login</md-button>
+              <div ng-show="user" class="welcome">
+                  <md-button ng-click="logout()"><p class="appName">Logout</p></md-button>
+              </div>
+
+          </div>
+      </nav>
