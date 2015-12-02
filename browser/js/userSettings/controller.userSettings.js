@@ -4,7 +4,7 @@ app.controller('UserSettingsCtrl', function($scope, GitHubFactory, getCache){
 		GitHubFactory.setRepoActive(boardID)
 		// GitHubFactory.getRepo(boardID)
 	}
-
+	$scope.rawSelected=false;
 
 	$scope.activeBoards = function(){
 		return $scope.repoCache.filter(function(board) {

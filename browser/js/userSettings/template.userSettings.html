@@ -1,5 +1,5 @@
+<div class="boardPage">
 <h3>GrilleBoards</h3>
-<div>
 <ul>
 	<!-- home(board) works too :) -->
 	<li ui-sref="home({ githubID: board.githubID })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
@@ -9,6 +9,7 @@
 </ul>
 
 <h3>RawBoards</h3>
+<div ng-show="rawSelected">
 <ul>
 	<h6>Choose One to put on your Grille</h6>
 	<label>Search: <input ng-model="searchText"></label>
@@ -21,5 +22,6 @@
 	</li>
 
 </ul>
+</div>
 
 </div>
