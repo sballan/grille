@@ -5,8 +5,7 @@ var Webhooks = require('../github-data/webhooks')
 
 module.exports = router;
 
-router.use('/members', require('./members'));
-
+router.use('/board', require('./board'));
 router.use('/github', require('./github'));
 
 router.post('/webhooks', function(req, res, next) {
