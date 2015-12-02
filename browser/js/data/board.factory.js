@@ -14,7 +14,7 @@ app.factory('BoardFactory', function(GitHubFactory) {
 		},
 		refreshCurrentBoard: function() {
 			var self = this;
-			getRepo(currentBoard.githubID)
+			GitHubFactory.getRepo(currentBoard.githubID)
 			.then(function(board) {
 				self.setCurrentBoard(board)
 			})
