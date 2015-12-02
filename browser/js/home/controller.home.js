@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, Socket, loadGrille) {
+app.controller('HomeCtrl', function($scope, HomeFactory, BoardFactory, Socket, loadGrille) {
     // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
   //1

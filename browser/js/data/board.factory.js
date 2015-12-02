@@ -9,7 +9,7 @@ app.factory('BoardFactory', function(GitHubFactory) {
 		},
 		setCurrentBoard: function(board) {
 			currentBoard = board
-			//this.readLanes()
+			// this.readLanes()
 			return currentBoard;
 		},
 		refreshCurrentBoard: function() {
