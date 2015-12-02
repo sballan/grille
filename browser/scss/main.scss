@@ -4,7 +4,7 @@
 
 body {
   background: #F0F0F0;
-  
+
 }
 
 @mixin clearfix {
@@ -24,6 +24,4 @@ body {
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
-@import 'tutorial/main';
-@import 'login/main';
 @import 'userSettings/main';

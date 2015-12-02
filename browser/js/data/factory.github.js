@@ -1,4 +1,4 @@
-app.factory('GitHubFactory', function($http) {
+app.factory('GitHubFactory', function($http, $rootScope) {
 	var repoCache = [];
 
 	function toData(res) {
@@ -9,6 +9,16 @@ app.factory('GitHubFactory', function($http) {
 		getCache: function(){
 			return repoCache;
 		},
+		// FIXME This doesn't work
+		getRepoFromCache: function(repoID) {
+			var repo;
+			repoCache.forEach(function(theRepo) {
+				if(theRepo.githubID === repoID) {
+					repo = theRepo
+				}
+			})
+			return repo
+		},
 		getAllRepos: function() {
 			return $http.get('/api/github/repos/get/all')
 			.then(toData)
@@ -17,22 +27,23 @@ app.factory('GitHubFactory', function($http) {
 				return repoCache;
 			})
 		},
-		getRepo: function(repo) {
-			return $http.get('api/github/repos/get/' + repo)
+		// TODO make this use getRepoFromCache
+		getRepo: function(repoID) {
+			return $http.get('api/github/repos/get/' + repoID)
 			.then(toData)
 			.then(function(data){
-				console.log("FIRST DATA", data)
 				var repo = data.board
 
 				repoCache.forEach(function(cachedRepo){
 					if (cachedRepo.githubID === repo.githubID){
 						cachedRepo = repo;
 						repo = cachedRepo
+
 						repo.lanes = data.lanes
 						repo.cards = data.cards
+
 					}
 				})
-				console.log("return repo", repo)
 				return repo;
 			})
 		},

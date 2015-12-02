@@ -1,9 +1,9 @@
-app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, GitHubFactory) {
+app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, GitHubFactory, BoardFactory) {
 
     return {
         restrict: 'E',
         scope: {},
-        templateUrl: 'js/common/directives/navbar/navbar.html',
+        templateUrl: 'js/navbar/navbar.html',
         link: function (scope) {
 
             scope.items = [
@@ -17,6 +17,8 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
             }
             scope.isOpen = false;
             scope.user = null;
+
+
 
             scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();
@@ -43,7 +45,7 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
-            
+
             // scope.lanes = HomeFactory.loadLanes();
 
 
@@ -51,16 +53,8 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
     scope.sortableOptions = {
         connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
-    scope.lanes;
-    scope.cards;
-
-    // GitHubFactory.getRepo(46445588)
-    // .then(function(data) {
-    //   scope.lanes = data.lanes
-    //   scope.cards = data.cards
-    // })
-
-
+    scope.lanes = BoardFactory.getCurrentBoard().lanes
+    scope.cards = BoardFactory.getCurrentBoard().cards
 
     scope.animationsEnabled = true;
 
@@ -73,7 +67,7 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
       });
 
       modalInstance.result.then(function (newLane) {
-          var spot=newLane.position;
+          var spot = newLane.position;
           newLane.ownCards = [];
           scope.lanes.splice(spot, 0, newLane);
       }, function () {
@@ -90,12 +84,12 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
 
       modalInstance.result.then(function (newCard) {
           newCard.lane = {};
-          newCard.lane._id = $rootScope.currentBoard.lanes[0]._id
-          $rootScope.currentBoard.cards.push(newCard)
-          console.log("currentBoardCARDS:", $rootScope.currentBoard.cards)
+          newCard.lane._id = BoardFactory.getCurrentBoard().lanes[0]._id
+          BoardFactory.getCurrentBoard().cards.push(newCard)
+
           // scope.lanes[0].ownCards.push(newCard.title)
           // console.log("rootscopelanes", $rootScope.currentBoards.cards[length-1])
-          
+
 
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
