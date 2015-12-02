@@ -3,7 +3,7 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
     return {
         restrict: 'E',
         scope: {},
-        templateUrl: 'js/common/directives/navbar/navbar.html',
+        templateUrl: 'js/navbar/navbar.html',
         link: function (scope) {
 
             scope.items = [
@@ -17,6 +17,8 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
             }
             scope.isOpen = false;
             scope.user = null;
+          
+
 
             scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();
