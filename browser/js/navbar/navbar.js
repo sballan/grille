@@ -53,8 +53,8 @@ app.directive('navbar', function ($rootScope, $uibModal, AuthService, AUTH_EVENT
     scope.sortableOptions = {
         connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
     };
-    scope.lanes = BoardFactory.getCurrentBoard().lanes
-    scope.cards = BoardFactory.getCurrentBoard().cards
+    //scope.lanes = BoardFactory.getCurrentBoard().lanes
+    //scope.cards = BoardFactory.getCurrentBoard().cards
 
     scope.animationsEnabled = true;
 
