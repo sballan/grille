@@ -1,4 +1,4 @@
-app.factory('BoardFactory', function(GitHubFactory) {
+app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 	var currentBoard;
 	//var movingCard;
 	var viewLanes = {};
@@ -25,16 +25,26 @@ app.factory('BoardFactory', function(GitHubFactory) {
 		},
 		// Writes the position of the cards in the lanes to the priority field on each card
 		writeLanes: function() {
+
 			for(var lane in viewLanes) {
-				viewLanes[lane].forEach(function(card) {
-					card.priority = viewLanes[lane].indexOf(card)
-					if(card.priority === -1) console.error("writeLanes is broken")
+				viewLanes[lane].forEach(function(card, index) {
+					card.priority = index
+					if(card.priority < 0) console.error("writeLanes is broken")
+				})
+				viewLanes[lane].sort(function(a, b) {
+					return a.priority - b.priority
 				})
 			}
+
+
+			console.log("Cached Cards")
+			currentBoard.cards.forEach(function(card) {
+				console.log(card.issueNumber + ": " + card.priority)
+			})
 		},
 		// Reads the priority of the card and places it in the right lane in the right place
 		readLanes: function() {
-			viewLanes = {}
+			// viewLanes = {}
 			console.log("CurrentBoard", currentBoard)
 			currentBoard.lanes.forEach(function(boardLane) {
 				viewLanes[boardLane.title] = [];
@@ -42,8 +52,7 @@ app.factory('BoardFactory', function(GitHubFactory) {
 
 				currentBoard.cards.forEach(function(card) {
 					if(card.lane.title === boardLane.title) {
-						console.log("Priority", card.priority)
-						if(!card.priority) card.priority = card.issueNumber
+						//if(!card.priority) card.priority = card.issueNumber
 						currentLane.push(card)
 					}
 				})
@@ -51,7 +60,6 @@ app.factory('BoardFactory', function(GitHubFactory) {
 					return a.priority - b.priority
 				})
 			})
-			console.log("viewLanes", viewLanes)
 			return viewLanes
 		},
 		sendAllToBacklog: function() {
@@ -66,11 +74,13 @@ app.factory('BoardFactory', function(GitHubFactory) {
 			})
 		},
 		addCard: function(card) {
-			viewLanes[card.lane.title].push(card)
+			console.log("BOARD ADD CARD", card)
+			//viewLanes[card.lane.title].push(card)
 			currentBoard.cards.push(card)
 			console.log("CURRENT BOARD cards", currentBoard.cards)
 			this.readLanes()
 			this.writeLanes()
+			this.updateAllPriority()
 		},
 
 		getBoardAndMakeCurrent: function(repoID) {
@@ -80,6 +90,18 @@ app.factory('BoardFactory', function(GitHubFactory) {
 				return self.setCurrentBoard(board)
 			})
 
+		},
+		updateAllPriority: function() {
+			return CardFactory.updatePriorityCards(currentBoard.cards)
+			.then(function(cards) {
+				cards.forEach(function(card) {
+					currentBoard.cards.forEach(function(c) {
+						if(c.githubID === card.githubID) {
+							c.priority = card.priority
+						}
+					})
+				})
+			})
 		}
 	}
 
