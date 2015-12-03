@@ -41,6 +41,7 @@ function getPages(currentPage, theData) {
 			data = theData.concat(data)
 
 			if(hasNextPage) {
+				//OP: talk to use about doing this recursion differently
 				getPages(currentPage + 1, data)
 			} else {
 				data = data.map(function(repo) {
@@ -51,6 +52,7 @@ function getPages(currentPage, theData) {
 				// Promise.map(data, function(repo))
 
 				// This puts all the boards from our database that correspond to the github repos in an array
+
 				return Promise.map(data, function(board) {
 
 					return Board.findOne({
