@@ -11,6 +11,7 @@ var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
+//OP: globals again
 var github;
 
 var getCommentsAsync;
@@ -46,7 +47,7 @@ router.get('/:repo', function(req, res, next) {
 			})
 			makeIssues(theRepo, 1, [])
 		})
-		.then(null, console.error)
+		.then(null, console.error) //OP: might as well use next and forward it rather than console.error
 
 });
 

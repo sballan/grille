@@ -17,6 +17,9 @@ function parse(body) {
 
 	repo.url = body.url || null
 	repo.collaborators_url = body.collaborators_url || null
+
+	//OP: if this is dead code remove it
+
 	// repo.html_url = body.html_url || null
 	// repo.forks_url = body.forks_url || null
 	// repo.keys_url = body.keys_url || null

@@ -1,5 +1,7 @@
 var user = require('./parser.user')
 
+//OP: can you just do comment = body? or use some lodash method
+//any different ones you can override separately
 function parse(body) {
 	if(!body) return null
 	var comment = {}

@@ -27,6 +27,7 @@ var payload = function (body) {
 	return data
 }
 
+//OP: obj is a vague name for object
 obj.payload = payload
 
 module.exports = obj

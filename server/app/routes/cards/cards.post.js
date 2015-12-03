@@ -14,8 +14,10 @@ module.exports = router;
 router.post('/', function(req, res, next) {
 	var github = req.user.githubAccess;
 
+	//OP: is it possible to promisify the whole github api? or make this happen outside of this route
 	var createIssueAsync = Promise.promisify(github.issues.create)
 
+	//OP: may be useful to have adapter methods for github api inputs as well as outputs
 	var msg = {
 		user: req.body.board.owner.username,
 		repo: req.body.board.name,
