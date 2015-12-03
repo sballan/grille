@@ -21,7 +21,6 @@ module.exports = {
   	getUser: function(accessToken) {
   		return client.get('/user', function(err, status, body) {
 	  		ghuser.info(function(stuff){
-	  		console.log(stuff)
 	  		})
   		})
   	}
