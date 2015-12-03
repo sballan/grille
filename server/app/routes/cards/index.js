@@ -5,9 +5,11 @@ var GitHubApi = require('github')
 
 
 router.post("/",function(req,res,next){
+	// create
 	var github = req.user.githubAccess;
 })
 router.put("/",function(req,res,next){
+	//update
 	var github = req.user.githubAccess;
 })
 
