@@ -51,6 +51,9 @@ router.get('/:repo', function(req, res, next) {
 
 });
 
+//OP: GENERAL NOTE: code hygiene
+//OP: may not need to nest .then
+
 function makeIssues(repo, currentPage, theIssues) {
 	//get repo issues
 	return repoIssuesAsync(
@@ -123,6 +126,7 @@ function attachComments(issues) {
 	.then(null, console.error)
 }
 
+//OP: response is global, not good
 function sendData(cards) {
 	var theData = {
 		board: theRepo,

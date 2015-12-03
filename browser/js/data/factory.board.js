@@ -15,6 +15,8 @@ app.factory('BoardFactory', function(GitHubFactory) {
 		},
 		refreshCurrentBoard: function() {
 			var self = this;
+
+			//OP: ES6 => context remains same as outer scope, don't need self
 			GitHubFactory.getRepo(currentBoard.githubID)
 			.then(function(board) {
 				self.setCurrentBoard(board)
@@ -54,6 +56,7 @@ app.factory('BoardFactory', function(GitHubFactory) {
 			console.log("viewLanes", viewLanes)
 			return viewLanes
 		},
+		//OP: does this need to return something?L
 		sendAllToBacklog: function() {
 			var backLog;
 
@@ -65,6 +68,7 @@ app.factory('BoardFactory', function(GitHubFactory) {
 				card.lane = backLog
 			})
 		},
+		//OP: does this need to return something?
 		addCard: function(card) {
 			viewLanes[card.lane.title].push(card)
 			currentBoard.cards.push(card)
