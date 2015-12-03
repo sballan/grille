@@ -5,16 +5,7 @@ var GitHubApi = require('github')
 
 
 router.post("/",function(req,res,next){
-	var github = new GitHubApi({
-		debug: true,
-		version: "3.0.0"
-	} );
-
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});
-	req.body.tex
+	var github = req.user.githubAccess;
 })
 
 module.exports = router;

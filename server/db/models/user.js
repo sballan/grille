@@ -59,6 +59,19 @@ schema.pre('save', function (next) {
 
 });
 
+schema.virtual('githubAccess').get(function(){
+     var github = new GitHubApi({
+        debug: true,
+        version: "3.0.0"
+    } );
+
+    github.authenticate({
+        type: "oauth",
+        token: this.user.accessToken
+    });
+    return github;
+})
+
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;
 
