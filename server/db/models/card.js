@@ -53,3 +53,4 @@ var cardSchema = new mongoose.Schema({
 })
 
 mongoose.model('Card', cardSchema);
+mongoose.model('Comment', commentSchema);
