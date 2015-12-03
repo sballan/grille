@@ -5,7 +5,7 @@ app.controller('HomeCtrl', function($scope, HomeFactory, BoardFactory, Socket, l
   $scope.cards = $scope.board.cards;
   $scope.lanes = $scope.board.lanes;
 
-  console.log("SCOPE CARD", $scope.cards)
+  $scope.viewLanes = BoardFactory.getViewLanes()
 
   $scope.hovered = false;
 

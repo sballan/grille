@@ -9,7 +9,8 @@ app.factory('BoardFactory', function(GitHubFactory) {
 		},
 		setCurrentBoard: function(board) {
 			currentBoard = board
-			// this.readLanes()
+			this.readLanes()
+			this.writeLanes()
 			return currentBoard;
 		},
 		refreshCurrentBoard: function() {
@@ -24,7 +25,7 @@ app.factory('BoardFactory', function(GitHubFactory) {
 		},
 		// Writes the position of the cards in the lanes to the priority field on each card
 		writeLanes: function() {
-			for(lane in viewLanes) {
+			for(var lane in viewLanes) {
 				viewLanes[lane].forEach(function(card) {
 					card.priority = viewLanes[lane].indexOf(card)
 					if(card.priority === -1) console.error("writeLanes is broken")
@@ -41,10 +42,16 @@ app.factory('BoardFactory', function(GitHubFactory) {
 
 				currentBoard.cards.forEach(function(card) {
 					if(card.lane.title === boardLane.title) {
-						viewLanes[card.priority] = card
+						console.log("Priority", card.priority)
+						if(!card.priority || card.priority < 0) card.priority = card.issueNumber
+						currentLane.push(card)
 					}
 				})
+				currentLane.sort(function(a, b) {
+					return a.priority - b.priority
+				})
 			})
+			console.log("viewLanes", viewLanes)
 			return viewLanes
 		},
 		sendAllToBacklog: function() {
@@ -68,7 +75,6 @@ app.factory('BoardFactory', function(GitHubFactory) {
 			var self = this;
 			return GitHubFactory.getRepo(repoID)
 			.then(function(board) {
-				console.log("GetBoardMakeCurrent", board)
 				return self.setCurrentBoard(board)
 			})
 
