@@ -1,5 +1,4 @@
-app.controller('HomeModalCtrl', function ($scope, $uibModal, $uibModalInstance) {
-
+app.controller('editCardCtrl', function ($scope, $uibModalInstance) {
   $scope.ok = function (data) {
     $uibModalInstance.close(data);
   };
