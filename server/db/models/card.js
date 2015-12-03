@@ -37,7 +37,7 @@ var cardSchema = new mongoose.Schema({
 	},
 	assignee: String,
 	priority: {
-		type: Number,
+		type: Number, 
 		default: -1
 	},
 	milestone: String, //TODO check this out
