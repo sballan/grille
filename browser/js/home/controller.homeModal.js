@@ -1,9 +1,4 @@
-app.controller('HomeModalCtrl', function ($scope, $uibModalInstance) {
-
-  // $scope.items = items;
-  // $scope.selected = {
-  //   item: $scope.items[0]
-  // };
+app.controller('HomeModalCtrl', function ($scope, $uibModal, $uibModalInstance) {
 
   $scope.ok = function (data) {
     $uibModalInstance.close(data);
