@@ -26,15 +26,7 @@ router.get('/:repo', function(req, res, next) {
 	// This is done to let us factor out functions that can refer to the response
 	response = res;
 
-	github = new GitHubApi({
-	debug: true,
-	version: "3.0.0"
-} );
-
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});
+	github = req.user.githubAccess;
 
 	getCommentsAsync =  Promise.promisify(github.issues.getComments)
 	repoIssuesAsync = Promise.promisify(github.issues.repoIssues)

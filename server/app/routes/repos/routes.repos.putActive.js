@@ -13,16 +13,7 @@ module.exports = router;
 
 
 router.put('/:boardID/active', function(req, res, next) {
-	var github = new GitHubApi({
-		debug: true,
-		version: "3.0.0"
-	} );
-
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});
-
+	var github = req.user.githubAccess;
 
 	Board.findOneAndUpdate({ githubID: req.params.boardID}, { isActive: true}, {new : true})
 	.then(function(board){

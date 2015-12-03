@@ -18,18 +18,9 @@ var data;
 
 router.get('/', function(req, res, next) {
 	response = res;
-	github = new GitHubApi({
-		debug: true,
-		version: "3.0.0"
-	} );
-
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});
+	github = req.user.githubAccess;
 
 	getAllAsync = Promise.promisify(github.repos.getAll)
-
 
 	// This function is called recursively, to get all the pages of repos
 	getPages(1, [])
