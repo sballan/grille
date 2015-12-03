@@ -21,6 +21,7 @@ var cardSchema = new mongoose.Schema({
 		type: Number,
 		unique: true
 	},
+	storyPoints:Number,
 	issueNumber: Number,
 	title: String,
 	body: String,
