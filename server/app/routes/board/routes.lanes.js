@@ -21,7 +21,7 @@ router.post('/post/:boardID/:laneTitle', function(req, res, next) {
 	.then(null, next);
 });
 
-
+// NOTE Consider deleting by lane._id, probably an optimisation.
 router.delete('/delete/:boardID/:laneTitle', function(req, res, next) {
 	Lane.remove({title: req.params.laneTitle, board: req.params.boardID})
 	.then(function() {

@@ -1,34 +1,40 @@
-app.factory('HomeFactory', function(){
-	var fillLanes = [
-				{
-					title:"Backlog",
-				    content:"content..",
-				    label:"label for it",
-				    ownCards:["card9","card10","card11","card12"]},
-				    {title:"Ready",
-				    content:"content....",
-				    label:"label for it",
-				    ownCards:["card5","card6","card7","card8"]},
-				    {title:"In Progress",
-				    content:"content.....",
-				    label:"labels for it",
-				    ownCards:["card1","card2","card3","card4"]},
-				    {title:"Done",
-				    content:"content.....",
-				    label:"label for it",
-				    ownCards:["card13","card14","card15","card16"]}
-    		]
-	return {
-		loadCards: function(){
-			/*
-			call to $http to check DB if the lanes have already been created. load that data
-			If not, then do what is below..
-			*/
+app.factory('HomeFactory', function($uibModal) {
+	var HomeFactory = {
+		addLane: function(animationsEnabled) {
+			var modalInstance = $uibModal.open({
+				animation: animationsEnabled,
+				templateUrl: 'js/home/template.laneModal.html',
+				controller: 'HomeModalCtrl'
+					// size: size
+			});
 
-			return 3
+			modalInstance.result.then(function(newLane) {
+				var spot = newLane.position;
+				newLane.ownCards = [];
+				$scope.lanes.splice(spot, 0, newLane);
+			}, function() {
+				console.log('Modal dismissed at: ' + new Date());
+			});
 		},
-		loadLanes: function() {
-			return 3
+		addCard: function(animationsEnabled) {
+			var modalInstance = $uibModal.open({
+				animation: animationsEnabled,
+				templateUrl: 'js/home/template.cardModal.html',
+				controller: 'HomeModalCtrl'
+			});
+
+			modalInstance.result.then(function(newCard) {
+				newCard.lane = {};
+				newCard.lane._id = BoardFactory.getCurrentBoard().lanes[0]._id
+				BoardFactory.getCurrentBoard().cards.push(newCard)
+
+			}, function() {
+				console.log('Modal dismissed at: ' + new Date());
+			});
+
 		}
 	}
+
+	return HomeFactory
+
 })
