@@ -130,7 +130,6 @@ router.get('/get/:repo', function(req, res, next) {
 						cards: cards,
 						lanes: theLanes
 					}
-					console.log("FINISHED", sendData);
 					res.send(sendData);
 				})
 				.then(null, function(err) {

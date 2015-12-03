@@ -25,14 +25,12 @@ router.post('/', function(req, res, next) {
 
 	createIssueAsync(msg)
 	.then(function(issue) {
-		console.log("New Issue From GitHub", issue)
 
 		issue = payloadParser.issue(issue)
 		issue.lane = req.body.lane
 		return Card.create(issue)
 	})
 	.then(function(card) {
-		console.log("New Card From Mongo", card)
 		res.send(card)
 	})
 
