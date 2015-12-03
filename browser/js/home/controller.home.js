@@ -1,11 +1,13 @@
+
 app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CardFactory, Socket, loadGrille) {
+
     // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
   //1
   $scope.cards = $scope.board.cards;
   $scope.lanes = $scope.board.lanes;
 
-  console.log("SCOPE CARD", $scope.cards)
+  $scope.viewLanes = BoardFactory.getViewLanes()
 
   $scope.hovered = false;
 
@@ -19,7 +21,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     //   cards: $scope.cards,
     //   lanes: $scope.lanes
     // }
-    $scope.yell = function(){console.log("HEYYY")}
     $scope.editCard = function (card) {
           var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,

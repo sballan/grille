@@ -8,7 +8,7 @@
 
           <h3 class="laneHeading"> {{ theLane.title }} </h3>
           <ul ui-sortable="sortableOptions" class="list">
-            <div ng-repeat="card in cards | filter: {lane: {_id: theLane._id}}" class="item">
+            <div ng-repeat="card in viewLanes[theLane.title] | filter: {lane: {_id: theLane._id}}" class="item">
               <div class="cardNumber"><p>{{card.issueNumber}}</p></div>
               <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
               <div>
