@@ -19,7 +19,16 @@
       
       <!-- list of comments -->
       <ul>
-        <li ng-repeat="comment in theCard.comments">{{ comment.body }}</li>
+        <li ng-repeat="comment in theCard.comments">
+          <textarea rows="1" class="cardText">{{ comment.body }}</textarea>
+           <span ng-hide="editing">
+    {{name}} <button ng-click="editing = true">Edit</button>
+  </span>
+  <span ng-show="editing">
+    <input type="text" ng-model="name"> 
+    <button ng-click="editing = false">Save</button>
+  </span>
+        </li>
       <ul>
       <md-input-container class="md-block">
         <label>Add a Comment</label>

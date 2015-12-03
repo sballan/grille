@@ -21,16 +21,8 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     function printer (){
 
     }
-    //1
-    // $scope.cards = setGrille.cards;
-    // $scope.lanes= setGrille.lanes;
-    // $rootScope.currentBoard = {
-    //   cards: $scope.cards,
-    //   lanes: $scope.lanes
-    // }
-    $scope.editCard = function (card) {
-              console.log("card github ID:", card.githubID)
 
+    $scope.saveComment = function (card) {
           var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: 'js/home/template.editCardModal.html',
@@ -38,11 +30,8 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               $scope.theCard = card;
 
                 $scope.ok = function (data) {
-                  console.log("DATA IS:", data)
-                  console.log("scope.theCard", $scope.theCard.comments)
-                  CommentFactory.cardAddComment(card, data)
+                  CommentFactory.addComment(card, data)
                   .then(function(response){
-                    console.log("CommentFactory RESPONSE:", response)
                     $scope.theCard.comments.push(data)
                     $uibModalInstance.close(data);
                   })
