@@ -36,7 +36,10 @@ var cardSchema = new mongoose.Schema({
 		username: String
 	},
 	assignee: String,
-	priority: Number,  
+	priority: {
+		type: Number, 
+		default: -1
+	},
 	milestone: String, //TODO check this out
 	labels: [mongoose.Schema.Types.Mixed],
 

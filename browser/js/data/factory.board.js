@@ -43,7 +43,7 @@ app.factory('BoardFactory', function(GitHubFactory) {
 				currentBoard.cards.forEach(function(card) {
 					if(card.lane.title === boardLane.title) {
 						console.log("Priority", card.priority)
-						if(!card.priority || card.priority < 0) card.priority = card.issueNumber
+						if(!card.priority) card.priority = card.issueNumber
 						currentLane.push(card)
 					}
 				})
@@ -65,12 +65,14 @@ app.factory('BoardFactory', function(GitHubFactory) {
 				card.lane = backLog
 			})
 		},
-		pullCard: function(card) {
-
+		addCard: function(card) {
+			viewLanes[card.lane.title].push(card)
+			currentBoard.cards.push(card)
+			console.log("CURRENT BOARD cards", currentBoard.cards)
+			this.readLanes()
+			this.writeLanes()
 		},
-		moveCard: function(card, lane, index) {
 
-		},
 		getBoardAndMakeCurrent: function(repoID) {
 			var self = this;
 			return GitHubFactory.getRepo(repoID)

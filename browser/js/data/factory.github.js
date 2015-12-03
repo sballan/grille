@@ -20,7 +20,7 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 			return repo
 		},
 		getAllRepos: function() {
-			return $http.get('/api/github/repos/get/all')
+			return $http.get('/api/repos/get/all')
 			.then(toData)
 			.then(function(repos){
 				repoCache = repos;
@@ -29,7 +29,7 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 		},
 		// TODO make this use getRepoFromCache
 		getRepo: function(repoID) {
-			return $http.get('api/github/repos/get/' + repoID)
+			return $http.get('api/repos/get/' + repoID)
 			.then(toData)
 			.then(function(data){
 				 var repo
@@ -53,7 +53,7 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 			})
 		},
 		setRepoActive: function(boardID){
-			return $http.put('api/github/repos/put/' + boardID + '/active')
+			return $http.put('api/repos/put/' + boardID + '/active')
 			.then(toData)
 			.then(function(repo){
 				repoCache.forEach(function(cachedRepo){

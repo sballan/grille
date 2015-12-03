@@ -1,6 +1,7 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var GitHubApi = require('github')
 
 var schema = new mongoose.Schema({
     name: String,
@@ -58,6 +59,20 @@ schema.pre('save', function (next) {
     next();
 
 });
+
+schema.virtual('githubAccess').get(function(){
+    var self = this;
+     var github = new GitHubApi({
+        debug: true,
+        version: "3.0.0"
+    } );
+
+    github.authenticate({
+        type: "oauth",
+        token: self.accessToken
+    });
+    return github;
+})
 
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;
