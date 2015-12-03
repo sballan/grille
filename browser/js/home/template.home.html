@@ -4,11 +4,11 @@
     <div class="section row connectedItemsExample">
 
       <div class="lateral">
-        <div class="laneConfig"ng-repeat="theLane in lanes">
+        <div class="laneConfig"ng-repeat="(title, lane) in viewLanes">
 
-          <h3 class="laneHeading"> {{ theLane.title }} </h3>
-          <ul ui-sortable="sortableOptions" class="list">
-            <div ng-repeat="card in viewLanes[theLane.title] | filter: {lane: {_id: theLane._id}}" class="item">
+          <h3 class="laneHeading"> {{ title }} </h3>
+          <ul ui-sortable="sortableOptions" class="list" ng-model="lane">
+            <div ng-repeat="card in lane" class="item">
               <div class="cardNumber"><p>{{card.issueNumber}}</p></div>
               <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
               <div>

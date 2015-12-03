@@ -4,6 +4,7 @@ var router = express.Router();
 var GitHubApi = require('github')
 
 router.use('/post', require('./cards.post'));
+router.use('/put', require('./cards.put'));
 
 router.put("/",function(req,res,next){
 	//update

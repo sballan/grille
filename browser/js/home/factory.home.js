@@ -31,7 +31,8 @@ app.factory('HomeFactory', function($uibModal, CardFactory, BoardFactory) {
 
 				CardFactory.addCard(newCard)
 				.then(function(card) {
-					BoardFactory.addCard(newCard)
+					console.log("Card in factory home", card)
+					BoardFactory.addCard(card)
 				})
 
 			}, function() {

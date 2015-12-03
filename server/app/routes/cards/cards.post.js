@@ -27,10 +27,12 @@ router.post('/', function(req, res, next) {
 	.then(function(issue) {
 
 		issue = payloadParser.issue(issue)
-		issue.lane = req.body.lane
+		issue.lane = req.body.lane._id
+		issue.board = req.body.board._id
 		return Card.create(issue)
 	})
 	.then(function(card) {
+		console.log("-----BACKEND CARD", card)
 		res.send(card)
 	})
 

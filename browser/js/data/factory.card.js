@@ -5,8 +5,12 @@ app.factory("CardFactory",function($http){
 	return {
 			addCard:function(card){
 				// card.lane = card.lane._id;
-				// card.board.cards = null
+				console.log('CardFactory', card)
 				return $http.post('/api/cards/post', card)
+				.then(toData)
+			},
+			updatePriorityCards: function(cards) {
+				return $http.put('/api/cards/put/priority/many', cards)
 				.then(toData)
 			},
 

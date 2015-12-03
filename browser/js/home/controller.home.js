@@ -5,15 +5,22 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
   $scope.board = loadGrille;
   //1
   $scope.cards = $scope.board.cards;
-  $scope.lanes = $scope.board.lanes;
 
   $scope.viewLanes = BoardFactory.getViewLanes()
 
   $scope.hovered = false;
 
 	$scope.sortableOptions = {
-    	connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
+    	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
+      stop: function(e, ui) {
+        BoardFactory.writeLanes()
+        BoardFactory.updateAllPriority()
+      }
     };
+
+    function printer (){
+
+    }
     //1
     // $scope.cards = setGrille.cards;
     // $scope.lanes= setGrille.lanes;
@@ -33,7 +40,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
                 $scope.cancel = function () {
                   $uibModalInstance.dismiss('cancel');
-                };    
+                };
             }
           });
 
