@@ -1,4 +1,4 @@
-app.factory('HomeFactory', function($uibModal) {
+app.factory('HomeFactory', function($uibModal, CardFactory, BoardFactory) {
 	var HomeFactory = {
 		addLane: function(animationsEnabled) {
 			var modalInstance = $uibModal.open({
@@ -24,9 +24,15 @@ app.factory('HomeFactory', function($uibModal) {
 			});
 
 			modalInstance.result.then(function(newCard) {
-				newCard.lane = {};
-				newCard.lane._id = BoardFactory.getCurrentBoard().lanes[0]._id
-				BoardFactory.getCurrentBoard().cards.push(newCard)
+				console.log("We hit the home factory")
+				console.log("Modal instance card", newCard)
+				newCard.lane = BoardFactory.getCurrentBoard().lanes[0]
+				newCard.board = BoardFactory.getCurrentBoard()
+
+				CardFactory.addCard(newCard)
+				.then(function(card) {
+					BoardFactory.addCard(newCard)
+				})
 
 			}, function() {
 				console.log('Modal dismissed at: ' + new Date());

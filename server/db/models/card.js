@@ -21,12 +21,13 @@ var cardSchema = new mongoose.Schema({
 		type: Number,
 		unique: true
 	},
+	storyPoints:Number,
 	issueNumber: Number,
 	title: String,
 	body: String,
 	comments: [commentSchema],
-  board: {type: mongoose.Schema.Types.ObjectId, ref: 'Board'},
-  lane: {type: mongoose.Schema.Types.ObjectId, ref: 'Lane'},
+  	board: {type: mongoose.Schema.Types.ObjectId, ref: 'Board'},
+  	lane: {type: mongoose.Schema.Types.ObjectId, ref: 'Lane'},
 
 	state: String, //enum
 	owner: {
@@ -35,7 +36,10 @@ var cardSchema = new mongoose.Schema({
 		username: String
 	},
 	assignee: String,
-	priority: Number,  
+	priority: {
+		type: Number, 
+		default: -1
+	},
 	milestone: String, //TODO check this out
 	labels: [mongoose.Schema.Types.Mixed],
 
