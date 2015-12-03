@@ -12,10 +12,10 @@
               <div class="cardNumber"><p>{{card.issueNumber}}</p></div>
               <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
               <div>
-              <button ng-click="editCard(card)">edit</button>
+
               <button><i class="fa fa-github" ng-click="githubLink()"></i></button>
 
-              <button><i class="fa fa-comment"></i></button>
+              <button><i class="fa fa-comment" ng-click="editCard(card)"></i></button>
               </div>
             </div>
           </ul>

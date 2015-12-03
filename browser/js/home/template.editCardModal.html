@@ -15,15 +15,15 @@
       <md-input-container md-no-float class="md-block">
         <label>Description</label>
       </md-input-container>
-        <textarea rows="1" ng-model="theCard.body" class="cardText"></textarea>
+        <textarea rows="1" ng-model="theCard.body" class="cardText" placeholder="write description here"></textarea>
       
       <!-- list of comments -->
       <ul>
-        <li ng-repeat="comment in theCard.comments">comment_shows_here</li>
+        <li ng-repeat="comment in theCard.comments">{{ comment.body }}</li>
       <ul>
       <md-input-container class="md-block">
-        <label>Comments</label>
-        <textarea id="comments" rows="1" class="cardText"></textarea>
+        <label>Add a Comment</label>
+        <textarea id="comments" ng-model="data.newComment" rows="1" class="cardText"></textarea>
       </md-input-container>
 
 

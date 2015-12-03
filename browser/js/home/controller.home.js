@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, Socket, loadGrille) {
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CardFactory, Socket, loadGrille) {
     // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
   //1
@@ -19,33 +19,33 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     //   cards: $scope.cards,
     //   lanes: $scope.lanes
     // }
-
+    $scope.yell = function(){console.log("HEYYY")}
     $scope.editCard = function (card) {
-      console.log("editting card:", card)
           var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: 'js/home/template.editCardModal.html',
-            controller: function($scope){
+            controller: function($scope, $uibModalInstance){
               $scope.theCard = card;
+                $scope.ok = function (data) {
+                  $uibModalInstance.close(data);
+                };
+
+                $scope.cancel = function () {
+                  $uibModalInstance.dismiss('cancel');
+                };    
             }
           });
 
-          modalInstance.result.then(function (edittedCard) {
+          modalInstance.result.then(function (comment) {
             //SAVE editted card changes
-              // var spot=newLane.position;
-              // newLane.ownCards = [];
-              // $scope.lanes.splice(spot, 0, newLane);
+            console.log("edittedCard:", comment)
+            CardFactory.cardAddComment(card,comment)
+            console.log("~~~CONTROLLER CardFactory executed")
           }, function () {
             console.log('Modal dismissed at: ' + new Date());
           });
     };
-  $scope.ok = function (data) {
-    $uibModalInstance.close(data);
-  };
 
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };    
 
 
     $scope.addLane = function () {
