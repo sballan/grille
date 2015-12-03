@@ -27,6 +27,9 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
     });
   };
 
+
+
+
   var removeUser = function() {
     $scope.user = null;
   };
