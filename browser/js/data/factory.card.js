@@ -1,13 +1,21 @@
-app.factory('CardFactory',function($http){
+app.factory("CardFactory",function($http){
+	function toData(res) {
+		return res.data
+	}
 	return {
-		cardAddComment: function(card,comment){
-			console.log("~~~FACTORY cardAddComment, card:", card)
-			console.log("~~~FACTORY cardAddComment, comment:", comment)
-			return $http.post('api/board/cards/post/' + card.githubID, comment)
-			.then(function(response){
-				console.log(response.data)
-				return response.data;
-			})
-		}
+			addCard:function(card){
+				return $http.post('/api/cards/post', card)
+				.then(toData)
+			},
+
+
+			updateCard:function(){
+
+			},
+
+
+			deleteCard:function(){
+
+			}
 	}
 })

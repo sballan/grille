@@ -12,16 +12,7 @@ var Lane = require('mongoose').model('Lane');
 module.exports = router;
 
 router.get('/get/all', function(req, res, next) {
-
-	var github = new GitHubApi({
-		debug: true,
-		version: "3.0.0"
-	} );
-
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});
+	var github = req.user.githubAccess;
 
 	// This function is called recursively; theData is an array made up of all the repos from all the pages; it grows each time the function recurses (using tail recursion).
 	function getPages(currentPage, theData) {
@@ -75,16 +66,8 @@ router.get('/get/all', function(req, res, next) {
 	})
 
 router.get('/get/:repo', function(req, res, next) {
-	var github = new GitHubApi({
-		debug: true,
-		version: "3.0.0"
-	} );
+	var github = req.user.githubAccess;
 
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});
-	//console.log("----req user", req.user)
 	var theRepo;
 	var theLane;
 	var theLanes;

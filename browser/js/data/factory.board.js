@@ -65,12 +65,13 @@ app.factory('BoardFactory', function(GitHubFactory) {
 				card.lane = backLog
 			})
 		},
-		pullCard: function(card) {
-
+		addCard: function(card) {
+			viewLanes[card.lane.title].push(card)
+			currentBoard.cards.push(card)
+			this.readLanes()
+			this.writeLanes()
 		},
-		moveCard: function(card, lane, index) {
 
-		},
 		getBoardAndMakeCurrent: function(repoID) {
 			var self = this;
 			return GitHubFactory.getRepo(repoID)
