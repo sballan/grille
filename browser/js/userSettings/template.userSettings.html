@@ -1,27 +1,31 @@
-<div class="boardPage">
-<h3>GrilleBoards</h3>
-<ul>
-	<!-- home(board) works too :) -->
-	<li ui-sref="home({ githubID: board.githubID })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
-		{{ board.name }}
-	</li>
+<div class="boardPage landingFont">
+	<table class="tableStyle" align="center">
+		<td class="colStyle">
+		    <h3 class="centerText">GrilleBoards</h3>
+			<ul>
+				<!-- home(board) works too :) -->
+				<li ui-sref="home({ githubID: board.githubID })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
+					{{ board.name }}
+				</li>
 
-</ul>
+			</ul>
+		</td>
+		<td class="colStyle">
+			<h3 class="centerText">RawBoards</h3>
+			<div ng-show="rawSelected">
+				<ul>
+					<h6>Choose One to put on your Grille</h6>
+					<label>Search: <input ng-model="searchText"></label>
 
-<h3>RawBoards</h3>
-<div ng-show="rawSelected">
-<ul>
-	<h6>Choose One to put on your Grille</h6>
-	<label>Search: <input ng-model="searchText"></label>
+					<li ng-repeat="board in inActiveBoards() | filter:searchText">
+						<!-- { board: board.githubID } -->
+						<!-- <a ui-sref="home()">{{ board.name }}</a> -->
+						<p ng-click="setActive(board.githubID)">{{ board.name }}</p>
 
-	<li ng-repeat="board in inActiveBoards() | filter:searchText">
-		<!-- { board: board.githubID } -->
-		<!-- <a ui-sref="home()">{{ board.name }}</a> -->
-		<p ng-click="setActive(board.githubID)">{{ board.name }}</p>
+					</li>
 
-	</li>
-
-</ul>
-</div>
-
+				</ul>
+			</div>
+		</td>
+	</table>
 </div>

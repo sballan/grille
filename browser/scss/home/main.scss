@@ -68,6 +68,36 @@ hr {
     font-weight: bold;
     font-family: 'Share Tech Mono';
 }
+
+.landingFont{
+    font-weight: bold;
+    font-family: 'Share Tech Mono';
+}
+
+.landingSize1{
+    font-size: 50px;
+}
+
+.landingSize2{
+    font-size: 20px;
+}
+
+.centerText{
+    text-align: center;
+}
+
+.tableStyle{
+    align: center;
+    border: 2px solid black;
+}
+
+.colStyle{
+    border: 1px solid black;
+    vertical-align: top;
+    width: 50%;
+    background-color: #cccccc;
+}
+
 .separator{
     height:100%;
     background-color: blue;
@@ -116,4 +146,6 @@ select.btn-mini + .caret {
     margin-left: -20px;
     margin-top: 9px;
 }
+
+
 
