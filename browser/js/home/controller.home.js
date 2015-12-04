@@ -27,44 +27,45 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     function printer (){
 
     }
-    //1
-    // $scope.cards = setGrille.cards;
-    // $scope.lanes= setGrille.lanes;
-    // $rootScope.currentBoard = {
-    //   cards: $scope.cards,
-    //   lanes: $scope.lanes
-    // }
-    $scope.editCard = function (card) {
-              console.log("card github ID:", card.githubID)
 
+    $scope.openCommentModal = function (card) {
+
+          //Modal view that opens up
           var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: 'js/home/template.editCardModal.html',
             controller: function($scope, $uibModalInstance){
+
+
+              //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
               $scope.theCard = card;
+              
+              //Update a Comment
+              $scope.updateComment = function(comment){
+                CommentFactory.updateComment(card, comment)
+              }
 
-                $scope.ok = function (data) {
-                  console.log("DATA IS:", data)
-                  console.log("scope.theCard", $scope.theCard.comments)
-                  CommentFactory.cardAddComment(card, data)
-                  .then(function(response){
-                    console.log("CommentFactory RESPONSE:", response)
-                    $scope.theCard.comments.push(data)
-                    $uibModalInstance.close(data);
-                  })
+              //Create a Comment
+              $scope.ok = function (data) {
+                CommentFactory.addComment(card, data)
+                .then(function(response){
+                  $scope.theCard.comments.push(data)
+                  $uibModalInstance.close(data);
+                })
+                
+              };
 
-                };
+              //Cancelling from this Modal screen
+              $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+              };
 
-                $scope.cancel = function () {
-                  $uibModalInstance.dismiss('cancel');
-                };
             }
           });
 
           modalInstance.result.then(function () {
-            //SAVE editted card changes
           }, function () {
-            console.log('Modal dismissed at: ' + new Date());
+            // console.log('Modal dismissed at: ' + new Date());
           });
     };
 

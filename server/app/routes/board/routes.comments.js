@@ -8,7 +8,7 @@ var GitHubApi = require('github')
 
 module.exports = router;
 
-router.post('/post/:cardID', function(req,res,next){
+router.post('/:cardID', function(req,res,next){
 	var github = new GitHubApi({
 		debug: true,
 		version: "3.0.0"
@@ -19,7 +19,7 @@ router.post('/post/:cardID', function(req,res,next){
 		token: req.user.accessToken
 	});
 
-	
+	//body of a request we'll send to Github
 	var msg = {
 		user: null,
 		repo: null,
@@ -29,29 +29,70 @@ router.post('/post/:cardID', function(req,res,next){
 
 	Board.findById(req.body.card.board)
 	.then(function(board){
+		//Send the comment to Github with msg body
 		msg.repo = board.name
 		msg.user = board.owner.username
 		var createCommentAsync = Promise.promisify(github.issues.createComment);
-		console.log("msg:", msg)
 		return createCommentAsync(msg)
 	})
 	.then(function(response){
-		//parse the response...
-		console.log("responded~~~~~~~~~")
-		res.send(response)
-		//create new comment...
+		//find the Card the comment was on, so we can update the card in the Database
+		return Card.findOne({ githubID: req.params.cardID})
 	})
-	// .catch(console.log)
+	.then(function(card){
 
-	//console.log
-	//2 persist comment to our DB
-	// console.log("~~~ROUTER , reqbody:", req.body)
-	// Card.findOne({ githubID: req.params.cardID})
-	// .then(function(card){
-	// 	var newComment = new Comment({ body: req.body.comment.body, author: req.user })
-	// 	card.comments.push(newComment)
-	// 	card.save()
-	// 	console.log("~~~ROUTER newly updated card:", card)
-	// 	res.send(card)
-	// })
+		//Add the new comment to the Database
+		var newComment = new Comment({ body: msg.body, author: req.user })
+		card.comments.push(newComment)
+		card.save()
+		res.send(card) 
+	})
+
+})
+
+router.put('/:cardID', function(req,res,next){
+	var github = new GitHubApi({
+		debug: true,
+		version: "3.0.0"
+	} );
+
+	github.authenticate({
+		type: "oauth",
+		token: req.user.accessToken
+	});	
+
+	//body of a request we'll send to Github
+
+	var msg = {
+		user: null,
+		repo: null,
+		id: req.body.card.issueNumber,
+		body: req.body.comment.body
+	}
+
+	Board.findById(req.body.card.board)
+	.then(function(board){
+		//Send the comment to Github with msg body
+		msg.repo = board.name
+		msg.user = board.owner.username
+		var editCommentAsync = Promise.promisify(github.issues.editComment);
+		console.log("~~~msg~~~", msg)
+		return editCommentAsync(msg)
+	})
+	.then(function(response){
+		//find the Card the comment was on, so we can update the card in the Database
+		console.log("RESPONSE:", response)
+		return Card.findOne({ githubID: req.params.cardID})
+	})
+	.then(function(card){
+
+		card.comments.forEach(function(comment){
+			if (comment.githubID == req.body.comment.githubID){
+				comment.body = req.body.comment.body;
+				comment.save()
+			}
+		})
+
+		res.send(card)
+	})
 })
