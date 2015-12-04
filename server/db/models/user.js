@@ -60,6 +60,7 @@ schema.pre('save', function (next) {
 
 });
 
+//OP: yay! does this work?
 schema.virtual('githubAccess').get(function(){
     var self = this;
      var github = new GitHubApi({

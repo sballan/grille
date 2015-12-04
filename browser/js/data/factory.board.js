@@ -1,5 +1,6 @@
 app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 	var currentBoard;
+	var hashLanes = {};
 	//var movingCard;
 	var viewLanes = {};
 
@@ -9,12 +10,19 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 		},
 		setCurrentBoard: function(board) {
 			currentBoard = board
+
+			currentBoard.lanes.forEach(function(lane) {
+				hashLanes[lane.title] = lane._id
+			})
+
 			this.readLanes()
 			this.writeLanes()
 			return currentBoard;
 		},
 		refreshCurrentBoard: function() {
 			var self = this;
+
+			//OP: ES6 => context remains same as outer scope, don't need self
 			GitHubFactory.getRepo(currentBoard.githubID)
 			.then(function(board) {
 				self.setCurrentBoard(board)
@@ -28,7 +36,11 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 
 			for(var lane in viewLanes) {
 				viewLanes[lane].forEach(function(card, index) {
+					var hashLane = hashLanes[lane]
+
 					card.priority = index
+					card.lane = hashLane
+
 					if(card.priority < 0) console.error("writeLanes is broken")
 				})
 				viewLanes[lane].sort(function(a, b) {
@@ -36,11 +48,6 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 				})
 			}
 
-
-			console.log("Cached Cards")
-			currentBoard.cards.forEach(function(card) {
-				console.log(card.issueNumber + ": " + card.priority)
-			})
 		},
 		// Reads the priority of the card and places it in the right lane in the right place
 		readLanes: function() {
@@ -62,6 +69,7 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 			})
 			return viewLanes
 		},
+		//OP: does this need to return something?L
 		sendAllToBacklog: function() {
 			var backLog;
 
@@ -73,6 +81,7 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 				card.lane = backLog
 			})
 		},
+		//OP: does this need to return something?
 		addCard: function(card) {
 			console.log("BOARD ADD CARD", card)
 			//viewLanes[card.lane.title].push(card)
@@ -92,12 +101,24 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 
 		},
 		updateAllPriority: function() {
-			return CardFactory.updatePriorityCards(currentBoard.cards)
+			return CardFactory.updatePriorityMany(currentBoard.cards)
 			.then(function(cards) {
 				cards.forEach(function(card) {
 					currentBoard.cards.forEach(function(c) {
 						if(c.githubID === card.githubID) {
 							c.priority = card.priority
+						}
+					})
+				})
+			})
+		},
+		updateAllLanes: function() {
+			return CardFactory.updateLaneMany(currentBoard.cards)
+			.then(function(cards) {
+				cards.forEach(function(card) {
+					currentBoard.cards.forEach(function(c) {
+						if(c.githubID === card.githubID) {
+							c.lane = card.lane
 						}
 					})
 				})

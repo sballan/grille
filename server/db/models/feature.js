@@ -1,6 +1,8 @@
 'use strict';
 var mongoose = require('mongoose');
 
+//OP: plan on using this?
+
 var featureSchema = new mongoose.Schema({
 	name: String,
 	//branches: [branchSchema]

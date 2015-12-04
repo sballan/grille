@@ -19,6 +19,7 @@ var http = require('http')
 
 module.exports = {
   	getUser: function(accessToken) {
+      //OP: What is going on here?
   		return client.get('/user', function(err, status, body) {
 	  		ghuser.info(function(stuff){
 	  		})

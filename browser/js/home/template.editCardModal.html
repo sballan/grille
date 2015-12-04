@@ -9,7 +9,7 @@
  
       <md-input-container class="md-block">
         <label>Title</label>
-        <textarea rows="1" ng-model="theCard.title" class="cardText" style="font-weight:bold; text-align:center;"></textarea>
+        <textarea rows="1" ng-model="theCard.title" class="cardText" style="font-weight:bold; text-align:center;" aria-label="cartText"></textarea>
       </md-input-container>
 
       <md-input-container md-no-float class="md-block">
@@ -45,10 +45,10 @@
 
 	<div layout layout-sm="column">
 	<md-input-container flex>
-    <md-button> <input type="button" ng-click="reset(form)" value="Reset"></md-button>
+   <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Cancel</md-button>
     </md-input-container>
     <md-input-container flex>
-    <md-button> <input type="submit" ng-click="ok(data)" value="Submit"></md-button>
+    <md-button> <input type="submit" ng-click="ok(data)" value="Submit" aria-label="submitter"></md-button>
     </md-input-container>
     </div>
 

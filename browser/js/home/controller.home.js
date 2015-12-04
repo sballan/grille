@@ -8,13 +8,19 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
   $scope.viewLanes = BoardFactory.getViewLanes()
 
-  $scope.hovered = false;
+  $scope.storyPointRange= ["Clear Points",1,2,3,5,8,13,20,40,100]
+
+  $scope.changePoints= function(){
+    
+  }
 
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
       stop: function(e, ui) {
+        console.log("VIEW LANES", BoardFactory.getViewLanes())
         BoardFactory.writeLanes()
         BoardFactory.updateAllPriority()
+        BoardFactory.updateAllLanes()
       }
     };
 
@@ -29,6 +35,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
             animation: $scope.animationsEnabled,
             templateUrl: 'js/home/template.editCardModal.html',
             controller: function($scope, $uibModalInstance){
+
 
               //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
               $scope.theCard = card;
@@ -52,6 +59,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
               };
+
             }
           });
 
