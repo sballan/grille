@@ -80,9 +80,6 @@ hr {
     white-space: nowrap;       
 }
 
-.story-point{
-    width:10px;
-}
 textarea{
     resize:none;
     width: 100%;
@@ -94,26 +91,51 @@ textarea{
     color:#66A266;
     font-size:.875em;
 }
-.iconic{
+.dropdown-menu{
+    position: absolute;
+    min-width: 100px;
+}
+.story-pointer{
+    background-color: white;
+}
+.individual-point{
     width:100%;
-    height:100%;
-    border:none;
-}
-select.btn {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    width: auto;
 }
 
-select.btn-mini {
-    height: auto;
-    line-height: 14px;
-    padding-right: 16px;
+.dropdown-menu>li>a {
+    color:#428bca;
 }
-
-select.btn-mini + .caret {
-    margin-left: -20px;
-    margin-top: 9px;
+.dropdown ul.dropdown-menu {
+    box-shadow:none;
+    width:60px;
 }
-
+.dropdown ul.dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    z-index: 10;
+}
+.dropdown ul.dropdown-menu:after {
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 14px;
+    z-index: 9;
+}
+.link-point{
+    width:100%;
+}
+.icon-size{
+    vertical-align: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height:.5em;
+    width:.5em;
+}

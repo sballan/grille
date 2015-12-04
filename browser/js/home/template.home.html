@@ -1,46 +1,35 @@
 <section>
-  <div>
-
     <div class="section row connectedItemsExample">
-
-      <div class="lateral">
-        <div class="laneConfig"ng-repeat="(title, lane) in viewLanes">
-
-          <h3 class="laneHeading"> {{ title }} </h3>
-          <ul ui-sortable="sortableOptions" class="list" ng-model="lane">
-            <div ng-repeat="card in lane" class="item">
-              <div class="cardNumber"><p>{{card.issueNumber}}</p></div>
-              <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
-              <div class="row">
-             <!--  <md-input-container class="story-point">
-              <label>Story Points</label>
-              <md-select ng-model="storyPoint">
-                <md-option ng-repeat="number in numbers" value="{{number}}" aria-label="storyPoint">{{number}}</md-option>
-              </md-select> -->
-              <div class="col-sm-4">
-              <i class="fa fa-gavel" ng-click="showPointSelection=!showPointSelection"></i>   
+        <div class="lateral">
+            <div class="laneConfig" ng-repeat="(title, lane) in viewLanes">
+                <h3 class="laneHeading"> {{ title }} </h3>
+                <ul ui-sortable="sortableOptions" class="list" ng-model="lane">
+                    <div ng-repeat="card in lane" class="item">
+                        <div class="cardNumber">
+                            <p>{{card.issueNumber}}</p>
+                        </div>
+                        <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
+                        <div class="row">
+                            <div class="col-sm-4 ">
+                                <div class="dropdown">
+                                    <a class="story-pointer dropdown-toggle" data-toggle="dropdown"><i class="fa fa-hourglass-start icon-size"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-repeat="number in storyPointRange" class="individual-point">
+                                            <a class="link-point">{{number}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="{{card.html_url}}" class="icon-size"><i class="fa fa-github" aria-label="githubLink"></i></a>
+                            </div>
+                            <div class="col-sm-4">
+                                <i class="fa fa-comment icon-size" ng-click="openCommentModal(card)" aria-label="comment"></i>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
             </div>
-
-
-              <!-- <select ng-options="number in storyPointRange"
-                ng-model="selectedNumber"
-              ng-change="changePoints(number)">
-              </select> -->
-              <div class="col-sm-4">
-              <a href="{{card.html_url}}"><i class="fa fa-github" aria-label="githubLink"></i></a>
-              </div>
-              <div class="col-sm-4">
-              <i class="fa fa-comment" ng-click="openCommentModal(card)" aria-label="comment"></i>
-              </div>
-
-              </div>
-            </div>
-          </ul>
-
         </div>
-
-      </div>
-
     </div>
-
 </section>
