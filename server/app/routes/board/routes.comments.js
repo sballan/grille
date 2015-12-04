@@ -62,10 +62,11 @@ router.put('/:cardID', function(req,res,next){
 	});	
 
 	//body of a request we'll send to Github
+
 	var msg = {
 		user: null,
 		repo: null,
-		id: req.params.cardID,
+		id: req.body.card.issueNumber,
 		body: req.body.comment.body
 	}
 
@@ -75,10 +76,12 @@ router.put('/:cardID', function(req,res,next){
 		msg.repo = board.name
 		msg.user = board.owner.username
 		var editCommentAsync = Promise.promisify(github.issues.editComment);
+		console.log("~~~msg~~~", msg)
 		return editCommentAsync(msg)
 	})
 	.then(function(response){
 		//find the Card the comment was on, so we can update the card in the Database
+		console.log("RESPONSE:", response)
 		return Card.findOne({ githubID: req.params.cardID})
 	})
 	.then(function(card){
