@@ -27,11 +27,11 @@ module.exports = function (app) {
                     }
                 } else {
                     return UserModel.create({
-                        githubID: profile.id,
+                        githubID: "" + profile.id,
                         username: profile.username,
                         url: profile.profileUrl,
                         accessToken: accessToken,
-                    });
+                    })
                 }
 
             }).then(function (userToLogin) {

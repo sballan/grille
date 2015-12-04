@@ -4,14 +4,9 @@ var mongoose = require('mongoose');
 var GitHubApi = require('github')
 
 var schema = new mongoose.Schema({
-    name: String,
     username: {
         type: String,
         unique: true
-    },
-    accessToken:{
-        type:String,
-        unique:true
     },
     githubID: {
         type: String,
@@ -22,8 +17,9 @@ var schema = new mongoose.Schema({
     email: {
         type: String
     },
-    password: {
-        type: String
+    accessToken:{
+        type:String,
+        unique:true
     },
     salt: {
         type: String
@@ -32,7 +28,8 @@ var schema = new mongoose.Schema({
     url: String,
     html_url: String,
     organizations_url: String,
-    repos_url: String
+    repos_url: String,
+    avatar_url: String
 
 });
 

@@ -3,6 +3,7 @@ var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
 
+var User = require('mongoose').model('User');
 var Board = require('mongoose').model('Board');
 var Card = require('mongoose').model('Card');
 var Lane = require('mongoose').model('Lane');
@@ -14,12 +15,14 @@ router.get('/:repo', function(req, res, next) {
 	var theRepo;
 	var theLane;
 	var theLanes;
+	var theCards;
 	var hasNextPage;
 
 	var github = req.user.githubAccess;
 
 	var getCommentsAsync =  Promise.promisify(github.issues.getComments)
 	var repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
+	var getCollaboratorsAsync = Promise.promisify(github.repos.getCollaborators)
 
 
 	Board.findOne({ githubID: req.params.repo })
@@ -43,7 +46,7 @@ router.get('/:repo', function(req, res, next) {
 		return repoIssuesAsync(
 		{
 				user: repo.owner.username,
-				repo: theRepo.name,
+				repo: repo.name,
 				per_page: 100,
 				page: currentPage,
 				state: "all"
@@ -74,8 +77,9 @@ router.get('/:repo', function(req, res, next) {
 						})
 					})
 					.then(attachComments)
+					.then(getCollaborators)
 					.then(sendData)
-					.then(null, next);
+					.then(null, next)
 				}
 		})
 		.then(null, next)
@@ -98,13 +102,39 @@ router.get('/:repo', function(req, res, next) {
 		.then(null, next)
 	}
 
+	function getCollaborators(cards) {
+		theCards = cards;
+		return getCollaboratorsAsync(
+			{
+				user: theRepo.owner.username,
+				repo: theRepo.name,
+				per_page: 100
+			})
+			.then(function(collaborators) {
+				collaborators = collaborators.map(function(collaborator) {
+					collaborator = payloadParser.collaborator(collaborator)
+					if(typeof collaborator.githubID === 'string') return collaborator
+				})
+				console.log("All Collaborators", collaborators)
+
+				return Promise.map(collaborators, function(collaborator) {
+					return User.findOneAndUpdate({githubID: collaborator.githubID}, collaborator, {upsert: true, new: true}).select('-accessToken')
+				})
+			})
+			.then(function(collaborators) {
+				theRepo.set({collaborators: collaborators}).populate('collaborators')
+				return theRepo.save()
+			})
+	}
+
 	//OP: res is global, not good
-	function sendData(cards) {
+	function sendData(theBoard) {
 		var theData = {
-			board: theRepo,
-			cards: cards,
+			board: theBoard,
+			cards: theCards,
 			lanes: theLanes
 		}
+		console.log("Finished Board", theBoard)
 		res.send(theData);
 	}
 
