@@ -20,7 +20,7 @@
       <ul>
         <li ng-repeat="comment in theCard.comments">
           <textarea ng-model="comment.body" name="aComment{{$index}}" rows="1" class="cardText">{{ comment.body }}</textarea>
-          <button ng-show="cardForm.aComment{{$index}}.$dirty" ng-click="updateComment(comment)">Save</button>
+          <button ng-show="cardForm.aComment{{$index}}.$dirty && !commentSaved" ng-click="updateComment(comment)">Save</button>
         </li>
       <ul>
 
