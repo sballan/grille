@@ -11,6 +11,7 @@ var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
+//OP: globals again
 var github;
 
 var getCommentsAsync;
@@ -46,9 +47,12 @@ router.get('/:repo', function(req, res, next) {
 			})
 			makeIssues(theRepo, 1, [])
 		})
-		.then(null, console.error)
+		.then(null, console.error) //OP: might as well use next and forward it rather than console.error
 
 });
+
+//OP: GENERAL NOTE: code hygiene
+//OP: may not need to nest .then
 
 function makeIssues(repo, currentPage, theIssues) {
 	//get repo issues
@@ -122,6 +126,7 @@ function attachComments(issues) {
 	.then(null, console.error)
 }
 
+//OP: response is global, not good
 function sendData(cards) {
 	var theData = {
 		board: theRepo,

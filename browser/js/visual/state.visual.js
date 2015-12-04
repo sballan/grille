@@ -3,5 +3,5 @@ app.config(function ($stateProvider) {
         url: '/visual',
         templateUrl: 'js/visual/template.visual.html',
         controller: 'VisualCtrl'
-    });
+    })
 })

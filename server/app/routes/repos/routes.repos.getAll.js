@@ -11,7 +11,9 @@ var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
-var github;
+var github; //OP: because this is global, if two users make requests at the same time, the second user will be used
+//OP: could pass github, getAllAsync, response, data into getPages
+//OP: just don't use it globally whatever you decide to do
 var getAllAsync;
 var response;
 var data;
@@ -39,19 +41,25 @@ function getPages(currentPage, theData) {
 			data = theData.concat(data)
 
 			if(hasNextPage) {
+				//OP: talk to use about doing this recursion differently
 				getPages(currentPage + 1, data)
 			} else {
 				data = data.map(function(repo) {
 					return payloadParser.repo(repo)
 				})
 
+				//OP: do this instead of above
+				// Promise.map(data, function(repo))
+
 				// This puts all the boards from our database that correspond to the github repos in an array
+
 				return Promise.map(data, function(board) {
 
 					return Board.findOne({
 						githubID: board.githubID
 					})
 				})
+				//OP: this .then does not need to be nested
 				.then(dataUpsert)
 			}
 		})
