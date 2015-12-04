@@ -2,22 +2,17 @@ var router = require('express').Router();
 var Card = require('mongoose').model('Card');
 var User = require('mongoose').model('User');
 var Board = require('mongoose').model('Board');
-var Comment = require('mongoose').model('Comment');
+// var Comment = require('mongoose').model('Comment');
 var Promise = require('bluebird')
 var GitHubApi = require('github')
+var payloadParser = require('../../github-data/parsers')
 
 module.exports = router;
 
-router.post('/:cardID', function(req,res,next){
-	var github = new GitHubApi({
-		debug: true,
-		version: "3.0.0"
-	} );
 
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});
+router.post('/:cardID', function(req,res,next){
+	var newComment;
+	var github = req.user.githubAccess;
 
 	//body of a request we'll send to Github
 	var msg = {
@@ -35,38 +30,35 @@ router.post('/:cardID', function(req,res,next){
 		var createCommentAsync = Promise.promisify(github.issues.createComment);
 		return createCommentAsync(msg)
 	})
-	.then(function(response){
+	.then(function(comment){
+		console.log("routes.comment, COMMENT from Github:", comment)
+		newComment = payloadParser.comment(comment)
+		console.log("routes.comment, PARSED COMMENT:", newComment)
+
 		//find the Card the comment was on, so we can update the card in the Database
 		return Card.findOne({ githubID: req.params.cardID})
 	})
 	.then(function(card){
+		//IRRELEVANT var newComment = new Comment({ body: msg.body, author: req.user })
 
 		//Add the new comment to the Database
-		var newComment = new Comment({ body: msg.body, author: req.user })
 		card.comments.push(newComment)
-		card.save()
-		res.send(card) 
+		return card.save()
+	})
+	.then(function(card){
+		res.send(card)
 	})
 
 })
 
 router.put('/:cardID', function(req,res,next){
-	var github = new GitHubApi({
-		debug: true,
-		version: "3.0.0"
-	} );
-
-	github.authenticate({
-		type: "oauth",
-		token: req.user.accessToken
-	});	
-
+	var github = req.user.githubAccess;
+	var editCommentAsync = Promise.promisify(github.issues.editComment);
 	//body of a request we'll send to Github
-
 	var msg = {
 		user: null,
 		repo: null,
-		id: req.body.card.issueNumber,
+		id: req.body.comment.githubID,
 		body: req.body.comment.body
 	}
 
@@ -75,13 +67,10 @@ router.put('/:cardID', function(req,res,next){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
 		msg.user = board.owner.username
-		var editCommentAsync = Promise.promisify(github.issues.editComment);
-		console.log("~~~msg~~~", msg)
 		return editCommentAsync(msg)
 	})
 	.then(function(response){
 		//find the Card the comment was on, so we can update the card in the Database
-		console.log("RESPONSE:", response)
 		return Card.findOne({ githubID: req.params.cardID})
 	})
 	.then(function(card){

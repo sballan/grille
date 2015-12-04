@@ -42,6 +42,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               
               //Update a Comment
               $scope.updateComment = function(comment){
+                console.dir(comment)
                 CommentFactory.updateComment(card, comment)
               }
 
