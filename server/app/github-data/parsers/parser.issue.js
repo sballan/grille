@@ -1,5 +1,4 @@
 var user = require('./parser.user');
-var _ = require('lodash');
 
 function parse(body) {
 	if(!body) return null;
