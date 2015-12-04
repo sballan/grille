@@ -12,15 +12,15 @@
               <div class="cardNumber"><p>{{card.issueNumber}}</p></div>
               <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
               <div>
-              <md-input-container>
+             <!--  <md-input-container class="story-point">
               <label>Story Points</label>
               <md-select ng-model="storyPoint">
-                <md-option ng-repeat="number in numbers" value="{{number}}">{{number}}</md-option>
-              </md-select>
+                <md-option ng-repeat="number in numbers" value="{{number}}" aria-label="storyPoint">{{number}}</md-option>
+              </md-select> -->
             </md-input-container>
-              <md-button><i class="fa fa-github" ng-click="githubLink()"></i></md-button>
+              <a href="{{card.html_url}}"><i class="fa fa-github" aria-label="githubLink"></i></a>
 
-              <md-button><i class="fa fa-comment" ng-click="editCard(card)"></i></md-button>
+              <i class="fa fa-comment" ng-click="editCard(card)" aria-label="comment"></i>
               </div>
             </div>
           </ul>
