@@ -3,11 +3,7 @@ var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
 
-var GitHubApi = require('github')
-
 var Board = require('mongoose').model('Board');
-var Card = require('mongoose').model('Card');
-var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 

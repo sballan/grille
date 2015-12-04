@@ -3,16 +3,11 @@ var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
 
-var GitHubApi = require('github')
-
 var Board = require('mongoose').model('Board');
 var Card = require('mongoose').model('Card');
 var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
-
-//OP: globals again
-
 
 router.get('/:repo', function(req, res, next) {
 	// This is done to let us factor out functions that can refer to the response
