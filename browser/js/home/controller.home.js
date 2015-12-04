@@ -42,7 +42,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               
               //Update a Comment
               $scope.updateComment = function(comment, cardForm){
-                console.log("cardDirt", cardDirt)
                 cardForm.$setPristine();
                 CommentFactory.updateComment(card, comment)
               }
