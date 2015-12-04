@@ -49,10 +49,16 @@ app.factory("CardFactory",function($http){
 			updateCard:function(){
 
 			},
-
-
-			deleteCard:function(){
-
-			}
+			changePoints:function(card,points){
+				// if(points="Clear"){
+				//  points=null;
+				// }
+					
+				return $http.put('/api/cards/put/storyPoints/'+card._id, {storyPoints:points})
+				.then(function(response){
+					console.log("response.data",response.data);
+					return response.data;
+				});
+			},
 	}
 })
