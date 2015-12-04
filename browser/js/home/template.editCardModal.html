@@ -3,10 +3,9 @@
    
     </md-input-container>
   </md-content>
+
   <md-content layout-padding>
     <form name="cardForm">
-    
- 
       <md-input-container class="md-block">
         <label>Title</label>
         <textarea rows="1" ng-model="theCard.title" class="cardText" style="font-weight:bold; text-align:center;" aria-label="cartText"></textarea>
@@ -20,9 +19,8 @@
       <!-- List of comments -->
       <ul>
         <li ng-repeat="comment in theCard.comments">
-          <textarea ng-model="comment.body" name="sometext" rows="1" class="cardText">{{ comment.body }}</textarea>
-          <button ng-click="updateComment(comment)">Save</button>
-
+          <textarea ng-model="comment.body" name="aComment{{$index}}" rows="1" class="cardText">{{ comment.body }}</textarea>
+          <button ng-show="cardForm.aComment{{$index}}.$dirty" ng-click="updateComment(comment)">Save</button>
         </li>
       <ul>
 
@@ -33,16 +31,15 @@
 
 
 	<div layout layout-sm="column">
-	<md-input-container flex>
-   <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Cancel</md-button>
+  	<md-input-container flex>
+     <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Cancel</md-button>
     </md-input-container>
-    <md-input-container flex>
-    <md-button> <input type="submit" ng-click="ok(data)" value="Submit" aria-label="submitter"></md-button>
-    </md-input-container>
-    </div>
 
- 
-      </div>
+    <md-input-container flex>
+      <md-button> <input type="submit" ng-click="ok(data)" value="Submit" aria-label="submitter"></md-button>
+    </md-input-container>
+  </div>
+
     </form>
   </md-content>
 
