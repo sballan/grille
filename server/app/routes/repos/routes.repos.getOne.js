@@ -56,27 +56,27 @@ router.get('/:repo', function(req, res, next) {
 
 				if(hasNextPage) {
 					return makeIssues(repo, currentPage + 1, issues);
+				} else {
+
+					return Promise.map(issues, function(issue) {
+						var parsed_issue = payloadParser.issue(issue);
+						parsed_issue.board = theRepo._id
+
+						return Card.findOne({ githubID: parsed_issue.githubID })
+						.then(function(card) {
+							if(!card) {
+								parsed_issue.lane = theLane._id
+
+								return Card.create(parsed_issue)
+							} else {
+								return card.set(parsed_issue).save()
+							}
+						})
+					})
+					.then(attachComments)
+					.then(sendData)
+					.then(null, next);
 				}
-
-			return Promise.map(issues, function(issue) {
-				var parsed_issue = payloadParser.issue(issue);
-				parsed_issue.board = theRepo._id
-
-				return Card.findOne({ githubID: parsed_issue.githubID })
-				.then(function(card) {
-					if(!card) {
-						parsed_issue.lane = theLane._id
-
-						return Card.create(parsed_issue)
-					} else {
-						return card.set(parsed_issue).save()
-					}
-				})
-			})
-			.then(attachComments)
-			.then(sendData)
-			.then(null, next);
-
 		})
 		.then(null, next)
 	}
@@ -85,16 +85,12 @@ router.get('/:repo', function(req, res, next) {
 		return Promise.map(issues, function(issue) {
 			return getCommentsAsync({user: theRepo.owner.username, repo: theRepo.name, number: issue.issueNumber, per_page: 100})
 			.then(function(comments) {
-				comments.forEach(function(comment) {
+				comments = comments.map(function(comment) {
 					comment = payloadParser.comment(comment)
-					if(!comment.githubID) comment = undefined
+					if(comment) return comment
 				})
 
-
-				comments = comments.filter(function(comment) {
-					return !!comment
-				})
-
+				console.log("Comments", comments)
 				return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
 				.populate('comments lane')
 			})
