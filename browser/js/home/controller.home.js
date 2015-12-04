@@ -44,10 +44,12 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               $scope.theCard = card;
               
               //Update a Comment
-              $scope.updateComment = function(comment){
-                console.dir(comment)
+              $scope.updateComment = function(comment, cardForm){
+                console.log("cardDirt", cardDirt)
+                cardForm.$setPristine();
                 CommentFactory.updateComment(card, comment)
               }
+              //$scope.cardForm.comments = [];
 
               //Create a Comment
               $scope.ok = function (data) {
