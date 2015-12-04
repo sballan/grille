@@ -1,5 +1,5 @@
 
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille) {
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory) {
 
     // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
@@ -8,10 +8,13 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
   $scope.viewLanes = BoardFactory.getViewLanes()
 
-  $scope.storyPointRange= ["Clear Points",1,2,3,5,8,13,20,40,100]
+  $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
-  $scope.changePoints= function(){
-    
+  $scope.changePoints= function(card,points){
+    CardFactory.changePoints(card,points)
+    .then(function(updatedCard){
+      card.storyPoints=updatedCard.storyPoints;
+    })
   }
 
 	$scope.sortableOptions = {

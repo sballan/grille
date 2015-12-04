@@ -93,10 +93,11 @@ textarea{
 }
 .dropdown-menu{
     position: absolute;
-    min-width: 100px;
+    min-width: 60px;
 }
 .story-pointer{
     background-color: white;
+    cursor:pointer;
 }
 .individual-point{
     width:100%;
