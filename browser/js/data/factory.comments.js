@@ -8,6 +8,7 @@ app.factory('CommentFactory',function($http){
 			})
 		},
 		updateComment: function(card,comment){
+			return $http.put('api/board/comments/' + card.githubID, {comment: comment, card: card})
 			console.log("~FAC EDITCOMMENT", comment)
 		}
 

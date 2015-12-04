@@ -17,11 +17,11 @@
       </md-input-container>
         <textarea rows="1" ng-model="theCard.body" class="cardText" placeholder="write description here"></textarea>
       
-      <!-- list of comments -->
+      <!-- List of comments -->
       <ul>
         <li ng-repeat="comment in theCard.comments">
           <textarea ng-model="comment.body" name="sometext" rows="1" class="cardText">{{ comment.body }}</textarea>
-          <button ng-click="updateComment(comment.body)">Save</button>
+          <button ng-click="updateComment(comment)">Save</button>
 
   <!--         <button ng-hide="editing" ng-click="editing = true">Edit</button>
           <button ng-show="editing" ng-click="editing = false">Save</button> -->

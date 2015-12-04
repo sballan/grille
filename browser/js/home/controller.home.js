@@ -22,19 +22,22 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
     }
 
-    $scope.saveComment = function (card) {
+    $scope.openCommentModal = function (card) {
+
+          //Modal view that opens up
           var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: 'js/home/template.editCardModal.html',
             controller: function($scope, $uibModalInstance){
 
+              //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
+              $scope.theCard = card;
+              
               //Update a Comment
               $scope.updateComment = function(comment){
                 CommentFactory.updateComment(card, comment)
               }
-              
-              $scope.theCard = card;
-              
+
               //Create a Comment
               $scope.ok = function (data) {
                 CommentFactory.addComment(card, data)
@@ -45,6 +48,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
                 
               };
 
+              //Cancelling from this Modal screen
               $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
               };
