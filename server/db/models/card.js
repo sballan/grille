@@ -21,7 +21,8 @@ var cardSchema = new mongoose.Schema({
 		type: Number,
 		unique: true
 	},
-	storyPoints:Number,
+	//fibonnaci numbers used in agile/scrum
+	storyPoints:{type:Number, enum:[1,2,3,5,8,13,20,40,100]},
 	issueNumber: Number,
 	title: String,
 	body: String,

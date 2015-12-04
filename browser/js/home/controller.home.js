@@ -8,7 +8,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
   $scope.viewLanes = BoardFactory.getViewLanes()
 
-  $scope.hovered = false;
+  $scope.numbers= [1,2,3,5,8,13,20,40,100]
 
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
