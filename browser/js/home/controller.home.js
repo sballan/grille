@@ -13,8 +13,10 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
       stop: function(e, ui) {
+        console.log("VIEW LANES", BoardFactory.getViewLanes())
         BoardFactory.writeLanes()
         BoardFactory.updateAllPriority()
+        BoardFactory.updateAllLanes()
       }
     };
 
@@ -46,7 +48,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
                     $scope.theCard.comments.push(data)
                     $uibModalInstance.close(data);
                   })
-                  
+
                 };
 
                 $scope.cancel = function () {

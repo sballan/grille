@@ -5,12 +5,43 @@ app.factory("CardFactory",function($http){
 	return {
 			addCard:function(card){
 				// card.lane = card.lane._id;
-				console.log('CardFactory', card)
 				return $http.post('/api/cards/post', card)
 				.then(toData)
 			},
-			updatePriorityCards: function(cards) {
-				return $http.put('/api/cards/put/priority/many', cards)
+			updatePriorityMany: function(cards) {
+				var data = []
+
+				cards.forEach(function(card) {
+					data.push({
+						_id: card._id,
+						githubID: card.githubID,
+						priority: card.priority
+					})
+				})
+
+				return $http.put('/api/cards/put/priority/many', data)
+				.then(toData)
+			},
+			updateLaneOne: function(card) {
+				var data = {
+					_id: card._id,
+					githubID: card.githubID,
+					lane: card.lane._id
+				}
+				return $http.put('/api/cards/put/lane/' + card.githubID, data)
+			},
+			updateLaneMany: function(cards) {
+				var data = []
+
+				cards.forEach(function(card) {
+					data.push({
+						_id: card._id,
+						githubID: card.githubID,
+						lane: card.lane
+					})
+				})
+
+				return $http.put('/api/cards/put/lane/many', data)
 				.then(toData)
 			},
 
