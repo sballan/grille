@@ -8,6 +8,7 @@ module.exports = router;
 router.use('/board', require('./board'));
 router.use('/cards', require('./cards'));
 router.use('/repos', require('./repos'));
+router.use('/comments', require('./comments'));
 
 router.post('/webhooks', function(req, res, next) {
 	//emit to a board via room

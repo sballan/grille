@@ -10,27 +10,16 @@
           <ul ui-sortable="sortableOptions" class="list" ng-model="lane">
             <div ng-repeat="card in lane" class="item">
               <div class="cardNumber"><p>{{card.issueNumber}}</p></div>
-              <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
+                <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
               <div class="row">
-             <!--  <md-input-container class="story-point">
-              <label>Story Points</label>
-              <md-select ng-model="storyPoint">
-                <md-option ng-repeat="number in numbers" value="{{number}}" aria-label="storyPoint">{{number}}</md-option>
-              </md-select> -->
               <div class="col-sm-4">
-              <i class="fa fa-gavel" ng-click="showPointSelection=!showPointSelection"></i>   
+                <i class="fa fa-gavel" ng-click="showPointSelection=!showPointSelection"></i>   
             </div>
-
-
-              <!-- <select ng-options="number in storyPointRange"
-                ng-model="selectedNumber"
-              ng-change="changePoints(number)">
-              </select> -->
               <div class="col-sm-4">
-              <a href="{{card.html_url}}"><i class="fa fa-github" aria-label="githubLink"></i></a>
+                <a href="{{card.html_url}}"><i class="fa fa-github" aria-label="githubLink"></i></a>
               </div>
               <div class="col-sm-4">
-              <i class="fa fa-comment" ng-click="openCommentModal(card)" aria-label="comment"></i>
+                <i class="fa fa-comment" ng-click="openCommentModal(card)" aria-label="comment"></i>
               </div>
 
               </div>
