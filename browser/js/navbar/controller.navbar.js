@@ -4,10 +4,6 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
   $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
   $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
-  $scope.items = [{ label: 'Home', state: 'home' },
-  { label: 'Admin', state: 'membersOnly', auth: true },
-  { label: 'Charts', state: 'visual' }];
-
   $scope.isOpen = false;
   $scope.user = null;
 
@@ -17,7 +13,8 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
 
   $scope.logout = function() {
     AuthService.logout().then(function() {
-      $state.go('home');
+      $scope.user = null;
+      $state.go('landing');
     });
   };
 
@@ -27,9 +24,6 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
     });
   };
 
-
-
-
   var removeUser = function() {
     $scope.user = null;
   };
@@ -38,10 +32,8 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
 
   $scope.hovered = false;
   $scope.sortableOptions = {
-    connectWith: '.connectedItemsExample .list' //need this to use ui-sortable across 2 lists
+    connectWith: '.connectedItemsExample .list'
   };
-  // $scope.lanes = BoardFactory.getCurrentBoard().lanes
-  // $scope.cards = BoardFactory.getCurrentBoard().cards
 
   $scope.animationsEnabled = true;
 

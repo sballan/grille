@@ -3,34 +3,26 @@ var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
 
-var GitHubApi = require('github')
-
+var User = require('mongoose').model('User');
 var Board = require('mongoose').model('Board');
 var Card = require('mongoose').model('Card');
 var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
-//OP: globals again
-var github;
-
-var getCommentsAsync;
-var repoIssuesAsync;
-
-var theRepo;
-var theLane;
-var theLanes;
-var hasNextPage;
-var response;
-
 router.get('/:repo', function(req, res, next) {
 	// This is done to let us factor out functions that can refer to the response
-	response = res;
+	var theRepo;
+	var theLane;
+	var theLanes;
+	var theCards;
+	var hasNextPage;
 
-	github = req.user.githubAccess;
+	var github = req.user.githubAccess;
 
-	getCommentsAsync =  Promise.promisify(github.issues.getComments)
-	repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
+	var getCommentsAsync =  Promise.promisify(github.issues.getComments)
+	var repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
+	var getCollaboratorsAsync = Promise.promisify(github.repos.getCollaborators)
 
 
 	Board.findOne({ githubID: req.params.repo })
@@ -47,92 +39,103 @@ router.get('/:repo', function(req, res, next) {
 			})
 			makeIssues(theRepo, 1, [])
 		})
-		.then(null, console.error) //OP: might as well use next and forward it rather than console.error
+		.then(null, next)
 
-});
+	function makeIssues(repo, currentPage, theIssues) {
+		//get repo issues
+		return repoIssuesAsync(
+		{
+				user: repo.owner.username,
+				repo: repo.name,
+				per_page: 100,
+				page: currentPage,
+				state: "all"
+			})
 
-//OP: GENERAL NOTE: code hygiene
-//OP: may not need to nest .then
+		.then(function(issues) {
+				hasNextPage = github.hasNextPage(issues.meta.link)
 
-function makeIssues(repo, currentPage, theIssues) {
-	//get repo issues
-	return repoIssuesAsync(
-	{
-			user: repo.owner.username,
-			repo: theRepo.name,
-			per_page: 100,
-			page: currentPage,
-			state: "all"
-		})
+				issues = theIssues.concat(issues)
 
-	.then(function(issues) {
-		console.log("-----01", issues)
-			hasNextPage = github.hasNextPage(issues.meta.link)
-
-			issues = theIssues.concat(issues)
-
-			if(hasNextPage) {
-				return makeIssues(repo, currentPage + 1, issues);
-			}
-
-		return Promise.map(issues, function(issue) {
-			console.log("-----02", issue)
-			var parsed_issue = payloadParser.issue(issue);
-			parsed_issue.board = theRepo._id
-
-			return Card.findOne({ githubID: parsed_issue.githubID })
-			.then(function(card) {
-				console.log("-----03", card)
-				if(!card) {
-					parsed_issue.lane = theLane._id
-
-					return Card.create(parsed_issue)
+				if(hasNextPage) {
+					return makeIssues(repo, currentPage + 1, issues);
 				} else {
-					return card.set(parsed_issue).save()
+
+					return Promise.map(issues, function(issue) {
+						var parsed_issue = payloadParser.issue(issue);
+						parsed_issue.board = theRepo._id
+
+						return Card.findOne({ githubID: parsed_issue.githubID })
+						.then(function(card) {
+							if(!card) {
+								parsed_issue.lane = theLane._id
+
+								return Card.create(parsed_issue)
+							} else {
+								return card.set(parsed_issue).save()
+							}
+						})
+					})
+					.then(attachComments)
+					.then(getCollaborators)
+					.then(sendData)
+					.then(null, next)
 				}
-			})
 		})
-		.then(attachComments)
-		.then(sendData)
-		.then(null, function(err) {
-			console.error("ERROR - ", err);
-			response.status(404).send(err);
-		});
-
-	})
-	.then(null, console.error)
-}
-
-function attachComments(issues) {
-	console.log("-----04", issues)
-	return Promise.map(issues, function(issue) {
-		return getCommentsAsync({user: theRepo.owner.username, repo: theRepo.name, number: issue.issueNumber, per_page: 100})
-		.then(function(comments) {
-			comments.forEach(function(comment) {
-				comment = payloadParser.comment(comment)
-				if(!comment.githubID) comment = undefined
-			})
-
-
-			comments = comments.filter(function(comment) {
-				return !!comment
-			})
-
-			//console.log("All the comments", comments)
-			return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
-			.populate('comments lane')
-		})
-	})
-	.then(null, console.error)
-}
-
-//OP: response is global, not good
-function sendData(cards) {
-	var theData = {
-		board: theRepo,
-		cards: cards,
-		lanes: theLanes
+		.then(null, next)
 	}
-	response.send(theData);
-}
 
+	function attachComments(issues) {
+		return Promise.map(issues, function(issue) {
+			return getCommentsAsync({user: theRepo.owner.username, repo: theRepo.name, number: issue.issueNumber, per_page: 100})
+			.then(function(comments) {
+				comments = comments.map(function(comment) {
+					comment = payloadParser.comment(comment)
+					if(comment) return comment
+				})
+
+				console.log("Comments", comments)
+				return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
+				.populate('comments lane')
+			})
+		})
+		.then(null, next)
+	}
+
+	function getCollaborators(cards) {
+		theCards = cards;
+		return getCollaboratorsAsync(
+			{
+				user: theRepo.owner.username,
+				repo: theRepo.name,
+				per_page: 100
+			})
+			.then(function(collaborators) {
+				collaborators = collaborators.map(function(collaborator) {
+					collaborator = payloadParser.collaborator(collaborator)
+					if(typeof collaborator.githubID === 'string') return collaborator
+				})
+				console.log("All Collaborators", collaborators)
+
+				return Promise.map(collaborators, function(collaborator) {
+					return User.findOneAndUpdate({githubID: collaborator.githubID}, collaborator, {upsert: true, new: true}).select('-accessToken')
+				})
+			})
+			.then(function(collaborators) {
+				theRepo.set({collaborators: collaborators}).populate('collaborators')
+				return theRepo.save()
+			})
+	}
+
+	//OP: res is global, not good
+	function sendData(theBoard) {
+		var theData = {
+			board: theBoard,
+			cards: theCards,
+			lanes: theLanes
+		}
+		console.log("Finished Board", theBoard)
+		res.send(theData);
+	}
+
+})
