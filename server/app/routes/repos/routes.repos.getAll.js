@@ -11,72 +11,63 @@ var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
-var github; //OP: because this is global, if two users make requests at the same time, the second user will be used
-//OP: could pass github, getAllAsync, response, data into getPages
-//OP: just don't use it globally whatever you decide to do
-var getAllAsync;
-var response;
-var data;
-
 router.get('/', function(req, res, next) {
-	response = res;
-	github = req.user.githubAccess;
 
-	getAllAsync = Promise.promisify(github.repos.getAll)
+	var response;
+
+	var github = req.user.githubAccess;
+
+	var getAllAsync = Promise.promisify(github.repos.getAll)
 
 	// This function is called recursively, to get all the pages of repos
 	getPages(1, [])
 
-})
+	function getPages(currentPage, theData) {
+		// returns all 100 repos from the currentPage
+		return getAllAsync({ per_page: 100, page: currentPage, sort: 'updated' })
+		.then(function(data) {
 
-function getPages(currentPage, theData) {
-	// returns all 100 repos from the currentPage
-	return getAllAsync({ per_page: 100, page: currentPage, sort: 'updated' })
-		.then(function(d) {
-
-			data = d
 			var hasNextPage = github.hasNextPage(data.meta.link)
 
 			// Here the list of repos is concatenated with the list from the previous recursion
 			data = theData.concat(data)
 
 			if(hasNextPage) {
-				//OP: talk to use about doing this recursion differently
 				getPages(currentPage + 1, data)
 			} else {
+
 				data = data.map(function(repo) {
 					return payloadParser.repo(repo)
 				})
 
-				//OP: do this instead of above
-				// Promise.map(data, function(repo))
-
 				// This puts all the boards from our database that correspond to the github repos in an array
-
 				return Promise.map(data, function(board) {
 
 					return Board.findOne({
 						githubID: board.githubID
 					})
 				})
-				//OP: this .then does not need to be nested
 				.then(dataUpsert)
 			}
-		})
-}
 
-function dataUpsert(boards) {
-	Promise.map(boards, function(board, index) {
-		if (!board) board = { githubID: null }
+			function dataUpsert(boards) {
+				Promise.map(boards, function(board, index) {
+					if (!board) board = { githubID: null }
 
-		return Board.findOneAndUpdate({
-			githubID: board.githubID
-		}, data[index], {
-			upsert: true,
-			new: true
+					return Board.findOneAndUpdate({
+						githubID: board.githubID
+					}, data[index], {
+						upsert: true,
+						new: true
+					})
+				})
+				.then(function(boards) {
+					res.send(boards)
+				})
+			}
+
 		})
-	})
-	.then(function(boards) {
-		response.send(boards)
-	})
-}
+	}
+
+})
+
