@@ -27,27 +27,33 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
             animation: $scope.animationsEnabled,
             templateUrl: 'js/home/template.editCardModal.html',
             controller: function($scope, $uibModalInstance){
+
+              //Update a Comment
+              $scope.updateComment = function(comment){
+                CommentFactory.updateComment(card, comment)
+              }
+              
               $scope.theCard = card;
+              
+              //Create a Comment
+              $scope.ok = function (data) {
+                CommentFactory.addComment(card, data)
+                .then(function(response){
+                  $scope.theCard.comments.push(data)
+                  $uibModalInstance.close(data);
+                })
+                
+              };
 
-                $scope.ok = function (data) {
-                  CommentFactory.addComment(card, data)
-                  .then(function(response){
-                    $scope.theCard.comments.push(data)
-                    $uibModalInstance.close(data);
-                  })
-                  
-                };
-
-                $scope.cancel = function () {
-                  $uibModalInstance.dismiss('cancel');
-                };
+              $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+              };
             }
           });
 
           modalInstance.result.then(function () {
-            //SAVE editted card changes
           }, function () {
-            console.log('Modal dismissed at: ' + new Date());
+            // console.log('Modal dismissed at: ' + new Date());
           });
     };
 

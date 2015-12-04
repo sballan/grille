@@ -20,16 +20,23 @@
       <!-- list of comments -->
       <ul>
         <li ng-repeat="comment in theCard.comments">
-          <textarea rows="1" class="cardText">{{ comment.body }}</textarea>
-           <span ng-hide="editing">
-    {{name}} <button ng-click="editing = true">Edit</button>
-  </span>
-  <span ng-show="editing">
-    <input type="text" ng-model="name"> 
-    <button ng-click="editing = false">Save</button>
-  </span>
+          <textarea ng-model="comment.body" name="sometext" rows="1" class="cardText">{{ comment.body }}</textarea>
+          <button ng-click="updateComment(comment.body)">Save</button>
+
+  <!--         <button ng-hide="editing" ng-click="editing = true">Edit</button>
+          <button ng-show="editing" ng-click="editing = false">Save</button> -->
+
+<!--            <span ng-hide="editing">
+             <button ng-click="editing = true">Edit</button>
+           </span>
+
+          <span ng-show="editing">
+            <input type="text" ng-model="name"> 
+            <button ng-click="editing = false">Save</button>
+          </span> -->
         </li>
       <ul>
+
       <md-input-container class="md-block">
         <label>Add a Comment</label>
         <textarea id="comments" ng-model="data.body" rows="1" class="cardText"></textarea>

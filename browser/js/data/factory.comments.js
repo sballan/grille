@@ -7,8 +7,8 @@ app.factory('CommentFactory',function($http){
 				return response.data;
 			})
 		},
-		editComment: function(card,comment){
-			
+		updateComment: function(card,comment){
+			console.log("~FAC EDITCOMMENT", comment)
 		}
 
 	}
