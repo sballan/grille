@@ -1,5 +1,5 @@
 app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
-	var currentBoard;
+	var currentBoard = null;
 	var hashLanes = {};
 	//var movingCard;
 	var viewLanes = {};
@@ -18,6 +18,9 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 			this.readLanes()
 			this.writeLanes()
 			return currentBoard;
+		},
+		removeCurrentBoard: function() {
+			currentBoard = null;
 		},
 		refreshCurrentBoard: function() {
 			var self = this;

@@ -19,7 +19,7 @@ app.config(function ($stateProvider) {
 
 
 // This app.run is for controlling access to specific states.
-app.run(function ($rootScope, AuthService, $state, $window) {
+app.run(function ($rootScope, AuthService, $state, $window, BoardFactory) {
 
     // The given state requires an authenticated user.
     var destinationStateRequiresAuth = function (state) {
@@ -28,7 +28,11 @@ app.run(function ($rootScope, AuthService, $state, $window) {
 
     // $stateChangeStart is an event fired
     // whenever the process of changing a state begins.
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+
+        if (toState.name === 'userSettings') {
+            BoardFactory.removeCurrentBoard();
+        }
 
         if (toState.external) {
             event.preventDefault();
@@ -62,5 +66,7 @@ app.run(function ($rootScope, AuthService, $state, $window) {
         });
 
     });
+
+    
 
 });
