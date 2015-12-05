@@ -24,10 +24,42 @@ hr {
   }
 }
 
+#commentText{
+    width: 75%;
+}
 
+#commentsList{
+    list-style-type: none;
+}
+
+#comments {
+    border: 2px solid grey;
+    border-radius: 3px;
+}
+
+#AddAComment { 
+    width:80%;
+    margin:auto;
+}
+
+#deleteCommentButton {
+    border-radius: 15px;
+    padding: 0px 5px 0px 5px;
+    // padding-right: 4px;
+    // padding-bottom: 0px;
+    // padding-left: 4px;
+}
 .section {
 	margin-top: 30px;
 	margin-bottom: 30px;
+}
+
+md-content {
+    form {
+        ul {
+            padding-left:60px
+        }
+    }
 }
 
 .list {

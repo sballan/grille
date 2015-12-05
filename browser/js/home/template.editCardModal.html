@@ -4,31 +4,33 @@
     </md-input-container>
   </md-content>
 
-  <pre>
-
-  </pre>
-
   <md-content layout-padding>
     <form name="cardForm">
       <md-input-container class="md-block">
         <label>Title</label>
-        <textarea rows="1" ng-model="theCard.title" class="cardText" style="font-weight:bold; text-align:center;" aria-label="cartText"></textarea>
+        <textarea rows="1" ng-model="modalCard.title" class="cardText" style="font-weight:bold; text-align:center;" aria-label="cartText"></textarea>
       </md-input-container>
 
       <md-input-container md-no-float class="md-block">
         <label>Description</label>
       </md-input-container>
-        <textarea rows="1" ng-model="theCard.body" class="cardText" placeholder="write description here"></textarea>
+        <textarea rows="1" ng-model="modalCard.body" class="cardText" placeholder="write description here"></textarea>
       
-      <!-- List of comments -->
+      <!-- List of Comments -->
       <ul>
-        <li ng-repeat="comment in theCard.comments">
-          <textarea ng-model="comment.body" name="aComment{{$index}}" rows="1" class="cardText">{{ comment.body }}</textarea>
+        <li id="commentsList" ng-repeat="comment in modalCard.comments">
+          <textarea id="commentText" ng-model="comment.body" name="aComment{{$index}}" rows="1" class="cardText">{{ comment.body }}</textarea>
           <button ng-show="cardForm.aComment{{$index}}.$dirty" ng-click="updateComment(comment, cardForm)">Save</button>
-        </li>
-      <ul>
 
-      <md-input-container class="md-block">
+          <button id="deleteCommentButton" class="btn btn-default btn-circle" ng-click="deleteComment(comment)">
+            <i class="fa fa-times"></i>
+          </button>
+
+        </li>
+      </ul>
+
+      <!-- Add a Comment -->
+      <md-input-container id="AddAComment" class="md-block">
         <label>Add a Comment</label>
         <textarea id="comments" ng-model="data.body" rows="1" class="cardText"></textarea>
       </md-input-container>

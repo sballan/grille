@@ -41,7 +41,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
 
               //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
-              $scope.theCard = card;
+              $scope.modalCard = card;
               
               //Update a Comment
               $scope.updateComment = function(comment, cardForm){
@@ -54,12 +54,21 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               $scope.ok = function (data) {
                 CommentFactory.addComment(card, data)
                 .then(function(response){
-                  $scope.theCard.comments.push(data)
+                  $scope.modalCard.comments.push(data)
                   $uibModalInstance.close(data);
                 })
                 
               };
 
+              //Delete a Comment
+              $scope.deleteComment = function(comment){
+                CommentFactory.deleteComment(card, comment)
+                .then(function(updatedCommentsArray){
+                  console.log("commentFactory.deleteComment RESPONSE YO")
+                  $scope.modalCard.comments = updatedCommentsArray;
+                })
+                // $scope.modalCard.comments.forEach
+              }
               //Cancelling from this Modal screen
               $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
