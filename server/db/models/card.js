@@ -47,7 +47,7 @@ var cardSchema = new mongoose.Schema({
 	updated_at: Date,
 	closed_at: Date,
 	due_on: Date,
-
+	sprint:{type:mongoose.Schema.Types.ObjectId, ref:'Sprint'},
 	url: String,
 	labels_url: String,
 	comments_url: String,

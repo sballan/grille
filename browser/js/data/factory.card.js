@@ -50,15 +50,11 @@ app.factory("CardFactory",function($http){
 
 			},
 			changePoints:function(card,points){
-				console.log("points",points)
 				if(points=="Clear"){
-					console.log("got in where i shouldnt be")
 				 points=null;
-				}
-					
+				}		
 				return $http.put('/api/cards/put/storyPoints/'+card._id, {storyPoints:points})
 				.then(function(response){
-					console.log("response.data",response.data);
 					return response.data;
 				});
 			},

@@ -24,7 +24,6 @@ hr {
   }
 }
 
-
 .section {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -50,7 +49,7 @@ hr {
 	font-size: 1.1em;
 	font-weight: bold;
 	text-align: center;
-	cursor: move;
+	cursor: default;
 }
 
 
@@ -170,4 +169,14 @@ textarea{
     padding-bottom: 0px;
     height:.5em;
     width:.5em;
+}
+.card-sprint{
+    padding-bottom: 0%;
+    text-align: right;
+    color:#68228B;
+    font-size:.875em;
+    cursor:pointer;  
+}
+a:hover{
+    text-decoration: none;
 }

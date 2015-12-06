@@ -6,7 +6,8 @@
                 <ul ui-sortable="sortableOptions" class="list" ng-model="lane">
                     <div ng-repeat="card in lane" class="item">
                         <div class="cardNumber">
-                            <p>{{card.issueNumber}}</p>
+                            <p>{{card.issueNumber}}</p><p ng-hide="card.sprint" class="card-sprint">Sprint</p>
+                        <!--   <a><span ng-show="card.sprint" class="card-sprint">{{card.sprint}}</span></a> -->
                         </div>
                         <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
                         <div class="row">

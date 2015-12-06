@@ -4,3 +4,4 @@
 require('./user');
 require('./board');
 require('./card');
+require('./sprint');
