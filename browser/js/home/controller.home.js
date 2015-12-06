@@ -42,6 +42,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
               //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
               $scope.modalCard = card;
+              console.log("SCOPEMODALCARD:", $scope.modalCard)
               
               //Update a Comment
               $scope.updateComment = function(comment, cardForm){
