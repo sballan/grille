@@ -49,14 +49,20 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
                 cardForm.$setPristine();
                 CommentFactory.updateComment(card, comment)
               }
+              $scope.cancelComment = function(cardForm){
+                cardForm.$setPristine();
+              }
               //$scope.cardForm.comments = [];
 
               //Create a Comment
               $scope.ok = function (data) {
                 CommentFactory.addComment(card, data)
-                .then(function(response){
-                  $scope.modalCard.comments.push(data)
-                  $uibModalInstance.close(data);
+                .then(function(updatedCard){
+                  console.log("updatedCard", updatedCard)
+                  // $scope.modalCard.comments.push(data)
+                  $scope.modalCard = updatedCard;
+
+                  // $uibModalInstance.close(data);
                 })
                 
               };
@@ -73,6 +79,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               //Cancelling from this Modal screen
               $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
+                  // $uibModalInstance.close(data);
               };
 
             }

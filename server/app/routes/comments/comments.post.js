@@ -24,7 +24,7 @@ router.post('/:cardID', function(req,res,next){
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
-		msg.user = board.owner.username
+		msg.user = req.user.username
 		var createCommentAsync = Promise.promisify(github.issues.createComment);
 		return createCommentAsync(msg)
 	})
@@ -62,7 +62,8 @@ router.put('/:cardID', function(req,res,next){
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
-		msg.user = board.owner.username
+		msg.user = req.body.comment.user.username
+		console.log("msgis", msg)
 		return editCommentAsync(msg)
 	})
 	.then(function(response){
@@ -73,6 +74,7 @@ router.put('/:cardID', function(req,res,next){
 		card.comments.forEach(function(comment){
 			if (comment.githubID == req.body.comment.githubID){
 				comment.body = req.body.comment.body;
+				comment.user.username = req.body.comment.user.username
 				comment.save()
 			}
 		})

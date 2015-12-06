@@ -30,14 +30,16 @@
       <!-- List of Comments -->
       <ul style="margin-bottom: 0px; padding-left: 0px">
         <li id="commentsList" ng-repeat="comment in modalCard.comments">
-          <div style="display:inline-block"> {{ comment.user.username }} </div>
+          <!-- <div> -->
+          <div style="display:inline-block; background-color: #d3d3d3;"> {{ comment.user.username }} </div>
           <textarea id="commentText" ng-model="comment.body" name="aComment{{$index}}" rows="1" class="cardText">{{ comment.body }}</textarea>
           <!-- Save - Delete, Comment buttons -->
-          <button ng-show="cardForm.aComment{{$index}}.$dirty" ng-click="updateComment(comment, cardForm)">Save</button>
-          <button id="deleteCommentButton" class="btn btn-default btn-circle" ng-click="deleteComment(comment)">
+          <button ng-hide="cardForm.aComment{{$index}}.$dirty" id="deleteCommentButton" class="btn btn-default btn-circle" ng-click="deleteComment(comment)">
             <i class="fa fa-times"></i>
           </button>
-
+          <!-- </div> -->
+          <button ng-show="cardForm.aComment{{$index}}.$dirty" ng-click="updateComment(comment, cardForm)">Save</button>
+          <button ng-show="cardForm.aComment{{$index}}.$dirty" ng-click="cancelComment(cardForm)">Cancel</button>
         </li>
       </ul>
       <!-- Divider -->
@@ -49,17 +51,17 @@
       <!-- Add a Comment -->
       <md-input-container id="AddAComment" class="md-block">
         <label>Add a Comment</label>
-        <textarea id="comments" ng-model="data.body" rows="1" class="cardText"></textarea>
+        <textarea id="comments" ng-model="data.body" name="newCommentBody" rows="1" class="cardText"></textarea>
       </md-input-container>
 
       <!-- Cancel - Submit Buttons -->
     	<div layout layout-sm="column">
       	<md-input-container flex style="padding-bottom:0px;">
-         <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Cancel</md-button>
+         <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Go Back</md-button>
         </md-input-container>
 
         <md-input-container flex style="padding-bottom:0px;">
-          <md-button class="btn btn-warning" style="margin:auto border-bottom: 0px;" type="submit" ng-click="ok(data)" aria-label="submitter">Submit</md-button>
+          <md-button ng-show="cardForm.newCommentBody.$dirty" class="btn btn-warning" style="margin:auto border-bottom: 0px;" type="submit" ng-click="ok(data)" aria-label="submitter">Submit Comment</md-button>
         </md-input-container>
       </div>
 
