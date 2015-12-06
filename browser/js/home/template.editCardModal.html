@@ -28,9 +28,9 @@
         <textarea style="padding-left: 5px;" rows="1" ng-model="modalCard.body" class="cardText"></textarea>
       
       <!-- List of Comments -->
-      <ul style="margin-bottom: 0px;">
+      <ul style="margin-bottom: 0px; padding-left: 0px">
         <li id="commentsList" ng-repeat="comment in modalCard.comments">
-          <!-- <p> {{ comment.author.username }} </p> -->
+          <div style="display:inline-block"> {{ comment.user.username }} </div>
           <textarea id="commentText" ng-model="comment.body" name="aComment{{$index}}" rows="1" class="cardText">{{ comment.body }}</textarea>
           <!-- Save - Delete, Comment buttons -->
           <button ng-show="cardForm.aComment{{$index}}.$dirty" ng-click="updateComment(comment, cardForm)">Save</button>

@@ -12,7 +12,8 @@ var commentSchema = new mongoose.Schema({
 		ref: 'User'
 	},
 	created_at: Date,
-	updated_at: Date
+	updated_at: Date,
+	user: {}
 })
 
 
