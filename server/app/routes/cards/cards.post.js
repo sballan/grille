@@ -4,6 +4,7 @@ var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
 
 var Card = require('mongoose').model('Card');
+var Lane = require('mongoose').model('Lane');
 
 module.exports = router;
 
@@ -27,6 +28,9 @@ router.post('/', function(req, res, next) {
 		issue.board = req.body.board._id
 
 		return Card.create(issue)
+	})
+	.then(function(card) {
+		return Lane.populate(card, {path: 'lane', model: 'Lane'})
 	})
 	.then(function(card) {
 		console.log("----From Card.post, Card right before res.send:", card)

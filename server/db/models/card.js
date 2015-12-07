@@ -66,7 +66,7 @@ cardSchema.post('init', function(doc) {
       .then(function(lane) {
       	doc.lane = lane;
       	console.log("Making default lane for new Card:", doc)
-      	doc.save()
+      	return doc.save()
       })
 	}
 })
