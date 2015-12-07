@@ -4,6 +4,7 @@ var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
 
 var Card = require('mongoose').model('Card');
+var Board = require('mongoose').model('Board');
 
 module.exports = router;
 
@@ -36,13 +37,45 @@ router.put('/lane/many', function(req, res, next) {
 router.put('/lane/:cardID', function(req, res, next) {
 
 	var card = req.body
-
 	Card.findOneAndUpdate({githubID: card.githubID}, card, {new: true})
 	.populate('lane')
 	.then(function(card) {
 		res.send(card)
 	})
 
+})
+
+router.put('/title/:cardId', function(req, res, next){
+	var github = req.user.githubAccess;
+	//Github module has a method 'githubissues.edit', there is no 'issues.updateTitle'
+	var updateTitleAsync = Promise.promisify(github.issues.edit)
+
+	//body of a request we'll send to Github, including an updated Title
+	var msg = {
+		user: null,
+		repo: null,
+		number: req.body.issueNumber,
+		title: req.body.title
+	}
+
+	Board.findById(req.body.board)
+	.then(function(board){
+		//Send the comment to Github with msg body
+		msg.repo = board.name
+		msg.user = req.user.username
+		var updateTitleAsync = Promise.promisify(github.issues.edit);
+		return updateTitleAsync(msg)
+	})
+	.then(function(response){
+		return Card.findOne({ githubID: req.params.cardId })
+	})
+	.then(function(foundCard){
+			foundCard.title = req.body.title;
+			return foundCard.save()
+	})
+	.then(function(savedCard){
+		res.send(savedCard)
+	})
 })
 
 router.put("/storyPoints/:cardId",function(req,res,next){

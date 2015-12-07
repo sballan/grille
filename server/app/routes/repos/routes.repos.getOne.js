@@ -101,6 +101,7 @@ router.get('/:repo', function(req, res, next) {
 	}
 
 	function getCollaborators(cards) {
+		console.log("CCAARRDDSS:", cards)
 		theCards = cards;
 		return getCollaboratorsAsync(
 			{
@@ -131,6 +132,7 @@ router.get('/:repo', function(req, res, next) {
 			cards: theCards,
 			lanes: theLanes
 		}
+
 		res.send(theData);
 	}
 

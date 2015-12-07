@@ -51,8 +51,12 @@ app.factory("CardFactory",function($http){
 			},
 
 
-			updateCard:function(){
-
+			updateCardTitle:function(card){
+				//the card title has been updated by this point, in ng-model
+				return $http.put('/api/cards/put/title/' + card.githubID, card)
+				.then(function(response){
+					return response.data
+				})
 			},
 			changePoints:function(card,points){
 				if(points=="Clear"){

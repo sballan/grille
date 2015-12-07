@@ -1,9 +1,8 @@
 
 app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory) {
 
-    // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
-  //1
+
   $scope.cards = $scope.board.cards;
 
   $scope.viewLanes = BoardFactory.getViewLanes
@@ -21,6 +20,13 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
       boardSprintArray= allSprints;
       console.log("boardSprints",boardSprintArray)
      })
+  }
+
+  $scope.updateCardTitle = function(card){
+    CardFactory.updateCardTitle(card)
+    .then(function(updatedCard){
+      card.title = updatedCard.title;
+    })
   }
 
   $scope.changePoints= function(card,points){
@@ -62,29 +68,45 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
 
               //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
-              $scope.theCard = card;
+              $scope.modalCard = card;
+
 
               //Update a Comment
               $scope.updateComment = function(comment, cardForm){
-                console.log("cardDirt", cardDirt)
                 cardForm.$setPristine();
                 CommentFactory.updateComment(card, comment)
+              }
+              $scope.cancelComment = function(cardForm){
+                cardForm.$setPristine();
               }
               //$scope.cardForm.comments = [];
 
               //Create a Comment
               $scope.ok = function (data) {
                 CommentFactory.addComment(card, data)
-                .then(function(response){
-                  $scope.theCard.comments.push(data)
-                  $uibModalInstance.close(data);
+                .then(function(updatedCard){
+                  console.log("updatedCard", updatedCard)
+                  // $scope.modalCard.comments.push(data)
+                  $scope.modalCard = updatedCard;
+                  $scope.data.body = "";
+                  // $uibModalInstance.close(data);
                 })
 
               };
 
+              //Delete a Comment
+              $scope.deleteComment = function(comment){
+                CommentFactory.deleteComment(card, comment)
+                .then(function(updatedCommentsArray){
+                  console.log("commentFactory.deleteComment RESPONSE YO")
+                  $scope.modalCard.comments = updatedCommentsArray;
+                })
+                // $scope.modalCard.comments.forEach
+              }
               //Cancelling from this Modal screen
               $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
+                  // $uibModalInstance.close(data);
               };
 
             }
