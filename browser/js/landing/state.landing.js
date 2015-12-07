@@ -3,10 +3,12 @@ app.config(function ($stateProvider) {
 		url: '/welcome',
 		templateUrl: 'js/landing/template.landing.html',
 		controller: function(AuthService, $state) {
-			//console.log('testing', AuthService.isAuthenticated())
-			if (AuthService.isAuthenticated()) {
-				$state.go('home');
-			} 
+			AuthService.getLoggedInUser().then(function (user) {
+				console.log('in here - ', user);
+				if (user) {
+					$state.go('userSettings');
+				}
+			}); 
 		}
 	});
 });

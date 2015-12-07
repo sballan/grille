@@ -1,17 +1,18 @@
-app.factory('HomeFactory', function($uibModal, CardFactory, BoardFactory,SprintFactory) {
+app.factory('HomeFactory', function($uibModal, CardFactory, BoardFactory, LaneFactory, SprintFactory) {
 	var HomeFactory = {
 		addLane: function(animationsEnabled) {
 			var modalInstance = $uibModal.open({
 				animation: animationsEnabled,
 				templateUrl: 'js/home/template.laneModal.html',
 				controller: 'HomeModalCtrl'
-					// size: size
 			});
 
 			modalInstance.result.then(function(newLane) {
-				var spot = newLane.position;
-				newLane.ownCards = [];
-				$scope.lanes.splice(spot, 0, newLane);
+				newLane.boardID = BoardFactory.getCurrentBoard()._id;
+				LaneFactory.createLane(newLane)
+				.then(function(lane) {
+					console.log('lane created - ', lane);
+				})
 			}, function() {
 				console.log('Modal dismissed at: ' + new Date());
 			});
