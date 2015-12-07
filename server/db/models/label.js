@@ -2,12 +2,16 @@
 var mongoose = require('mongoose');
 
 var labelSchema = new mongoose.Schema({
-    title: {
+    name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     color: {
     	type: String
+    },
+    url: {
+        type: String
     },
     board: {
         type: mongoose.Schema.Types.ObjectId,

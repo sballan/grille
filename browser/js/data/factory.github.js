@@ -34,12 +34,14 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 			return $http.get('api/repos/get/' + repoID)
 			.then(toData)
 			.then(function(data){
+				console.log("GET REPO", data)
 				 var repo
 				repoCache.forEach(function(cachedRepo){
 					if (cachedRepo.githubID === data.board.githubID){
 						cachedRepo = data.board;
 						cachedRepo.lanes = data.lanes
 						cachedRepo.cards = data.cards
+						cachedRepo.labels = data.labels
 						repo = cachedRepo;
 					}
 				})
