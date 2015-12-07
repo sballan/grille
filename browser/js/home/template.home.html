@@ -11,10 +11,10 @@
                                     <p>{{card.issueNumber}}</p>
                                 </div>
                                 <div class="dropdown col-sm-6 sprint-dropdown">
-                                    <a class="sprint-tag dropdown-toggle" data-toggle="dropdown" ng-click="getAllSprints()" disabled="!boardSprints"><span ng-hide="card.sprint">Sprint</span>
-                                    <span ng-show="card.sprint" class="sprint-tag">{{card.sprint}}</span></a>
+                                    <a class="sprint-tag dropdown-toggle" data-toggle="dropdown" ng-click="getAllSprints()"><span ng-hide="card.sprint" disabled="!boardSprints">Sprint</span>
+                                    <span ng-show="card.sprint" class="sprint-tag" >{{card.sprint}}</span></a>
                                     <ul class="dropdown-menu">
-                                        <li ng-repeat="sprint in boardSprints" class="individual-point">
+                                        <li ng-repeat="sprint in boardSprints()" class="individual-point">
                                             <a class="link-point" ng-click="chooseSprint(card,sprint)">{{number}}</a>
                                         </li>
                                     </ul>

@@ -9,16 +9,17 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
   $scope.viewLanes = BoardFactory.getViewLanes()
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
-
-  var boardSprints= null;
+  var boardSprintArray=null;
+  $scope.boardSprints= function(){
+    return boardSprintArray;
+  };
 
   $scope.getAllSprints = function(){
-    var board =BoardFactory.getCurrentBoard();
-     SprintFactory.getAllSprints(board._id)
+     SprintFactory.getAllSprints($scope.board._id)
      .then(function(allSprints){
       console.log("all sprints", allSprints)
-      boardSprints = allSprints;
-      console.log("boardSprints",boardSprints)
+      boardSprintArray= allSprints;
+      console.log("boardSprints",boardSprintArray)
      })
   }
 
