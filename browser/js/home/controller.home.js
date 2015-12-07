@@ -1,9 +1,8 @@
 
 app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory) {
 
-    // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
-  //1
+
   $scope.cards = $scope.board.cards;
 
   $scope.viewLanes = BoardFactory.getViewLanes()
@@ -61,7 +60,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
                   console.log("updatedCard", updatedCard)
                   // $scope.modalCard.comments.push(data)
                   $scope.modalCard = updatedCard;
-
+                  $scope.data.body = "";
                   // $uibModalInstance.close(data);
                 })
                 
