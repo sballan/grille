@@ -76,24 +76,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     };
 
 
-
-    $scope.addLane = function () {
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'js/home/template.laneModal.html',
-        controller: 'HomeModalCtrl'
-        // size: size
-      });
-
-      modalInstance.result.then(function (newLane) {
-          var spot=newLane.position;
-          newLane.ownCards = [];
-          $scope.lanes.splice(spot, 0, newLane);
-      }, function () {
-        console.log('Modal dismissed at: ' + new Date());
-      });
-  };
-
   $scope.animationsEnabled = true;
 
 });
