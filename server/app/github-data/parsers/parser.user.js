@@ -14,9 +14,6 @@ function parse(body) {
 	user.organizations_url = body.organizations_url
   user.repos_url = user.repos_url
 
-	// console.log("User Body", body)
- //  console.log("User", user)
-
   return user
 }
 

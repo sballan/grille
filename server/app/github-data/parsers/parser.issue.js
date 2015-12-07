@@ -18,7 +18,6 @@ function parse(body) {
 
 	issue.url = body.url;
 	issue.labels_url = body.labels_url;
-	issue.comments_url = body.comments_url;
 	issue.events_url = body.events_url;
 	issue.html_url = body.html_url;
 

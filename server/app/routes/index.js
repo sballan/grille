@@ -9,6 +9,7 @@ router.use('/board', require('./board'));
 router.use('/cards', require('./cards'));
 router.use('/repos', require('./repos'));
 router.use('/comments', require('./comments'));
+router.use('/milestones', require('./milestones'));
 
 router.post('/webhooks', function(req, res, next) {
 	console.log("webhook")
@@ -22,7 +23,6 @@ router.post('/webhooks', function(req, res, next) {
 		// console.log("WEBHOOK RESPONSE", response)
 		res.send()
 	})
-	.then(null,next)
 
 })
 

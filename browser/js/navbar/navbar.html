@@ -14,6 +14,9 @@
                     <md-button focus-me="false" ng-click="addLane()">Add Lane </md-button>
                   </md-menu-item>
                   <md-menu-item>
+                    <md-button focus-me="false" ng-click="addSprint()">Add Sprint </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
                     <md-button ui-sref="userSettings">Home</md-button>
                   </md-menu-item>
                   <md-menu-item>
@@ -45,6 +48,15 @@
 
         <div class="app-name boardName" ng-show"user && currentBoard()">
           {{currentBoard().name}}
+<!--           <md-select ng-model="aaa">
+            <md-option>
+              one
+            </md-option>
+            <md-option>
+              two
+            </md-option>
+          </md-select> -->
+
         </div>
         
 

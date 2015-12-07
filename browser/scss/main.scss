@@ -7,6 +7,10 @@ body {
 
 }
 
+html, body {
+  background: #F0F0F0;
+}
+
 @mixin clearfix {
   &:after {
     content: "";

@@ -46,5 +46,12 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
     HomeFactory.addCard($scope.animationsEnabled)
   }
 
+  $scope.addSprint =function(){
+    console.log("got here")
+    HomeFactory.addSprint($scope.animationsEnabled);
+  }
+
   $scope.currentBoard = BoardFactory.getCurrentBoard;
+
+  $scope.getRepoCache = GitHubFactory.getRepoCache;
 })
