@@ -34,6 +34,9 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 		getViewLanes: function() {
 			return viewLanes;
 		},
+		getHashLanes: function() {
+			return hashLanes;
+		},
 		// Writes the position of the cards in the lanes to the priority field on each card
 		writeLanes: function() {
 
@@ -84,7 +87,6 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 				card.lane = backLog
 			})
 		},
-		//OP: does this need to return something?
 		addCard: function(card) {
 			console.log("BOARD ADD CARD", card)
 			//viewLanes[card.lane.title].push(card)

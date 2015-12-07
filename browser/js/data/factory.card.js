@@ -4,7 +4,12 @@ app.factory("CardFactory",function($http){
 	}
 	return {
 			addCard:function(card){
-				// card.lane = card.lane._id;
+				card.board = {
+					owner: card.board.owner,
+					name: card.board.name,
+					_id: card.board._id
+				}
+				console.log("From CardFactory, right before post:", card)
 				return $http.post('/api/cards/post', card)
 				.then(toData)
 			},
@@ -53,7 +58,7 @@ app.factory("CardFactory",function($http){
 				// if(points="Clear"){
 				//  points=null;
 				// }
-					
+
 				return $http.put('/api/cards/put/storyPoints/'+card._id, {storyPoints:points})
 				.then(function(response){
 					console.log("response.data",response.data);
