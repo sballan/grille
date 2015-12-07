@@ -9,6 +9,7 @@ router.use('/board', require('./board'));
 router.use('/cards', require('./cards'));
 router.use('/repos', require('./repos'));
 router.use('/comments', require('./comments'));
+router.use('/milestones', require('./milestones'));
 
 router.post('/webhooks', function(req, res, next) {
 	//emit to a board via room
@@ -20,7 +21,6 @@ router.post('/webhooks', function(req, res, next) {
 	.then(function(){
 		res.send()
 	})
-	.then(null,next)
 
 })
 

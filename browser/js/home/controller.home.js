@@ -1,14 +1,27 @@
 
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory) {
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory) {
 
     // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
   //1
   $scope.cards = $scope.board.cards;
 
-  $scope.viewLanes = BoardFactory.getViewLanes()
+  $scope.viewLanes = BoardFactory.getViewLanes
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
+  var boardSprintArray=null;
+  $scope.boardSprints= function(){
+    return boardSprintArray;
+  };
+
+  $scope.getAllSprints = function(){
+     SprintFactory.getAllSprints($scope.board._id)
+     .then(function(allSprints){
+      console.log("all sprints", allSprints)
+      boardSprintArray= allSprints;
+      console.log("boardSprints",boardSprintArray)
+     })
+  }
 
   $scope.changePoints= function(card,points){
     CardFactory.changePoints(card,points)
@@ -17,19 +30,27 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     })
   }
 
+  $scope.addSprint = function(){
+    HomeFactory.addSprintModal();
+  }
+
+  $scope.editSprint = function(card){
+    HomeFactory.editSprintModal(card);
+  }
+
+
+
+
+
+
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
       stop: function(e, ui) {
-        console.log("VIEW LANES", BoardFactory.getViewLanes())
         BoardFactory.writeLanes()
         BoardFactory.updateAllPriority()
         BoardFactory.updateAllLanes()
       }
     };
-
-    function printer (){
-
-    }
 
     $scope.openCommentModal = function (card) {
 
@@ -42,7 +63,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
               //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
               $scope.theCard = card;
-              
+
               //Update a Comment
               $scope.updateComment = function(comment, cardForm){
                 console.log("cardDirt", cardDirt)
@@ -58,7 +79,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
                   $scope.theCard.comments.push(data)
                   $uibModalInstance.close(data);
                 })
-                
+
               };
 
               //Cancelling from this Modal screen

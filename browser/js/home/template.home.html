@@ -1,12 +1,25 @@
 <section>
     <div class="section row connectedItemsExample">
         <div class="lateral">
-            <div class="laneConfig" ng-repeat="(title, lane) in viewLanes">
+            <div class="laneConfig" ng-repeat="(title, lane) in viewLanes()">
                 <h3 class="laneHeading"> {{ title }} </h3>
                 <ul ui-sortable="sortableOptions" class="list" ng-model="lane">
                     <div ng-repeat="card in lane" class="item">
                         <div class="cardNumber">
-                            <p>{{card.issueNumber}}</p>
+                            <div class="row">
+                                <div class="col-sm-6 card-number">
+                                    <p>{{card.issueNumber}}</p>
+                                </div>
+                                <div class="dropdown col-sm-6 sprint-dropdown">
+                                    <a class="sprint-tag dropdown-toggle" data-toggle="dropdown" ng-click="getAllSprints()"><span ng-hide="card.sprint" disabled="!boardSprints">Sprint</span>
+                                    <span ng-show="card.sprint" class="sprint-tag" >{{card.sprint}}</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-repeat="sprint in boardSprints()" class="individual-point">
+                                            <a class="link-point" ng-click="chooseSprint(card,sprint)">{{number}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
                         <div class="row">
@@ -14,6 +27,7 @@
                                 <div class="dropdown">
                                     <a class="story-pointer dropdown-toggle" data-toggle="dropdown"><i class="fa fa-hourglass-start icon-size" ng-hide="card.storyPoints"></i><span ng-show="card.storyPoints" class="border-circle">{{card.storyPoints}}</span></a>
                                     <ul class="dropdown-menu">
+                                        <li class="dropper-header">Points</li>
                                         <li ng-repeat="number in storyPointsRange" class="individual-point">
                                             <a class="link-point" ng-click="changePoints(card,number)">{{number}}</a>
                                         </li>

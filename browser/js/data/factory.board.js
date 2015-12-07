@@ -1,4 +1,4 @@
-app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
+app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 	var currentBoard = null;
 	var hashLanes = {};
 	//var movingCard;
@@ -34,6 +34,9 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 		getViewLanes: function() {
 			return viewLanes;
 		},
+		getHashLanes: function() {
+			return hashLanes;
+		},
 		// Writes the position of the cards in the lanes to the priority field on each card
 		writeLanes: function() {
 
@@ -61,8 +64,10 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 				var currentLane = viewLanes[boardLane.title]
 
 				currentBoard.cards.forEach(function(card) {
-					if(card.lane.title === boardLane.title) {
+					if(card.lane._id === hashLanes[boardLane.title] ||
+						 card.lane === hashLanes[boardLane.title]) {
 						//if(!card.priority) card.priority = card.issueNumber
+						console.log("They are equal:", card)
 						currentLane.push(card)
 					}
 				})
@@ -70,6 +75,7 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 					return a.priority - b.priority
 				})
 			})
+			console.log("View Lanes: ", viewLanes)
 			return viewLanes
 		},
 		//OP: does this need to return something?L
@@ -84,14 +90,11 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory) {
 				card.lane = backLog
 			})
 		},
-		//OP: does this need to return something?
 		addCard: function(card) {
-			console.log("BOARD ADD CARD", card)
 			//viewLanes[card.lane.title].push(card)
 			currentBoard.cards.push(card)
-			console.log("CURRENT BOARD cards", currentBoard.cards)
-			this.readLanes()
 			this.writeLanes()
+			this.readLanes()
 			this.updateAllPriority()
 		},
 

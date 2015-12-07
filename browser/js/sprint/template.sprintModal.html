@@ -1,0 +1,34 @@
+<div  layout="column" ng-cloak class="md-inline-form sprint-form">
+  
+  <md-content layout-padding>
+    <form name="sprintForm">
+
+
+      <md-input-container class="md-block">
+        <label>Sprint title</label>
+        <input ng-model="sprint.title" ng-required="true">
+      </md-input-container>
+
+      <md-input-container md-no-float class="md-block">
+      <label>Sprint description</label>
+        <input ng-model="sprint.description" ng-required="true">
+      </md-input-container>
+
+<input type="date" ng-model="sprint.startDate" ng-required="true">
+<input type="date" ng-model="sprint.endDate" ng-required="true">
+
+	<div layout layout-sm="column">
+	<md-input-container flex>
+    <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Cancel</md-button>
+    </md-input-container>
+    <md-input-container flex>
+    <md-button> <input type="submit" ng-click="ok(sprint)" value="Submit" aria-label="submit"></md-button>
+    </md-input-container>
+    </div>
+
+
+
+    </form>
+  </md-content>
+
+</div>

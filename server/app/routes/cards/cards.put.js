@@ -46,15 +46,12 @@ router.put('/lane/:cardID', function(req, res, next) {
 })
 
 router.put("/storyPoints/:cardId",function(req,res,next){
-	console.log("storypoints to backend", req.body.storyPoints)
 	Card.findById(req.params.cardId)
 	.then(function(foundCard){
-		console.log("FOUND CAERDD", foundCard)
 		foundCard.storyPoints=req.body.storyPoints;
 		return foundCard.save()
 	})
 	.then(function(savedCard){
-		console.log("saved CAERDD", savedCard)
 		res.send(savedCard);
 	})
 })
