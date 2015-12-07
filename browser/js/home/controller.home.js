@@ -6,7 +6,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
   //1
   $scope.cards = $scope.board.cards;
 
-  $scope.viewLanes = BoardFactory.getViewLanes()
+  $scope.viewLanes = BoardFactory.getViewLanes
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
   var boardSprintArray=null;
@@ -63,12 +63,14 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
               //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
               $scope.theCard = card;
-              
+
               //Update a Comment
-              $scope.updateComment = function(comment){
-                console.dir(comment)
+              $scope.updateComment = function(comment, cardForm){
+                console.log("cardDirt", cardDirt)
+                cardForm.$setPristine();
                 CommentFactory.updateComment(card, comment)
               }
+              //$scope.cardForm.comments = [];
 
               //Create a Comment
               $scope.ok = function (data) {
@@ -77,7 +79,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
                   $scope.theCard.comments.push(data)
                   $uibModalInstance.close(data);
                 })
-                
+
               };
 
               //Cancelling from this Modal screen

@@ -93,8 +93,6 @@ router.get('/:repo', function(req, res, next) {
 					comment = payloadParser.comment(comment)
 					if(comment) return comment
 				})
-
-				console.log("Comments", comments)
 				return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
 				.populate('comments lane')
 			})
@@ -115,7 +113,6 @@ router.get('/:repo', function(req, res, next) {
 					collaborator = payloadParser.collaborator(collaborator)
 					if(typeof collaborator.githubID === 'string') return collaborator
 				})
-				console.log("All Collaborators", collaborators)
 
 				return Promise.map(collaborators, function(collaborator) {
 					return User.findOneAndUpdate({githubID: collaborator.githubID}, collaborator, {upsert: true, new: true}).select('-accessToken')
@@ -134,7 +131,6 @@ router.get('/:repo', function(req, res, next) {
 			cards: theCards,
 			lanes: theLanes
 		}
-		console.log("Finished Board", theBoard)
 		res.send(theData);
 	}
 

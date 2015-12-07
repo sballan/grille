@@ -14,6 +14,7 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
   $scope.logout = function() {
     AuthService.logout().then(function() {
       $scope.user = null;
+      $scope.currentBoard = null;
       $state.go('landing');
     });
   };
@@ -49,4 +50,7 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
     console.log("got here")
     HomeFactory.addSprint($scope.animationsEnabled);
   }
+
+  $scope.currentBoard = BoardFactory.getCurrentBoard;
+
 })

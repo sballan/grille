@@ -10,7 +10,7 @@
               <span class="app-name">Grille</span> <i ng-show="user" class="fa fa-caret-down"></i>
              </md-button>
              <md-menu-content ng-show="user">
-                  <md-menu-item>
+                  <md-menu-item ng-show="currentBoard()" >
                     <md-button focus-me="false" ng-click="addLane()">Add Lane </md-button>
                   </md-menu-item>
                   <md-menu-item>
@@ -18,9 +18,6 @@
                   </md-menu-item>
                   <md-menu-item>
                     <md-button ui-sref="userSettings">Home</md-button>
-                  </md-menu-item>
-                  <md-menu-item>
-                    <md-button ui-sref="home">Admin</md-button>
                   </md-menu-item>
                   <md-menu-item>
                     <md-button ui-sref="visual">Charts</md-button>
@@ -34,12 +31,12 @@
           </md-menu-bar>
         </div>
 
-        <div class="dropper" ng-show="user">
+        <div class="dropper" ng-show="user && currentBoard()">
           <md-button ng-click="addCard()"><span class="app-name">Issue</span> <i class="fa fa-plus"></i></md-button>
         </div>
-        <!-- 
-          <div class="cur-repo">
-          <md-input-container>
+
+<!--           <div class="cur-repo">
+              <md-input-container>
                 <label>Current Repo</label>
                 <md-select ng-model="user.currenRepo">
                   <md-option  value="">
@@ -47,8 +44,12 @@
                   </md-option>
                 </md-select>
               </md-input-container>
-          </div>
-         -->
+          </div> -->
+
+        <div class="app-name boardName" ng-show"user && currentBoard()">
+          {{currentBoard().name}}
+        </div>
+        
 
         <!-- <md-button ng-show="!user" ui-sref="auth" class="btn login-button app-name">Login</md-button> -->
         <span class="app-name navbar-username" ng-show="user">{{user.username}}</span>
