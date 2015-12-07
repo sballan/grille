@@ -8,7 +8,7 @@
                         <div class="cardNumber">
                             <p>{{card.issueNumber}}</p>
                         </div>
-                        <textarea rows="1" ng-model="card.title" class="cardText"></textarea>
+                        <textarea rows="1" ng-model="card.title" ng-model-options="{ updateOn: 'blur' }" ng-change="updateCardTitle(card)" class="cardText"></textarea>
                         <div class="row">
                             <div class="col-sm-3 ">
                                 <div class="dropdown">
