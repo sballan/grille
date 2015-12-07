@@ -34,7 +34,7 @@ hr {
     border-right-style: solid;
     border-right-color: rgba(0,34,21,.2);
 	list-style: none outside none;
-	margin: 10px;
+	
 	padding: 10px;
     height:calc(100vh - 40px);
     overflow: scroll;
@@ -116,7 +116,7 @@ textarea{
 }
 .cardNumber{
     padding-bottom: 0%;
-    text-align: left;
+    text-align:left;
     color:#66A266;
     font-size:.875em;
 }
@@ -161,6 +161,8 @@ textarea{
     z-index: 9;
 }
 .link-point{
+    text-align:left;
+    padding-left: 0px;
     width:100%;
 }
 .icon-size{
@@ -179,4 +181,10 @@ textarea{
 }
 a:hover{
     text-decoration: none;
+}
+.sprint-dropdown{
+    text-align:right;
+}
+.dropdown-menu > li >a {
+    padding-left: 0px;
 }

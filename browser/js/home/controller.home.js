@@ -1,5 +1,5 @@
 
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory) {
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory) {
 
     // angular.element('body').scrollLeft(50000);
   $scope.board = loadGrille;
@@ -10,12 +10,37 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
+  var boardSprints= null;
+
+  $scope.getAllSprints = function(){
+    var board =BoardFactory.getCurrentBoard();
+     SprintFactory.getAllSprints(board._id)
+     .then(function(allSprints){
+      console.log("all sprints", allSprints)
+      boardSprints = allSprints;
+      console.log("boardSprints",boardSprints)
+     })
+  }
+
   $scope.changePoints= function(card,points){
     CardFactory.changePoints(card,points)
     .then(function(updatedCard){
       card.storyPoints=updatedCard.storyPoints;
     })
   }
+
+  $scope.addSprint = function(){
+    HomeFactory.addSprintModal();
+  }
+
+  $scope.editSprint = function(card){
+    HomeFactory.editSprintModal(card);
+  }
+
+
+
+
+
 
 	$scope.sortableOptions = {
     	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
@@ -25,10 +50,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
         BoardFactory.updateAllLanes()
       }
     };
-
-    function printer (){
-
-    }
 
     $scope.openCommentModal = function (card) {
 

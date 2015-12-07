@@ -44,4 +44,9 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
   $scope.addCard = function() {
     HomeFactory.addCard($scope.animationsEnabled)
   }
+
+  $scope.addSprint =function(){
+    console.log("got here")
+    HomeFactory.addSprint($scope.animationsEnabled);
+  }
 })
