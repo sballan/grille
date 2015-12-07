@@ -50,10 +50,7 @@ router.put('/title/:cardId', function(req, res, next){
 	//Github module has a method 'githubissues.edit', there is no 'issues.updateTitle'
 	var updateTitleAsync = Promise.promisify(github.issues.edit)
 
-	// console.log("ROUTERPARAM", req.params)
-	// console.log("ROUTERBODY", req.body)
-
-	//body of a request we'll send to Github
+	//body of a request we'll send to Github, including an updated Title
 	var msg = {
 		user: null,
 		repo: null,
@@ -66,17 +63,14 @@ router.put('/title/:cardId', function(req, res, next){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
 		msg.user = req.user.username
-		console.log("ROUTER MSG", msg)
 		var updateTitleAsync = Promise.promisify(github.issues.edit);
 		return updateTitleAsync(msg)
 	})
 	.then(function(response){
-		console.log("ROUTER RESPONSE", response)
 		return Card.findOne({ githubID: req.params.cardId })
 	})
 	.then(function(foundCard){
 			foundCard.title = req.body.title;
-			console.log("ROUTER FOUND CARD", foundCard)
 			return foundCard.save()
 	})
 	.then(function(savedCard){

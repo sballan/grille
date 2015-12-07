@@ -1,12 +1,6 @@
 
 app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory) {
 
-  // $scope.myFunction = function(){
-  //       var x = document.getElementById("cardTitle");
-  //   x.value = x.value.toUpperCase();
-  //   {{ yell() }};
-  //   return console.log(x.value);
-  // }
   $scope.board = loadGrille;
 
   $scope.cards = $scope.board.cards;
@@ -16,10 +10,8 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
   $scope.updateCardTitle = function(card){
-    console.log("CONTROLLER UPDATECARDTITLE", card)
     CardFactory.updateCardTitle(card)
     .then(function(updatedCard){
-      console.log("CONTRLL UPDATED_CARD", updatedCard)
       card.title = updatedCard.title;
     })
   }
@@ -40,10 +32,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
         BoardFactory.updateAllLanes()
       }
     };
-
-    function printer (){
-
-    }
 
     $scope.openCommentModal = function (card) {
 

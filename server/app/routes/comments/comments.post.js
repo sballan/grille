@@ -29,9 +29,7 @@ router.post('/:cardID', function(req,res,next){
 		return createCommentAsync(msg)
 	})
 	.then(function(comment){
-		console.log("routes.comment, COMMENT from Github:", comment)
 		newComment = payloadParser.comment(comment)
-		console.log("newCommnet", newComment)
 
 		//find the Card the comment was on, so we can update the card in the Database
 		return Card.findOne({ githubID: req.params.cardID})
@@ -63,7 +61,6 @@ router.put('/:cardID', function(req,res,next){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
 		msg.user = req.body.comment.user.username
-		console.log("msgis", msg)
 		return editCommentAsync(msg)
 	})
 	.then(function(response){

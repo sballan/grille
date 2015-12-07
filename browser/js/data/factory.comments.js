@@ -11,7 +11,6 @@ app.factory('CommentFactory',function($http, BoardFactory){
 			})
 		},
 		updateComment: function(card,comment){
-
 			return $http.put('api/comments/' + card.githubID, {comment: comment, card: card})
 		},
 		deleteComment: function(card,comment){
