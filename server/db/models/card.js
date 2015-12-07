@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var Lane = mongoose.model('Lane')
 
 var commentSchema = new mongoose.Schema({
 	body: String,
@@ -54,6 +55,20 @@ var cardSchema = new mongoose.Schema({
 	events_url: String,
 	html_url: String,
 	isPullRequest: {type: Boolean, default: false}
+})
+
+cardSchema.post('init', function(doc) {
+	if(!doc.lane) {
+    Lane.findOne({
+        board: doc.board._id,
+        title: 'Backlog'
+      })
+      .then(function(lane) {
+      	doc.lane = lane;
+      	console.log("Making default lane for new Card:", doc)
+      	return doc.save()
+      })
+	}
 })
 
 mongoose.model('Card', cardSchema);

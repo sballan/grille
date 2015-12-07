@@ -31,9 +31,7 @@ router.post('/:cardID', function(req,res,next){
 		return createCommentAsync(msg)
 	})
 	.then(function(comment){
-		console.log("routes.comment, COMMENT from Github:", comment)
 		newComment = payloadParser.comment(comment)
-		console.log("routes.comment, PARSED COMMENT:", newComment)
 
 		//find the Card the comment was on, so we can update the card in the Database
 		return Card.findOne({ githubID: req.params.cardID})
