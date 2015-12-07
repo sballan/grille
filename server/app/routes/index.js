@@ -12,11 +12,11 @@ router.use('/comments', require('./comments'));
 router.use('/milestones', require('./milestones'));
 
 router.post('/webhooks', function(req, res, next) {
-	console.log("webhook")
+	//console.log("webhook")
 	//emit to a board via room
-	var socket = io()
+	//var socket = io()
 	//Can emit this after Webhooks exectues, or inside of Webhooks EventHandler
-	socket.emit('update', {name: "backend data"})
+	//socket.emit('update', {name: "backend data"})
 
 	Webhooks[req.headers['x-github-event']](req.body)
 	.then(function(){
