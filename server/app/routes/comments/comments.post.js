@@ -7,7 +7,7 @@ var GitHubApi = require('github')
 var payloadParser = require('../../github-data/parsers')
 
 module.exports = router;
-
+//Create a Comment
 router.post('/:cardID', function(req,res,next){
 	var newComment;
 	var github = req.user.githubAccess;
@@ -24,7 +24,7 @@ router.post('/:cardID', function(req,res,next){
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
-		msg.user = req.user.username
+		msg.user = board.owner.username
 		var createCommentAsync = Promise.promisify(github.issues.createComment);
 		return createCommentAsync(msg)
 	})
@@ -44,7 +44,7 @@ router.post('/:cardID', function(req,res,next){
 	})
 
 })
-
+//Update a Comment
 router.put('/:cardID', function(req,res,next){
 	var github = req.user.githubAccess;
 	var editCommentAsync = Promise.promisify(github.issues.editComment);
@@ -55,7 +55,6 @@ router.put('/:cardID', function(req,res,next){
 		id: req.body.comment.githubID,
 		body: req.body.comment.body
 	}
-
 	Board.findById(req.body.card.board)
 	.then(function(board){
 		//Send the comment to Github with msg body
