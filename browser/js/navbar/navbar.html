@@ -46,8 +46,8 @@
               </md-input-container>
           </div> -->
 
-        <div class="app-name boardName" ng-show"user && currentBoard()">
-          {{currentBoard().name}}
+        <!-- <div class="app-name boardName" ng-show"user && currentBoard()">
+          {{currentBoard().name}} -->
 <!--           <md-select ng-model="aaa">
             <md-option>
               one
@@ -57,11 +57,14 @@
             </md-option>
           </md-select> -->
 
-        </div>
+        <!-- </div> -->
         
 
         <!-- <md-button ng-show="!user" ui-sref="auth" class="btn login-button app-name">Login</md-button> -->
-        <span class="app-name navbar-username" ng-show="user">{{user.username}}</span>
+        <span class="app-name navbar-username" ng-show="user && !currentBoard()">{{user.username}}</span>
+        <span class="app-name boardName" ng-show="user && currentBoard()">{{currentBoard().owner.username+'/'+currentBoard().name}}</span>
+        <i ng-show="user && getActiveRepoCache().length>1" class="fa fa-caret-down"></i>
+
 
       </div>
   </div>
