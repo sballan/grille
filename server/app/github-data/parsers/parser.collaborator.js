@@ -14,8 +14,8 @@ function parse(body) {
 	collaborator.organizations_url = body.organizations_url
   collaborator.repos_url = body.repos_url
 
-  console.log("Collab Body", body)
-  console.log("Collab", collaborator)
+  // console.log("Collab Body", body)
+  // console.log("Collab", collaborator)
   return collaborator
 }
 
