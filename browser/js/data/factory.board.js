@@ -45,7 +45,16 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 					var hashLane = hashLanes[lane]
 
 					card.priority = index
-					card.lane = hashLane
+
+					if(card.state === 'closed') {
+						card.lane = hashLanes['Done']
+					} else if(lane === 'Done'){
+						card.state = 'closed'
+					} else {
+						card.state = 'open'
+						card.lane = hashLane
+					}
+
 
 					if(card.priority < 0) console.error("writeLanes is broken")
 				})
