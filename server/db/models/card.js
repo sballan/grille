@@ -23,7 +23,7 @@ var cardSchema = new mongoose.Schema({
 		unique: true
 	},
 	//fibonnaci numbers used in agile/scrum
-	storyPoints:{type:Number, enum:[1,2,3,5,8,13,20,40,100]},
+	storyPoints:{type:Number, enum:[null,1,2,3,5,8,13,20,40,100]},
 	issueNumber: Number,
 	title: String,
 	body: String,
@@ -48,7 +48,7 @@ var cardSchema = new mongoose.Schema({
 	updated_at: Date,
 	closed_at: Date,
 	due_on: Date,
-
+	sprint:{type:mongoose.Schema.Types.ObjectId, ref:'Sprint'},
 	url: String,
 	labels_url: String,
 	comments_url: String,

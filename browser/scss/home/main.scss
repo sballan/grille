@@ -24,7 +24,6 @@ hr {
   }
 }
 
-
 .section {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -35,7 +34,7 @@ hr {
     border-right-style: solid;
     border-right-color: rgba(0,34,21,.2);
 	list-style: none outside none;
-	margin: 10px;
+	
 	padding: 10px;
     height:calc(100vh - 40px);
     overflow: scroll;
@@ -50,7 +49,7 @@ hr {
 	font-size: 1.1em;
 	font-weight: bold;
 	text-align: center;
-	cursor: move;
+	cursor: default;
 }
 
 
@@ -118,7 +117,7 @@ textarea{
 }
 .cardNumber{
     padding-bottom: 0%;
-    text-align: left;
+    text-align:left;
     color:#66A266;
     font-size:.875em;
 }
@@ -136,6 +135,7 @@ textarea{
 
 .dropdown-menu>li>a {
     color:#428bca;
+    cursor:pointer;
 }
 .dropdown ul.dropdown-menu {
     box-shadow:none;
@@ -162,6 +162,8 @@ textarea{
     z-index: 9;
 }
 .link-point{
+    text-align:left;
+    padding-left: 0px;
     width:100%;
 }
 .icon-size{
@@ -170,4 +172,20 @@ textarea{
     padding-bottom: 0px;
     height:.5em;
     width:.5em;
+}
+.card-sprint{
+    padding-bottom: 0%;
+    text-align: right;
+    color:#68228B;
+    font-size:.875em;
+    cursor:pointer;  
+}
+a:hover{
+    text-decoration: none;
+}
+.sprint-dropdown{
+    text-align:right;
+}
+.dropdown-menu > li >a {
+    padding-left: 0px;
 }

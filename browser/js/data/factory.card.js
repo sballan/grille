@@ -55,13 +55,11 @@ app.factory("CardFactory",function($http){
 
 			},
 			changePoints:function(card,points){
-				// if(points="Clear"){
-				//  points=null;
-				// }
-
+				if(points=="Clear"){
+				 points=null;
+				}		
 				return $http.put('/api/cards/put/storyPoints/'+card._id, {storyPoints:points})
 				.then(function(response){
-					console.log("response.data",response.data);
 					return response.data;
 				});
 			},
