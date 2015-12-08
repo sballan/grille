@@ -9,13 +9,25 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
-  $scope.boardSprints= boardSprints;
+  $scope.boardSprintArray= boardSprints;
   
-  console.log("boardsprints",$scope.boardSprints)
+  console.log("boardsprintArray",$scope.boardSprintArray)
 
   $scope.cardExpansion=function($event,card){
     textAreaSize($event,card);
     card.show=!card.show
+  }
+
+
+  $scope.boardSprints= function(){
+    return $scopeboardSprintArray;
+  };
+
+  $scope.getAllSprints = function(){
+     SprintFactory.getAllSprints($scope.board._id)
+     .then(function(allSprints){
+      boardSprintArray= allSprints;
+     })
   }
 
   var textAreaSize = function($event,card){
@@ -23,7 +35,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     console.log("textRowVal",textRowVal);
     if(textRowVal.attr('rows')==1){
       console.log("row val in 1")
-      textRowVal.attr('rows','3')
+      textRowVal.attr('rows','2')
     }
     else{
      textRowVal.attr('rows','1')
@@ -90,14 +102,15 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
               //Create a Comment
               $scope.ok = function (data) {
-                CommentFactory.addComment(card, data)
-                .then(function(updatedCard){
-                  console.log("updatedCard", updatedCard)
-                  // $scope.modalCard.comments.push(data)
-                  $scope.modalCard = updatedCard;
-                  $scope.data.body = "";
-                  // $uibModalInstance.close(data);
-                })
+                console.log("data", data)
+                console.log("typeof", typeof data)
+                if (data !== ""){
+                  CommentFactory.addComment(card, data)
+                  .then(function(updatedCard){
+                    $scope.modalCard = updatedCard;
+                    $scope.data.body = "";
+                  })
+                }
 
               };
 
@@ -105,7 +118,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               $scope.deleteComment = function(comment){
                 CommentFactory.deleteComment(card, comment)
                 .then(function(updatedCommentsArray){
-                  console.log("commentFactory.deleteComment RESPONSE YO")
                   $scope.modalCard.comments = updatedCommentsArray;
                 })
                 // $scope.modalCard.comments.forEach

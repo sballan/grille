@@ -45,7 +45,16 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 					var hashLane = hashLanes[lane]
 
 					card.priority = index
-					card.lane = hashLane
+
+					if(card.state === 'closed') {
+						card.lane = hashLanes['Done']
+					} else if(lane === 'Done'){
+						card.state = 'closed'
+					} else {
+						card.state = 'open'
+						card.lane = hashLane
+					}
+
 
 					if(card.priority < 0) console.error("writeLanes is broken")
 				})
@@ -58,7 +67,6 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 		// Reads the priority of the card and places it in the right lane in the right place
 		readLanes: function() {
 			// viewLanes = {}
-			console.log("CurrentBoard", currentBoard)
 			currentBoard.lanes.forEach(function(boardLane) {
 				viewLanes[boardLane.title] = [];
 				var currentLane = viewLanes[boardLane.title]
@@ -74,7 +82,6 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 					return a.priority - b.priority
 				})
 			})
-			console.log("View Lanes: ", viewLanes)
 			return viewLanes
 		},
 		//OP: does this need to return something?L
