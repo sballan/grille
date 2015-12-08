@@ -34,7 +34,6 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 			return $http.get('api/repos/get/' + repoID)
 			.then(toData)
 			.then(function(data){
-				console.log("GET REPO", data)
 				 var repo
 				repoCache.forEach(function(cachedRepo){
 					if (cachedRepo.githubID === data.board.githubID){

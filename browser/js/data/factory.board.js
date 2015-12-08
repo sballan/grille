@@ -67,7 +67,6 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 		// Reads the priority of the card and places it in the right lane in the right place
 		readLanes: function() {
 			// viewLanes = {}
-			console.log('Labels: ',currentBoard.labels)
 			currentBoard.lanes.forEach(function(boardLane) {
 				viewLanes[boardLane.title] = [];
 				var currentLane = viewLanes[boardLane.title]
