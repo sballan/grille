@@ -50,6 +50,7 @@ app.factory('GitHubFactory', function($http, $rootScope) {
 					var cachedRepo = data.board
 					cachedRepo.lanes = data.lanes
 					cachedRepo.cards = data.cards
+					cachedRepo.labels = data.labels
 					repoCache.push(cachedRepo)
 					return cachedRepo
 				}

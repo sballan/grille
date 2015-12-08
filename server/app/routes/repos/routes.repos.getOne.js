@@ -24,7 +24,7 @@ router.get('/:repo', function(req, res, next) {
 	var getCommentsAsync =  Promise.promisify(github.issues.getComments)
 	var repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
 	var getCollaboratorsAsync = Promise.promisify(github.repos.getCollaborators)
-	var getIssueLabelsAsync = Promise.promisify(github.issues.getLabels)
+	var getIssueLabelsAsync = Promise.promisify(github.issues.getIssueLabels)
 
 
 	Board.findOne({ githubID: req.params.repo })
@@ -72,16 +72,14 @@ router.get('/:repo', function(req, res, next) {
 
 						return Card.findOne({ githubID: parsed_issue.githubID })
 							.then(function(card) {
-
 								return getIssueLabelsAsync({
 									user: repo.owner.username,
 									repo: repo.name,
 									number: issue.number,
 								})
 								.then(function(labels) {
-									return Label.create(labels)
-									.then(function(newLabels) {
-										return Label.find({board: theRepo._id})
+									return Promise.map(labels, function(label) {
+										return Label.findOneAndUpdate({board: theRepo._id, name: label.name}, label, {new: true, upsert: true})
 									})
 									.then(function(newLabels) {
 										parsed_issue.labels = newLabels
@@ -158,8 +156,6 @@ router.get('/:repo', function(req, res, next) {
 				lanes: theLanes,
 				labels: labels
 			}
-			console.log('-----THE DATA',theData)
-
 			res.send(theData);
 
 		})
