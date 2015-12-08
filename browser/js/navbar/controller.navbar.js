@@ -53,22 +53,21 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
 
   $scope.currentBoard = BoardFactory.getCurrentBoard;
 
-  $scope.getActiveRepoCache = function() {
-    if (BoardFactory.getCurrentBoard()) {
-      var currBoard = BoardFactory.getCurrentBoard().name;
-      var repoCache = GitHubFactory.getCache();
-      if (repoCache.length === 0) {
-        return GitHubFactory.getAllRepos()
-        .then(function(repos) {
-          return repos.filter(function(repo) {
-            return (repo.isActive && repo.name !== currBoard);
-          })
-        });
-      } else {
-        return repoCache.filter(function(repo) {
-          return (repo.isActive && repo.name !== currBoard);
-        })
-      }
-    }
-  }
+  // $scope.getActiveRepoCache = function() {
+  //   if (BoardFactory.getCurrentBoard()) {
+  //     var currBoard = BoardFactory.getCurrentBoard().name;
+  //     if (GitHubFactory.getCache().length <= 1) {
+  //       return GitHubFactory.getAllRepos()
+  //       .then(function(repos) {
+  //         return repos.filter(function(repo) {
+  //           return (repo.isActive && repo.name !== currBoard);
+  //         })
+  //       });
+  //     } else {
+  //       return GitHubFactory.getCache().filter(function(repo) {
+  //         return (repo.isActive && repo.name !== currBoard);
+  //       })
+  //     }
+  //   }
+  // }
 })
