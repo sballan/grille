@@ -9,7 +9,6 @@ var obj = {
 
 // This function might be useful to call the various parse function all in one shot.
 var payload = function (body) {
-	//console.log("------Payload Function", body)
 
 	var data = {}
 	data.repo = obj.repo(body.repository)

@@ -49,7 +49,10 @@ var cardSchema = new mongoose.Schema({
 	updated_at: Date,
 	closed_at: Date,
 	due_on: Date,
-	sprint:{type:mongoose.Schema.Types.ObjectId, ref:'Sprint'},
+	sprint: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'Sprint'
+	},
 	url: String,
 	labels_url: String,
 	comments_url: String,
@@ -58,19 +61,19 @@ var cardSchema = new mongoose.Schema({
 	isPullRequest: {type: Boolean, default: false}
 })
 
-cardSchema.post('init', function(doc) {
-	if(!doc.lane) {
-    Lane.findOne({
-        board: doc.board._id,
-        title: 'Backlog'
-      })
-      .then(function(lane) {
-      	doc.lane = lane;
-      	console.log("Making default lane for new Card:", doc)
-      	return doc.save()
-      })
-	}
-})
+// cardSchema.post('init', function(doc) {
+// 	if(!doc.lane) {
+//     Lane.findOne({
+//         board: doc.board._id,
+//         title: 'Backlog'
+//       })
+//       .then(function(lane) {
+//       	doc.lane = lane;
+//       	console.log("Making default lane for new Card:", doc)
+//       	return doc.save()
+//       })
+// 	}
+// })
 
 mongoose.model('Card', cardSchema);
 // mongoose.model('Comment', commentSchema);

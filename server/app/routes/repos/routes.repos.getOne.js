@@ -7,6 +7,7 @@ var User = require('mongoose').model('User');
 var Board = require('mongoose').model('Board');
 var Card = require('mongoose').model('Card');
 var Lane = require('mongoose').model('Lane');
+var Label = require('mongoose').model('Label');
 
 module.exports = router;
 
@@ -23,6 +24,7 @@ router.get('/:repo', function(req, res, next) {
 	var getCommentsAsync =  Promise.promisify(github.issues.getComments)
 	var repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
 	var getCollaboratorsAsync = Promise.promisify(github.repos.getCollaborators)
+	var getIssueLabelsAsync = Promise.promisify(github.issues.getIssueLabels)
 
 
 	Board.findOne({ githubID: req.params.repo })
@@ -38,6 +40,7 @@ router.get('/:repo', function(req, res, next) {
 				}
 			})
 			makeIssues(theRepo, 1, [])
+
 		})
 		.then(null, next)
 
@@ -65,8 +68,27 @@ router.get('/:repo', function(req, res, next) {
 						var parsed_issue = payloadParser.issue(issue);
 						parsed_issue.board = theRepo._id
 
+						var issueLabels;
+
 						return Card.findOne({ githubID: parsed_issue.githubID })
-						.then(function(card) {
+							.then(function(card) {
+								return getIssueLabelsAsync({
+									user: repo.owner.username,
+									repo: repo.name,
+									number: issue.number,
+								})
+								.then(function(labels) {
+									return Promise.map(labels, function(label) {
+										return Label.findOneAndUpdate({board: theRepo._id, name: label.name}, label, {new: true, upsert: true})
+									})
+									.then(function(newLabels) {
+										parsed_issue.labels = newLabels
+										return card
+									})
+								})
+							})
+							.then(function(card) {
+
 							if(!card) {
 								parsed_issue.lane = theLane._id
 
@@ -101,7 +123,6 @@ router.get('/:repo', function(req, res, next) {
 	}
 
 	function getCollaborators(cards) {
-		console.log("CCAARRDDSS:", cards)
 		theCards = cards;
 		return getCollaboratorsAsync(
 			{
@@ -127,13 +148,18 @@ router.get('/:repo', function(req, res, next) {
 
 	//OP: res is global, not good
 	function sendData(theBoard) {
-		var theData = {
-			board: theBoard,
-			cards: theCards,
-			lanes: theLanes
-		}
+		Label.find({board: theBoard})
+		.then(function(labels) {
+			var theData = {
+				board: theBoard,
+				cards: theCards,
+				lanes: theLanes,
+				labels: labels
+			}
+			res.send(theData);
 
-		res.send(theData);
+		})
+
 	}
 
 })

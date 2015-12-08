@@ -33,7 +33,6 @@ router.post('/', function(req, res, next) {
 		return Lane.populate(card, {path: 'lane', model: 'Lane'})
 	})
 	.then(function(card) {
-		console.log("----From Card.post, Card right before res.send:", card)
 		res.send(card)
 	})
 

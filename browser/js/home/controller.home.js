@@ -16,9 +16,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
   $scope.getAllSprints = function(){
      SprintFactory.getAllSprints($scope.board._id)
      .then(function(allSprints){
-      console.log("all sprints", allSprints)
       boardSprintArray= allSprints;
-      console.log("boardSprints",boardSprintArray)
      })
   }
 
