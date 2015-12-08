@@ -40,7 +40,7 @@
           <md-button class="app-name boardName" ng-show="user && currentBoard()" ng-click="$mdOpenMenu($event)">
             <span>{{currentBoard().owner.username+'/'+currentBoard().name}}</span>
           </md-button>
-          <md-menu-content class="boardMenu" >
+          <md-menu-content class="boardMenu">
             <md-menu-item ng-repeat="board in getActiveRepoCache()">
               <md-button ui-sref="home({ githubID: board.githubID })">{{board.name}}</md-button>
             </md-menu-item>
