@@ -25,7 +25,7 @@ hr {
 }
 
 #commentText{
-    width: 65%;
+    width: 69%;
     resize: both;
 }
 
@@ -39,7 +39,7 @@ hr {
 }
 
 #AddAComment {
-    width:80%;
+    width:100%;
     margin:auto;
     padding-bottom: 0px;
 }
@@ -52,6 +52,10 @@ hr {
     // padding-left: 4px;
 }
 
+.SaveCancelButtons {
+    display: inline-block;
+    float:right;
+}
 .section {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -153,11 +157,57 @@ textarea{
     width: 100%;
     border-style: none;
 }
+
+.cardModalSubmitButton {
+    margin:auto; 
+    border-bottom: 0px;
+}
+.editCardModalButtons {
+    padding-bottom:0px;
+}
+.modalCardDivider {
+    width: 100%;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid white;
+    margin: 20px 0; 
+    margin-top: 2px; 
+    margin-bottom: 0px;
+}
+.modalCardUser{
+    display:inline-block;
+    background-color: #d3d3d3;
+    border-radius: 3px;
+}
+.commentsList {
+    margin-bottom: 0px;
+    padding-left: 0px;
+}
+.modalCardBody {
+    padding-left: 5px;
+}
+.commentHistory {
+    top:-25px;
+    color: #337ab7;
+}
+.commentDescription{
+    height:0px;
+}
+.editCardModalTitle {
+    font-weight:bold; 
+    text-align:center; 
+    font-size: 18px; 
+    margin-top: 0px; 
+    margin-bottom: 0px;
+}
 .cardNumber{
     padding-bottom: 0%;
     text-align:left;
     color:#66A266;
     font-size:.875em;
+}
+.SaveCancelButtons{
+    padding-top:1px;
+    padding-bottom:1px;
 }
 .dropdown-menu{
     position: absolute;
@@ -212,12 +262,19 @@ textarea{
     width:.5em;
 }
 
-
+.issueDescription {
+    padding-bottom: 0px;
+}
+.editCardModalWindow {
+    border-style: solid; 
+    border-width: 2px; 
+    border-radius: 5px;
+}
 .editCommentCardNumber {
   padding-bottom: 0%;
   text-align: left;
   color: #66A266;
-  font-size: .875em;
+  font-size: 20px;
 }
 
 

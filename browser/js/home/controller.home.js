@@ -83,14 +83,15 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
               //Create a Comment
               $scope.ok = function (data) {
-                CommentFactory.addComment(card, data)
-                .then(function(updatedCard){
-                  console.log("updatedCard", updatedCard)
-                  // $scope.modalCard.comments.push(data)
-                  $scope.modalCard = updatedCard;
-                  $scope.data.body = "";
-                  // $uibModalInstance.close(data);
-                })
+                console.log("data", data)
+                console.log("typeof", typeof data)
+                if (data !== ""){
+                  CommentFactory.addComment(card, data)
+                  .then(function(updatedCard){
+                    $scope.modalCard = updatedCard;
+                    $scope.data.body = "";
+                  })
+                }
 
               };
 
@@ -98,7 +99,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               $scope.deleteComment = function(comment){
                 CommentFactory.deleteComment(card, comment)
                 .then(function(updatedCommentsArray){
-                  console.log("commentFactory.deleteComment RESPONSE YO")
                   $scope.modalCard.comments = updatedCommentsArray;
                 })
                 // $scope.modalCard.comments.forEach
