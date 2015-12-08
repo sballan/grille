@@ -20,7 +20,7 @@ function parse(body) {
 	}
 	comment.created_at = body.created_at
 	comment.updated_at = body.updated_at
-	console.log("AND THE COMMENT IS:", comment)
+
 	return comment;
 }
 

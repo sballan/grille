@@ -6,10 +6,8 @@ var Sprint = require('mongoose').model('Sprint');
 
 router.post('/',function(req,res, next){
 	//create
-	console.log("before creating sprint", req.body)
 	Sprint.create(req.body)
 	.then(function(createdSprint){
-		console.log("after creating", createdSprint)
 		res.send(createdSprint);
 	})
 })
@@ -20,13 +18,10 @@ router.get('/:id',function(req,res, next){
 })
 
 router.get('/all/:boardId',function(req,res, next){
-	console.log("got to get all sprints")
 	Sprint.find({board:req.params.boardId})
 	.then(function(allFound){
-		console.log("ALLLL FOUND",allFound);
 		res.send(allFound);
 	})
-	
 
 })
 

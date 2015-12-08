@@ -3,7 +3,8 @@
 		<td class="colStyle">
 		    <h3 class="centerText">GrilleBoards</h3>
 			<ul>
-				<li ui-sref="home({ githubID: board.githubID })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
+				<!-- home(board) works too :) -->
+				<li ui-sref="home({ githubID: board.githubID, boardId:board._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
 					{{ board.name }}
 				</li>
 

@@ -24,13 +24,10 @@ hr {
   }
 }
 
-#commentText{
-    width: 65%;
-    resize: both;
-}
-
 #commentsList{
     list-style-type: none;
+    // display: inline-block;
+    // max-width:90%;
 }
 
 #comments {
@@ -39,7 +36,7 @@ hr {
 }
 
 #AddAComment {
-    width:80%;
+    width:100%;
     margin:auto;
     padding-bottom: 0px;
 }
@@ -47,11 +44,13 @@ hr {
 #deleteCommentButton {
     border-radius: 15px;
     padding: 0px 5px 0px 5px;
-    // padding-right: 4px;
-    // padding-bottom: 0px;
-    // padding-left: 4px;
+    float: right;
 }
 
+.SaveCancelButtons {
+    display: inline-block;
+    float:right;
+}
 .section {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -102,8 +101,11 @@ md-content {
     text-align:center;
 }
 .laneHeading{
+    font-weight: bold;
+    font-family: 'Share Tech Mono';
+    margin-top: 0px;
+    margin-bottom: 0px;
     font-weight: thin;
-
 }
 
 .separator{
@@ -123,15 +125,76 @@ textarea{
     width: 100%;
     border-style: none;
 }
+
+.cardModalSubmitButton {
+    margin:auto; 
+    border-bottom: 0px;
+}
+.editCardModalButtons {
+    padding-bottom:0px;
+}
+.modalCardDivider {
+    width: 100%;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid white;
+    margin: 20px 0; 
+    margin-top: 2px; 
+    margin-bottom: 0px;
+}
+.modalCardUser{
+    display:inline-block;
+    background-color: #d3d3d3;
+    border-radius: 3px;
+}
+.commentsList {
+    margin-bottom: 0px;
+    padding-left: 0px;
+}
+.modalCardBody {
+    padding-left: 5px;
+}
+.commentHistory {
+    top:-25px;
+    color: #337ab7;
+}
+.commentDescription{
+    height:0px;
+}
+.editCardModalTitle {
+    font-weight:bold; 
+    text-align:center; 
+    font-size: 18px; 
+    margin-top: 0px; 
+    margin-bottom: 0px;
+}
 .cardNumber{
     padding-bottom: 0%;
     text-align:left;
     color:#66A266;
     font-size:.875em;
 }
+.SaveCancelButtons{
+    padding-top:1px;
+    padding-bottom:1px;
+}
+.commentText{
+    max-width: 84%; //68, 84
+    resize: both;
+    border-bottom: solid 1px #F5F5F5;
+}
+.smallerWidth{
+    width: 68%;
+}
+
 .dropdown-menu{
     position: absolute;
     min-width: 60px;
+}
+.sprint-dropdown > .dropdown-menu{
+    min-width: 30%;
+}
+.expand-sprint-dropdown > .dropdown-menu{
+    min-width: 30%;
 }
 .story-pointer{
     background-color: white;
@@ -156,7 +219,7 @@ textarea{
     border-left: 10px solid transparent;
     position: absolute;
     top: -10px;
-    right: 16px;
+    left: 16px;
     z-index: 10;
 }
 .dropdown ul.dropdown-menu:after {
@@ -166,12 +229,13 @@ textarea{
     border-left: 12px solid transparent;
     position: absolute;
     top: -12px;
-    right: 14px;
+    left: 14px;
     z-index: 9;
 }
 .link-point{
     text-align:left;
     padding-left: 0px;
+    padding-right: 0px;
     width:100%;
 }
 .icon-size{
@@ -182,12 +246,19 @@ textarea{
     width:.5em;
 }
 
-
+.issueDescription {
+    padding-bottom: 0px;
+}
+.editCardModalWindow {
+    border-style: solid; 
+    border-width: 2px; 
+    border-radius: 5px;
+}
 .editCommentCardNumber {
   padding-bottom: 0%;
   text-align: left;
   color: #66A266;
-  font-size: .875em;
+  font-size: 20px;
 }
 
 
@@ -207,4 +278,17 @@ a:hover{
 .dropdown-menu > li >a {
     padding-left: 0px;
 }
-
+.card-text{
+    width:90%;
+    overflow: hidden;
+}
+.card-text-icon{
+    width:10%;
+}
+.card-expansion{
+    height:100%;
+}
+.expand-sprint-dropdown{
+    width: 100%;
+    text-align: left;
+}

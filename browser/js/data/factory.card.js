@@ -67,5 +67,9 @@ app.factory("CardFactory",function($http){
 					return response.data;
 				});
 			},
+			chooseSprint:function(card,sprint){
+				return $http.put('/api/cards/put/sprint/'+card._id+"/"+sprint._id)
+				.then(toData);
+			}
 	}
 })
