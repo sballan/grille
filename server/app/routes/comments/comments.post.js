@@ -79,16 +79,16 @@ router.put('/:cardID', function(req,res,next){
 	})
 })
 
-router.put('/delete/:cardID', function(req,res,next){
+router.delete('/:cardID/:board/:commentID', function(req,res,next){
 	var github = req.user.githubAccess;
 	var deleteCommentAsync = Promise.promisify(github.issues.deleteComment);
 	var msg = {
 		user: null,
 		repo: null,
-		id: req.body.comment.githubID
+		id: req.params.commentID
 	}
-
-	Board.findById(req.body.card.board)
+	console.log
+	Board.findById(req.params.board)
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
