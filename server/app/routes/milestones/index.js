@@ -21,13 +21,15 @@ router.get('/:id',function(req,res, next){
 
 router.get('/all/:boardId',function(req,res, next){
 	console.log("got to get all sprints")
+	//completed:false
 	Sprint.find({board:req.params.boardId})
 	.then(function(allFound){
 		console.log("ALLLL FOUND",allFound);
 		res.send(allFound);
 	})
-	
-
+	.then(null,function(err){
+		res.send(null)
+	})
 })
 
 

@@ -94,7 +94,7 @@ router.get('/:repo', function(req, res, next) {
 					if(comment) return comment
 				})
 				return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
-				.populate('comments lane')
+				.populate('comments lane sprint')
 			})
 		})
 		.then(null, next)

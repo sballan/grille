@@ -67,7 +67,6 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 					if(card.lane._id === hashLanes[boardLane.title] ||
 						 card.lane === hashLanes[boardLane.title]) {
 						//if(!card.priority) card.priority = card.issueNumber
-						console.log("They are equal:", card)
 						currentLane.push(card)
 					}
 				})

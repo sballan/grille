@@ -11,17 +11,25 @@
                                     <p>{{card.issueNumber}}</p>
                                 </div>
                                 <div class="dropdown col-sm-6 sprint-dropdown">
-                                    <a class="sprint-tag dropdown-toggle" data-toggle="dropdown" ng-click="getAllSprints()"><span ng-hide="card.sprint" disabled="!boardSprints">Sprint</span>
-                                    <span ng-show="card.sprint" class="sprint-tag" >{{card.sprint}}</span></a>
+                                    <a class="sprint-tag dropdown-toggle" data-toggle="dropdown">
+                                    <span ng-show="card.sprint" class="sprint-tag"> Sprint: {{card.sprint.title | limitTo:8}}</span>
+                                    </a>
+                                   
                                     <ul class="dropdown-menu">
-                                        <li ng-repeat="sprint in boardSprints()" class="individual-point">
-                                            <a class="link-point" ng-click="chooseSprint(card,sprint)">{{number}}</a>
+                                        <li ng-repeat="sprint in boardSprints" class="individual-point">
+                                            <a class="link-point" ng-click="chooseSprint(card,sprint)">{{sprint.title}}</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <textarea rows="1" ng-model="card.title" ng-model-options="{ updateOn: 'blur' }" ng-change="updateCardTitle(card)" class="cardText"></textarea>
+                        <div class="here-jquery-over-here">
+                        <textarea rows="1" ng-model="card.title" ng-model-options="{ updateOn: 'blur' }" ng-change="updateCardTitle(card)" class="card-text" ng-style="overflowStyle"></textarea> <i class="fa fa-arrow-circle-o-down card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'auto'}" ng-hide="card.show"></i><i class="fa fa-arrow-circle-o-up card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'hidden'}" ng-hide="!card.show"></i>
+                        </div>
+                        <!--  fix
+                        <div ng-show="card.show" class="col-sm-12">
+                        <p ng-model="card.body">{{card.body}}</p>
+                        </div>  -->
                         <div class="row">
                             <div class="col-sm-3 ">
                                 <div class="dropdown">
@@ -38,9 +46,9 @@
                                 <a target="_blank" href="{{card.html_url}}" class="icon-size"><i class="fa fa-github" aria-label="githubLink"></i></a>
                             </div>
                             <div class="col-sm-3">
-                                <i class="fa fa-comment icon-size" ng-click="openCommentModal(card)" aria-label="comment"></i>
+                                <i class="fa fa-comment-o" ng-click="openCommentModal(card)" aria-label="comment"></i>
                             </div>
-                            <!--  <div class="col-sm-3 ">
+                             <div class="col-sm-3 ">
                                 <div class="dropdown">
                                     <a class="assignee-dropdown dropdown-toggle" data-toggle="dropdown"><i class="fa fa-smile-o icon-size"></i></a>
                                     <ul class="dropdown-menu">
@@ -49,8 +57,34 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div> -->
+                            </div>   
                         </div>
+                        <div class="card-expansion row" ng-show="card.show">
+                            
+                              <div class="dropdown col-sm-12 expand-sprint-dropdown" ng-show="boardSprints.length>=1">
+                                    <a class="sprint-tag dropdown-toggle" data-toggle="dropdown">
+                                    <span ng-show="card.sprint" class="sprint-tag"> Sprint: {{card.sprint.title | limitTo:20}}</span>
+                                    </a>
+                                      <a class="sprint-tag dropdown-toggle" data-toggle="dropdown"><span ng-hide="card.sprint || !boardSprints"> Choose Sprint</span> </a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-repeat="sprint in boardSprints" class="individual-point">
+                                            <a class="link-point" ng-click="chooseSprint(card,sprint)">{{sprint.title}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            
+                            <div class="row" ng-show="card.labels.length>=1">
+                                <div class="col-sm-1" ng-repeat="label in card.labels">
+                                    {{label.title}}
+                                </div>
+
+
+                            </div>
+                       
+                        </div>
+
+
+
                     </div>
                 </ul>
             </div>

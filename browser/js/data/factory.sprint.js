@@ -1,12 +1,18 @@
 app.factory("SprintFactory",function($http){
 	function toData(res) {
 		return res.data
-	}
+	};
+	var cachSprints=[];
 
-	return {
+	var SprintFactory= {
 		addSprint:function(newSprint){
 			return $http.post('api/milestones/',newSprint)
-			.then(toData)
+			.then(function(res){
+				console.log("Cached sprints", cachSprints);
+				console.log("Cached sprints", res.data);
+				cachSprints.push(res.data);
+				return res.data;
+			})
 		},
 		editSprint:function(sprint){
 			return $http.put('api/milestones/'+sprint._id,sprint)
@@ -17,19 +23,26 @@ app.factory("SprintFactory",function($http){
 		},
 		getAllSprints:function(boardId){
 			return $http.get('api/milestones/all/'+boardId)
-			.then(toData)
+			.then(function(res){
+				console.log("res.data", res.data)
+				cachSprints= res.data;
+				return res.data;
+			})
 		},
 
 		getOneSprint:function(sprint){
 			return $http.get('api/milestones/:id')
 			.then(toData)
+		},
+		getCachedSprints:function(){
+			return cachSprints;
+		},
+		setCachedSprints:function(){
+			
 		}
 
 
 
-
-
-
-
 	}
+	return SprintFactory;
 });
