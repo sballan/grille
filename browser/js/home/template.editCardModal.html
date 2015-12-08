@@ -13,26 +13,29 @@
         <label class="commentHistory">Comment History:</label>
       </md-input-container>
         <textarea class="modalCardBody" rows="1" ng-model="modalCard.body" class="cardText"></textarea>
-      
       <!-- List of Comments -->
       <ul class="commentsList">
         <li id="commentsList" ng-repeat="comment in modalCard.comments">
-          <!-- <div> -->
+    
           <div class="modalCardUser"> {{ comment.user.username }} </div>
-          <textarea id="commentText" ng-model="comment.body" name="aComment{{$index}}" rows="1" class="cardText">{{ comment.body }}</textarea>
-          <!-- Save - Delete, Comment buttons -->
-          <button ng-hide="cardForm.aComment{{$index}}.$dirty" id="deleteCommentButton" class="btn btn-default btn-circle" ng-click="deleteComment(comment)">
+          <!-- <div> -->
+            <textarea class="commentText" ng-class=" {smallerWidth: cardForm.aComment{{$index}}.$dirty}" ng-model="comment.body" name="aComment{{$index}}" rows="1">{{ comment.body }}</textarea>
+          <!-- </div> -->
+
+
+          <!-- {{cardForm.aComment{{$index}} | json}} -->
+          <!-- Save, Delete, Comment buttons -->
+          <button ng-show="cardForm.aComment{{$index}}.$pristine" id="deleteCommentButton" class="btn btn-default btn-circle" ng-click="deleteComment(comment)">
             <i class="fa fa-times"></i>
           </button>
           <div ng-show="cardForm.aComment{{$index}}.$dirty" class="SaveCancelButtons">
             <button class="btn btn-default btn-sm SaveCancelButtons" ng-click="updateComment(comment, cardForm)">Save</button>
-            <!-- <div style="width:2px; display:inline-block";></div> -->
             <button style="margin-right:2px;" class="btn btn-default btn-sm SaveCancelButtons" ng-click="cancelComment(cardForm)">Cancel</button>
           </div>
         </li>
       </ul>
       <!-- Divider -->
-      <div class="modalCardDivider"></div>
+      <!-- <div class="modalCardDivider"></div> -->
 
       <!-- Add a Comment -->
       <md-input-container id="AddAComment" class="md-block">
