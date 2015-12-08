@@ -17,11 +17,8 @@
 					<h6>Choose One to put on your Grille</h6>
 					<label>Search: <input ng-model="searchText"></label>
 
-					<li ng-repeat="board in inActiveBoards() | filter:searchText">
-						<!-- { board: board.githubID } -->
-						<!-- <a ui-sref="home()">{{ board.name }}</a> -->
+					<li ng-repeat="board in inActiveBoards() | filter:{name: searchText}">
 						<p ng-click="setActive(board.githubID)">{{ board.name }}</p>
-
 					</li>
 
 				</ul>
