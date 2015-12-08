@@ -34,38 +34,18 @@
         <div class="dropper" ng-show="user && currentBoard()">
           <md-button ng-click="addCard()"><span class="app-name">Issue</span> <i class="fa fa-plus"></i></md-button>
         </div>
-
-<!--           <div class="cur-repo">
-              <md-input-container>
-                <label>Current Repo</label>
-                <md-select ng-model="user.currenRepo">
-                  <md-option  value="">
-                    user.activeRepos
-                  </md-option>
-                </md-select>
-              </md-input-container>
-          </div> -->
-
-        <!-- <div class="app-name boardName" ng-show"user && currentBoard()">
-          {{currentBoard().name}} -->
-<!--           <md-select ng-model="aaa">
-            <md-option>
-              one
-            </md-option>
-            <md-option>
-              two
-            </md-option>
-          </md-select> -->
-
-        <!-- </div> -->
         
-
-        <!-- <md-button ng-show="!user" ui-sref="auth" class="btn login-button app-name">Login</md-button> -->
         <span class="app-name navbar-username" ng-show="user && !currentBoard()">{{user.username}}</span>
-        <span class="app-name boardName" ng-show="user && currentBoard()">{{currentBoard().owner.username+'/'+currentBoard().name}}</span>
-        <i ng-show="user && getActiveRepoCache().length>1" class="fa fa-caret-down"></i>
-
-
+        <md-menu>
+          <md-button class="app-name boardName" ng-show="user && currentBoard()" ng-click="$mdOpenMenu($event)">
+            <span>{{currentBoard().owner.username+'/'+currentBoard().name}}</span>
+          </md-button>
+          <md-menu-content class="boardMenu" >
+            <md-menu-item ng-repeat="board in getActiveRepoCache()">
+              <md-button ui-sref="home({ githubID: board.githubID })">{{board.name}}</md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </div>
   </div>
 </nav>

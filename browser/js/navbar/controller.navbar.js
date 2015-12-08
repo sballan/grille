@@ -54,8 +54,11 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
   $scope.currentBoard = BoardFactory.getCurrentBoard;
 
   $scope.getActiveRepoCache = function() {
-    return GitHubFactory.getCache().filter(function(repo) {
-      return (repo.isActive);
-    })
+    if (BoardFactory.getCurrentBoard()) {
+      var currBoard = BoardFactory.getCurrentBoard().name;
+      return GitHubFactory.getCache().filter(function(repo) {
+        return (repo.isActive && repo.name !== currBoard);
+      })
+    }
   }
 })
