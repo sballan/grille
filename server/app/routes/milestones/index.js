@@ -23,7 +23,6 @@ router.get('/all/:boardId',function(req,res, next){
 		res.send(allFound);
 	})
 
-
 })
 
 

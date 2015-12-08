@@ -7,7 +7,8 @@ var sprintSchema = new mongoose.Schema({
 	startDate: Date,
 	endDate: Date,
 	board: {type: mongoose.Schema.Types.ObjectId, ref: 'Board'},
-	assignees:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}]
+	assignees:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
+	completed: {type:Boolean, default:false}
 })
 
 

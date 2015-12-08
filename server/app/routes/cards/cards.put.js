@@ -2,7 +2,7 @@
 var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
-
+var Sprint = require('mongoose').model('Sprint');
 var Card = require('mongoose').model('Card');
 var Board = require('mongoose').model('Board');
 
@@ -38,7 +38,7 @@ router.put('/lane/:cardID', function(req, res, next) {
 
 	var card = req.body
 	Card.findOneAndUpdate({githubID: card.githubID}, card, {new: true})
-	.populate('lane')
+	.populate('lane sprint')
 	.then(function(card) {
 		res.send(card)
 	})
@@ -86,5 +86,25 @@ router.put("/storyPoints/:cardId",function(req,res,next){
 	})
 	.then(function(savedCard){
 		res.send(savedCard);
+	})
+})
+
+router.put("/sprint/:cardId/:sprintId",function(req,res){
+	Card.findById(req.params.cardId)
+	.then(function(foundCard){
+		console.log("got in card srpint")
+		return foundCard;
+	})
+	.then(function(foundCard){
+		return Sprint.findById(req.params.sprintId)
+		.then(function(foundSprint){
+			console.log("got in foundsprint",foundSprint)
+			foundCard.sprint=foundSprint;
+			return foundCard.save()
+		})
+	})
+	.then(function(savedCard){
+		console.log("savedCard",savedCard)
+		res.send(savedCard)
 	})
 })

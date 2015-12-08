@@ -1,5 +1,5 @@
 
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory) {
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory,boardSprints) {
 
   $scope.board = loadGrille;
 
@@ -8,9 +8,19 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
   $scope.viewLanes = BoardFactory.getViewLanes
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
-  var boardSprintArray=null;
+
+  $scope.boardSprintArray= boardSprints;
+  
+  console.log("boardsprintArray",$scope.boardSprintArray)
+
+  $scope.cardExpansion=function($event,card){
+    textAreaSize($event,card);
+    card.show=!card.show
+  }
+
+
   $scope.boardSprints= function(){
-    return boardSprintArray;
+    return $scopeboardSprintArray;
   };
 
   $scope.getAllSprints = function(){
@@ -19,6 +29,18 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
       boardSprintArray= allSprints;
      })
   }
+
+  var textAreaSize = function($event,card){
+    var textRowVal=$($event.target).closest('div').children('.card-text');
+    console.log("textRowVal",textRowVal);
+    if(textRowVal.attr('rows')==1){
+      console.log("row val in 1")
+      textRowVal.attr('rows','2')
+    }
+    else{
+     textRowVal.attr('rows','1')
+    }
+ }
 
   $scope.updateCardTitle = function(card){
     CardFactory.updateCardTitle(card)
@@ -34,16 +56,15 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     })
   }
 
-  $scope.addSprint = function(){
-    HomeFactory.addSprintModal();
+  $scope.chooseSprint= function(card,sprint){
+    CardFactory.chooseSprint(card,sprint)
+    .then(function(returnedCard){
+      card.sprint= returnedCard.sprint;
+    })
   }
-
   $scope.editSprint = function(card){
     HomeFactory.editSprintModal(card);
   }
-
-
-
 
 
 
