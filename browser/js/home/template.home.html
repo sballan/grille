@@ -14,14 +14,14 @@
                                     <a class="sprint-tag dropdown-toggle" data-toggle="dropdown">
                                         <span ng-show="card.sprint" class="sprint-tag"> Sprint: {{card.sprint.title | limitTo:15}}</span>
                                     </a>
-                                   
+
                                 </div>
                             </div>
                         </div>
                         <div class="here-jquery-over-here">
                             <textarea rows="1" ng-model="card.title" ng-model-options="{ updateOn: 'blur' }" ng-change="updateCardTitle(card)" class="card-text" ng-style="overflowStyle"></textarea> <i class="fa fa-arrow-circle-o-down card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'auto'}" ng-hide="card.show"></i><i class="fa fa-arrow-circle-o-up card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'hidden'}" ng-hide="!card.show"></i>
                         </div>
-                       
+
                         <!-- <div ng-show="card.show" class="row card-body">
                         <p ng-model="card.body">Description:{{card.body}}</p>
                         </div>  -->
@@ -57,12 +57,13 @@
                         <div class="card-expansion row" ng-show="card.show">
                             <div class="dropdown col-sm-12 expand-sprint-dropdown" ng-show="boardSprintArray.length>=1">
                                 <a class="sprint-tag dropdown-toggle" data-toggle="dropdown">
-                                    <span ng-show="card.sprint" class="sprint-tag"> Sprint: {{card.sprint.title | limitTo:20}}</span>
+                                    <span ng-show="card.sprint" class="sprint-tag cursorsily"> Sprint: {{card.sprint.title | limitTo:20}}</span>
                                 </a>
-                                <a class="sprint-tag dropdown-toggle" data-toggle="dropdown"><span ng-hide="card.sprint"> Choose Sprint</span> </a>
+                                <a class="sprint-tag dropdown-toggle cursorily" data-toggle="dropdown"><span ng-hide="card.sprint"> Choose Sprint</span> </a>
+
                                 <ul class="dropdown-menu">
                                     <li ng-repeat="sprint in boardSprintArray" class="individual-point">
-                                        <a class="link-point" ng-click="chooseSprint(card,sprint)">{{sprint.title}}</a>
+                                        <a class="link-point" ng-click="chooseSprint(card,sprint)">{{sprint.title | limitTo:18}}</a>
                                     </li>
                                 </ul>
                             </div>
