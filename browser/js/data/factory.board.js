@@ -47,10 +47,9 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 
 					card.priority = index
 
-					if(card.state === 'closed') {
-						card.lane = hashLanes['Done']
-					} else if(lane === 'Done'){
+					if(lane === 'Done') {
 						card.state = 'closed'
+						card.lane = hashLanes['Done']
 					} else {
 						card.state = 'open'
 						card.lane = hashLane

@@ -79,8 +79,13 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
     	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
       stop: function(e, ui) {
         BoardFactory.writeLanes()
-        BoardFactory.updateAllPriority()
         BoardFactory.updateAllLanes()
+        .then(function(data) {
+          return BoardFactory.updateAllPriority()
+        })
+        .then(function(data) {
+          BoardFactory.readLanes()
+        })
       }
     };
 

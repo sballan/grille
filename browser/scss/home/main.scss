@@ -283,7 +283,7 @@ table input {
     text-align:left;
 }
 .startDateTitle{
-    width:45%; 
+    width:45%;
     text-align:left;
     float:right;
 }
@@ -316,6 +316,16 @@ a:hover{
 .collab-img {
     height: 18px;
     border-radius: 15px;
+}
+
+.dropdown-menu, .individual-point, .link-point {
+    z-index: 50;
+    -webkit-transform: translate3d(0, 0, 50);
+}
+
+-webkit-scrollbar{
+    z-index: 0;
+   -webkit-transform: translate3d(0, 0, 0);
 }
 
 .card-body{
