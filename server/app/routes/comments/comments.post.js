@@ -59,7 +59,7 @@ router.put('/:cardID', function(req,res,next){
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
-		msg.user = req.body.comment.user.username
+		msg.user = board.owner.username
 		return editCommentAsync(msg)
 	})
 	.then(function(response){
@@ -79,7 +79,7 @@ router.put('/:cardID', function(req,res,next){
 	})
 })
 
-router.delete('/:cardID/:board/:commentID', function(req,res,next){
+router.delete('/:cardID/:boardID/:commentID', function(req,res,next){
 	var github = req.user.githubAccess;
 	var deleteCommentAsync = Promise.promisify(github.issues.deleteComment);
 	var msg = {
@@ -87,8 +87,7 @@ router.delete('/:cardID/:board/:commentID', function(req,res,next){
 		repo: null,
 		id: req.params.commentID
 	}
-	console.log
-	Board.findById(req.params.board)
+	Board.findById(req.params.boardID)
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
@@ -101,7 +100,7 @@ router.delete('/:cardID/:board/:commentID', function(req,res,next){
 	})
 	.then(function(card){
 		card.comments.forEach(function(comment, idx){
-			if (comment.githubID == req.body.comment.githubID){
+			if (comment.githubID == req.params.commentID){
 				card.comments.splice(idx,1)
 			}
 		})

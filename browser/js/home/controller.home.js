@@ -75,6 +75,11 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
               $scope.updateComment = function(comment, cardForm){
                 cardForm.$setPristine();
                 CommentFactory.updateComment(card, comment)
+                .then(function(updatedCard){
+                  console.log("CONTROLLER updatedCard", updatedCard)
+                  console.log("CONTROLLER $scope.modalCards", $scope.modalCard)
+                  $scope.modalCard.comments = updatedCard.comments;
+                })
               }
               $scope.cancelComment = function(cardForm){
                 cardForm.$setPristine();
@@ -101,7 +106,6 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
                 .then(function(updatedCommentsArray){
                   $scope.modalCard.comments = updatedCommentsArray;
                 })
-                // $scope.modalCard.comments.forEach
               }
               //Cancelling from this Modal screen
               $scope.cancel = function () {

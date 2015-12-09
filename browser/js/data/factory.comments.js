@@ -12,10 +12,12 @@ app.factory('CommentFactory',function($http, BoardFactory){
 		},
 		updateComment: function(card,comment){
 			return $http.put('api/comments/' + card.githubID, {comment: comment, card: card})
+			.then(function(response){
+				BoardFactory.refreshCurrentBoard()
+				return response.data
+			})
 		},
 		deleteComment: function(card,comment){
-			console.log("CCOMMENT", comment)
-			//$http.delete doesn't permit a 'body' to be sent, so use a .put and treat it as a delete
 			return $http.delete('api/comments/' + card.githubID + '/' + card.board + '/' + comment.githubID , {comment: comment, card: card})
 			.then(function(response){
 				BoardFactory.refreshCurrentBoard()

@@ -1,6 +1,4 @@
 app.controller("VisualCtrl",function($scope, $rootScope){
-	//can access the rootscope which was set in home.js
-	console.log("ROOTSCOPE é", $rootScope.currentBoard)
 
 	$scope.daysToComplete=null;
     //would let the user choose but for now we pick to test
