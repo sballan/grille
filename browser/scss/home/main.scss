@@ -101,38 +101,9 @@ md-content {
     text-align:center;
 }
 .laneHeading{
+    margin-top: 0px;
+    margin-bottom: 0px;
     font-weight: thin;
-
-}
-
-.landingFont{
-    font-weight: bold;
-
-}
-
-.landingSize1{
-    font-size: 50px;
-}
-
-.landingSize2{
-    font-size: 20px;
-}
-
-.centerText{
-    text-align: center;
-}
-
-.tableStyle{
-    align: center;
-    border: 2px solid black;
-    border-radius: 100px;
-}
-
-.colStyle{
-    border: 1px solid black;
-    vertical-align: top;
-    width: 50%;
-    background-color: #cccccc;
 }
 
 .separator{
@@ -217,6 +188,12 @@ textarea{
     position: absolute;
     min-width: 60px;
 }
+.sprint-dropdown > .dropdown-menu{
+    min-width: 30%;
+}
+.expand-sprint-dropdown > .dropdown-menu{
+    min-width: 30%;
+}
 .story-pointer{
     background-color: white;
     cursor:pointer;
@@ -240,7 +217,7 @@ textarea{
     border-left: 10px solid transparent;
     position: absolute;
     top: -10px;
-    right: 16px;
+    left: 16px;
     z-index: 10;
 }
 .dropdown ul.dropdown-menu:after {
@@ -250,12 +227,13 @@ textarea{
     border-left: 12px solid transparent;
     position: absolute;
     top: -12px;
-    right: 14px;
+    left: 14px;
     z-index: 9;
 }
 .link-point{
     text-align:left;
     padding-left: 0px;
+    padding-right: 0px;
     width:100%;
 }
 .icon-size{
@@ -298,4 +276,17 @@ a:hover{
 .dropdown-menu > li >a {
     padding-left: 0px;
 }
-
+.card-text{
+    width:90%;
+    overflow: hidden;
+}
+.card-text-icon{
+    width:10%;
+}
+.card-expansion{
+    height:100%;
+}
+.expand-sprint-dropdown{
+    width: 100%;
+    text-align: left;
+}

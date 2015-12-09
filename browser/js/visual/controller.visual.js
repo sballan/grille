@@ -1,7 +1,6 @@
-app.controller("VisualCtrl",function($scope, $rootScope){
+app.controller("VisualCtrl",function($scope, $rootScope, SprintFactory, CardFactory){
 
-	$scope.daysToComplete=null;
-    //would let the user choose but for now we pick to test
+	$scope.daysToComplete;
     $scope.daysToComplete=20;
     $scope.totalPoints=60;
     $scope.lineData = [

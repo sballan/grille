@@ -9,7 +9,6 @@ var io = require('../../../io')
 
 module.exports = {
 	issue_comment: function(body) {
-		console.log("issue_comment executed")
 		var payload = parser.payload(body)
 		if(payload.action !== 'created') console.error("Action for issue_comment should be 'created'")
 

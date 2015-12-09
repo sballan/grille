@@ -6,8 +6,8 @@ navbar {
   box-shadow: 1px 1px 4px -3px black;
 
  .navbar{
-  min-height: 40px;
-  max-height: 40px;
+  min-height: 30px;
+  max-height: 30px;
  }
 
   .container {
@@ -83,42 +83,46 @@ navbar {
   }
 
   .boardName{
+    float: right;
     text-align: left;
-    margin-left: 1%;
+    margin-top: 0.25%;
     padding-left: 1%;
     padding-right: 1%;
     color: #3366cc;
     font-style: italic;
     background-color: #cccccc;
     border-radius: 5px;
+    text-transform: lowercase;
+    line-height: 25px;
+    min-height: 25px;
+  }
+
+  .boardMenu{
+    padding-top: 20px;
   }
 
   .navbar-static-top{
     margin-bottom:0px;
   }
+
   .navbar-header{
     width:100%;
     max-height:40px;
   }
-  .cur-repo{
-    display: inline;
-    width:150px;
-    height:100%;
-  }
+
   .boldinator{
-  font-weight: bold;
+    font-weight: bold;
   }
+
   .md-button{
-  color:none;
+    color:none;
+    margin: 0.2% 0;
   }
-  .cur-repo > md-input-container{
-    height:40px;
-    padding-bottom:0px;
-  }
+
   .navbar-username{
     float: right;
     padding-right: 2%;
-    margin-top: 1%;
+    margin-top: 0.5%;
   }
 
 }

@@ -12,7 +12,6 @@ router.get('/:boardID', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-	console.log('in add lane route')
 	Lane.create({title: req.body.title, active: true, board: req.body.boardID})
 	.then(function(lane) {
 		res.send(lane);
