@@ -1,5 +1,5 @@
 
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory) {
+app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 'BoardFactory', 'CommentFactory', 'Socket', 'loadGrille', 'CardFactory','SprintFactory', function($rootScope, $scope, $uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory, SprintFactory) {
 
   $scope.board = loadGrille;
   $scope.cards = $scope.board.cards;
@@ -151,4 +151,4 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
   $scope.animationsEnabled = true;
 
-});
+}]);

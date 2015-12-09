@@ -3,7 +3,7 @@ app.controller('editCardCtrl', function ($scope, $uibModalInstance, zCard, Comme
      //          $scope.updateComment = function(comment){
      //            CommentFactory.updateComment(card, comment)
      //          }
-              
+
      //          $scope.theCard = zCard;
 
      //          //Add a Comment
@@ -13,7 +13,7 @@ app.controller('editCardCtrl', function ($scope, $uibModalInstance, zCard, Comme
      //              $scope.theCard.comments.push(data)
      //              $uibModalInstance.close(data);
      //            })
-                
+
      //          };
 
      //          $scope.cancel = function () {
