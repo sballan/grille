@@ -44,13 +44,9 @@ hr {
 #deleteCommentButton {
     border-radius: 15px;
     padding: 0px 5px 0px 5px;
-    float: right;
+    // float: right;
 }
 
-.SaveCancelButtons {
-    display: inline-block;
-    float:right;
-}
 .section {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -151,6 +147,8 @@ textarea{
 .modalCardBody {
     padding-left: 5px;
 }
+
+//Edit Card Comments
 .commentHistory {
     top:-25px;
     color: #337ab7;
@@ -174,6 +172,7 @@ textarea{
 .SaveCancelButtons{
     padding-top:1px;
     padding-bottom:1px;
+    float:right;
 }
 .commentText{
     max-width: 84%; //68, 84
@@ -258,7 +257,11 @@ textarea{
   font-size: 20px;
 }
 
+.addIssueHeadings{
+    font-size: 24px;
+}
 
+//Sprints
 .card-sprint{
     padding-bottom: 0%;
     text-align: right;
@@ -266,6 +269,25 @@ textarea{
     font-size:.875em;
     cursor:pointer;
 }
+.addSprintHeadings{
+    font-size: 18px;
+}
+
+table input {
+    width:45%;
+}
+.startDate{
+    text-align:right;
+}
+.endDate{
+    text-align:left;
+}
+.startDateTitle{
+    width:45%; 
+    text-align:left;
+    float:right;
+}
+
 a:hover{
     text-decoration: none;
 }

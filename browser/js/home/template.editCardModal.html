@@ -16,14 +16,9 @@
       <!-- List of Comments -->
       <ul class="commentsList">
         <li id="commentsList" ng-repeat="comment in modalCard.comments">
-    
           <div class="modalCardUser"> {{ comment.user.username }} </div>
-          <!-- <div> -->
             <textarea class="commentText" ng-class=" {smallerWidth: cardForm.aComment{{$index}}.$dirty}" ng-model="comment.body" name="aComment{{$index}}" rows="1">{{ comment.body }}</textarea>
-          <!-- </div> -->
 
-
-          <!-- {{cardForm.aComment{{$index}} | json}} -->
           <!-- Save, Delete, Comment buttons -->
           <button ng-show="cardForm.aComment{{$index}}.$pristine" id="deleteCommentButton" class="btn btn-default btn-circle" ng-click="deleteComment(comment)">
             <i class="fa fa-times"></i>
@@ -33,6 +28,8 @@
             <button style="margin-right:2px;" class="btn btn-default btn-sm SaveCancelButtons" ng-click="cancelComment(cardForm)">Cancel</button>
           </div>
         </li>
+
+
       </ul>
       <!-- Divider -->
       <!-- <div class="modalCardDivider"></div> -->

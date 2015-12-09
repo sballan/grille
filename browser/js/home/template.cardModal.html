@@ -23,20 +23,20 @@
 
 
       <md-input-container class="md-block">
-        <label>Title</label>
-        <input ng-model="card.title" placeholder="Whatsa matter">
+        <label class="addIssueHeadings">Title</label>
+        <input ng-model="card.title" placeholder="Issue title">
       </md-input-container>
 
       <md-input-container md-no-float class="md-block">
-      <label>Description</label>
-        <input ng-model="card.body" placeholder="Descriptor">
+      <label class="addIssueHeadings">Description</label>
+        <input ng-model="card.body" placeholder="Description here">
       </md-input-container>
 	<div layout layout-sm="column">
 	<md-input-container flex>
     <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Cancel</md-button>
     </md-input-container>
     <md-input-container flex>
-    <md-button> <input type="submit" ng-click="ok(card)" value="Submit" aria-label="subimt"></md-button>
+    <md-button class="btn btn-warning" type="button" ng-click="ok(card)" aria-label="subimt">Submit</md-button>
     </md-input-container>
     </div>
 
