@@ -22,9 +22,9 @@
                             <textarea rows="1" ng-model="card.title" ng-model-options="{ updateOn: 'blur' }" ng-change="updateCardTitle(card)" class="card-text" ng-style="overflowStyle"></textarea> <i class="fa fa-arrow-circle-o-down card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'auto'}" ng-hide="card.show"></i><i class="fa fa-arrow-circle-o-up card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'hidden'}" ng-hide="!card.show"></i>
                         </div>
                        
-                        <div ng-show="card.show" class="row card-body">
-                        <p ng-model="card.body">{{card.body}}</p>
-                        </div> 
+                        <!-- <div ng-show="card.show" class="row card-body">
+                        <p ng-model="card.body">Description:{{card.body}}</p>
+                        </div>  -->
                         <div class="row">
                             <div class="col-sm-3 ">
                                 <div class="dropdown">

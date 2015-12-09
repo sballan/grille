@@ -1,4 +1,4 @@
-app.factory("SprintFactory",function($http,BoardFactory){
+app.factory("SprintFactory",function($http,BoardFactory,$rootScope){
 	function toData(res) {
 		return res.data
 	};

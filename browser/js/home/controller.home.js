@@ -8,10 +8,12 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
-  $scope.boardSprintArray;
+  $scope.boardSprintArray=[];
 
   $rootScope.$on('Sprint created',function(event,args){
+    console.log("on sprint", args.sprint)
     boardsprintArray.push(args.sprint);
+    $scope.$digest();
   })
   console.log("board",$scope.board)
   console.log("boardsprintArray",$scope.boardSprintArray)
