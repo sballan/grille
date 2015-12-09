@@ -8,6 +8,7 @@ var Board = require('mongoose').model('Board');
 var Card = require('mongoose').model('Card');
 var Lane = require('mongoose').model('Lane');
 var Label = require('mongoose').model('Label');
+var Sprint = require('mongoose').model('Sprint');
 
 module.exports = router;
 
@@ -148,13 +149,21 @@ router.get('/:repo', function(req, res, next) {
 
 	//OP: res is global, not good
 	function sendData(theBoard) {
+		var attachedLabels;
+		var theBoard = theBoard;
+
 		Label.find({board: theBoard})
 		.then(function(labels) {
+			attachedLabels = labels
+			return Sprint.find({board: theBoard})
+		})
+		.then(function(sprints) {
 			var theData = {
 				board: theBoard,
 				cards: theCards,
 				lanes: theLanes,
-				labels: labels
+				labels: attachedLabels,
+				sprints: sprints
 			}
 			res.send(theData);
 

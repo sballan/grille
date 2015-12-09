@@ -52,7 +52,7 @@
                                     <a class="assignee-dropdown dropdown-toggle" data-toggle="dropdown"><i class="fa fa-smile-o icon-size"></i></a>
                                     <ul class="dropdown-menu">
                                         <li ng-repeat="collaborator in collaborators" class="individual-point">
-                                            <a class="link-point">picture and name here</a>
+                                            <a class="link-point"><img class="collab-img"src="{{collaborator.avatar_url}}" />{{collaborator.username}}</a>
                                         </li>
                                     </ul>
                                 </div>

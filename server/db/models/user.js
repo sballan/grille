@@ -18,8 +18,7 @@ var schema = new mongoose.Schema({
         type: String
     },
     accessToken:{
-        type:String,
-        unique:true
+        type:String
     },
     salt: {
         type: String

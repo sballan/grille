@@ -2,15 +2,14 @@
 app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory,boardSprints) {
 
   $scope.board = loadGrille;
-
   $scope.cards = $scope.board.cards;
-
+  $scope.collaborators = $scope.board.collaborators
   $scope.viewLanes = BoardFactory.getViewLanes
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
   $scope.boardSprintArray= boardSprints;
-  
+
   console.log("boardsprintArray",$scope.boardSprintArray)
 
   $scope.cardExpansion=function($event,card){
