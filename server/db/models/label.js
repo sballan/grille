@@ -5,7 +5,6 @@ var labelSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true
     },
     color: {
     	type: String

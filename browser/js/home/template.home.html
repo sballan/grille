@@ -10,24 +10,20 @@
                                 <div class="col-xs-6 card-number">
                                     <p>{{card.issueNumber}}</p>
                                 </div>
-                                <div class="dropdown col-sm-6 sprint-dropdown">
+                                <div class="col-sm-6 sprint-dropdown">
                                     <a class="sprint-tag dropdown-toggle" data-toggle="dropdown">
                                         <span ng-show="card.sprint" class="sprint-tag"> Sprint: {{card.sprint.title | limitTo:15}}</span>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li ng-repeat="sprint in boardSprints" class="individual-point">
-                                            <a class="sprint-name" ng-click="chooseSprint(card,sprint)">{{sprint.title}}</a>
-                                        </li>
-                                    </ul>
+
                                 </div>
                             </div>
                         </div>
                         <div class="here-jquery-over-here">
                             <textarea rows="1" ng-model="card.title" ng-model-options="{ updateOn: 'blur' }" ng-change="updateCardTitle(card)" class="card-text" ng-style="overflowStyle"></textarea> <i class="fa fa-arrow-circle-o-down card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'auto'}" ng-hide="card.show"></i><i class="fa fa-arrow-circle-o-up card-text-icon" ng-click="cardExpansion($event,card); overflowStyle={overflow:'hidden'}" ng-hide="!card.show"></i>
                         </div>
-                        <!--  fix
-                        <div ng-show="card.show" class="col-sm-12">
-                        <p ng-model="card.body">{{card.body}}</p>
+
+                        <!-- <div ng-show="card.show" class="row card-body">
+                        <p ng-model="card.body">Description:{{card.body}}</p>
                         </div>  -->
                         <div class="row">
                             <div class="col-sm-3 ">
@@ -52,7 +48,7 @@
                                     <a class="assignee-dropdown dropdown-toggle" data-toggle="dropdown"><i class="fa fa-smile-o icon-size"></i></a>
                                     <ul class="dropdown-menu">
                                         <li ng-repeat="collaborator in collaborators" class="individual-point">
-                                            <a class="link-point">picture and name here</a>
+                                            <a class="link-point"><img class="collab-img"src="{{collaborator.avatar_url}}" />{{collaborator.username}}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -63,7 +59,8 @@
                                 <a class="sprint-tag dropdown-toggle" data-toggle="dropdown">
                                     <span ng-show="card.sprint" class="sprint-tag cursorsily"> Sprint: {{card.sprint.title | limitTo:20}}</span>
                                 </a>
-                                <a class="sprint-tag dropdown-toggle cursorily" data-toggle="dropdown"><span ng-hide="card.sprint || !boardSprintArray"> Choose Sprint</span> </a>
+                                <a class="sprint-tag dropdown-toggle cursorily" data-toggle="dropdown"><span ng-hide="card.sprint"> Choose Sprint</span> </a>
+
                                 <ul class="dropdown-menu">
                                     <li ng-repeat="sprint in boardSprintArray" class="individual-point">
                                         <a class="link-point" ng-click="chooseSprint(card,sprint)">{{sprint.title | limitTo:18}}</a>

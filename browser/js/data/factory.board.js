@@ -26,10 +26,11 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 			var self = this;
 
 			//OP: ES6 => context remains same as outer scope, don't need self
-			GitHubFactory.getRepo(currentBoard.githubID)
+			return GitHubFactory.getRepo(currentBoard.githubID)
 			.then(function(board) {
-				self.setCurrentBoard(board)
+				return self.setCurrentBoard(board)
 			})
+
 		},
 		getViewLanes: function() {
 			return viewLanes;

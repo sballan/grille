@@ -1,13 +1,16 @@
-app.factory("SprintFactory",function($http){
+app.factory("SprintFactory",function($http,BoardFactory,$rootScope){
 	function toData(res) {
 		return res.data
 	};
+
 	var cachSprints=[];
 
 	var SprintFactory= {
 		addSprint:function(newSprint){
 			return $http.post('api/milestones/',newSprint)
 			.then(function(res){
+				var board=BoardFactory.getCurrentBoard();
+				$rootScope.$broadcast('Sprint created',{sprint:res.data});
 				console.log("Cached sprints", cachSprints);
 				console.log("Cached sprints", res.data);
 				cachSprints.push(res.data);
