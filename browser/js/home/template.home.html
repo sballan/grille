@@ -61,12 +61,12 @@
                         <div class="card-expansion row" ng-show="card.show">
                             <div class="dropdown col-sm-12 expand-sprint-dropdown" ng-show="boardSprintArray.length>=1">
                                 <a class="sprint-tag dropdown-toggle" data-toggle="dropdown">
-                                    <span ng-show="card.sprint" class="sprint-tag"> Sprint: {{card.sprint.title | limitTo:20}}</span>
+                                    <span ng-show="card.sprint" class="sprint-tag cursorsily"> Sprint: {{card.sprint.title | limitTo:20}}</span>
                                 </a>
-                                <a class="sprint-tag dropdown-toggle" data-toggle="dropdown"><span ng-hide="card.sprint || !boardSprintArray"> Choose Sprint</span> </a>
+                                <a class="sprint-tag dropdown-toggle cursorily" data-toggle="dropdown"><span ng-hide="card.sprint || !boardSprintArray"> Choose Sprint</span> </a>
                                 <ul class="dropdown-menu">
                                     <li ng-repeat="sprint in boardSprintArray" class="individual-point">
-                                        <a class="link-point" ng-click="chooseSprint(card,sprint)">{{sprint.title}}</a>
+                                        <a class="link-point" ng-click="chooseSprint(card,sprint)">{{sprint.title | limitTo:18}}</a>
                                     </li>
                                 </ul>
                             </div>
