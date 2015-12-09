@@ -4,7 +4,9 @@
 		<table class="tableStyle" align="center">
 			<td class="colStyle">
 			    <h3 class="centerText blueText textUnderline">GrilleBoards</h3>
+
 				<ul class="listStyle">
+					<li class="blueText">  Please select a Grille to manage</li>
 					<!-- home(board) works too :) -->
 					<li class="blueText" ui-sref="home({ githubID: board.githubID, boardId:board._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
 						<button class="listBtnStyle">{{ board.owner.username + '/' + board.name }}</button>
