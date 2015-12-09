@@ -23,7 +23,7 @@
           <button ng-show="cardForm.aComment{{$index}}.$pristine" id="deleteCommentButton" class="btn btn-default btn-circle" ng-click="deleteComment(comment)">
             <i class="fa fa-times"></i>
           </button>
-          <div ng-show="cardForm.aComment{{$index}}.$dirty" class="SaveCancelButtons">
+          <div ng-hide="cardForm.aComment{{$index}}.$pristine" class="SaveCancelButtons">
             <button class="btn btn-default btn-sm SaveCancelButtons" ng-click="updateComment(comment, cardForm)">Save</button>
             <button style="margin-right:2px;" class="btn btn-default btn-sm SaveCancelButtons" ng-click="cancelComment(cardForm)">Cancel</button>
           </div>

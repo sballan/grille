@@ -1,6 +1,4 @@
 app.controller("VisualCtrl",function($scope, $rootScope, SprintFactory, CardFactory){
-	//can access the rootscope which was set in home.js
-	console.log("ROOTSCOPE é", $rootScope.currentBoard)
 
 	$scope.daysToComplete;
     $scope.daysToComplete=20;
