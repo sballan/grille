@@ -1,4 +1,4 @@
-app.factory('HomeFactory', function($uibModal, CardFactory, BoardFactory, LaneFactory, SprintFactory) {
+app.factory('HomeFactory', ['$uibModal', 'CardFactory', 'BoardFactory', 'LaneFactory', 'SprintFactory', function($uibModal, CardFactory, BoardFactory, LaneFactory, SprintFactory) {
 	var HomeFactory = {
 		addLane: function(animationsEnabled) {
 			var modalInstance = $uibModal.open({
@@ -76,7 +76,7 @@ app.factory('HomeFactory', function($uibModal, CardFactory, BoardFactory, LaneFa
 
 		// 		})
 
-				
+
 
 		// 	}, function() {
 		// 		console.log('Modal dismissed at: ' + new Date());
@@ -88,4 +88,4 @@ app.factory('HomeFactory', function($uibModal, CardFactory, BoardFactory, LaneFa
 
 	return HomeFactory
 
-})
+}])

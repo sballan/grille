@@ -1,4 +1,4 @@
-app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, GitHubFactory, BoardFactory, HomeFactory) {
+app.controller('NavBarCtrl', ['$scope', '$rootScope', '$uibModal', 'AuthService', 'AUTH_EVENTS', '$state', 'GitHubFactory', 'BoardFactory', 'HomeFactory', function($scope, $rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, GitHubFactory, BoardFactory, HomeFactory) {
 
   $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
   $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
@@ -70,4 +70,4 @@ app.controller('NavBarCtrl', function($scope, $rootScope, $uibModal, AuthService
   //     }
   //   }
   // }
-})
+}])

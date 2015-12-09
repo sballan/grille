@@ -1,4 +1,4 @@
-app.factory("CardFactory",function($http){
+app.factory("CardFactory", ['$http', function($http){
 	function toData(res) {
 		return res.data
 	}
@@ -61,7 +61,7 @@ app.factory("CardFactory",function($http){
 			changePoints:function(card,points){
 				if(points=="Clear"){
 				 points=null;
-				}		
+				}
 				return $http.put('/api/cards/put/storyPoints/'+card._id, {storyPoints:points})
 				.then(function(response){
 					return response.data;
@@ -72,4 +72,4 @@ app.factory("CardFactory",function($http){
 				.then(toData);
 			}
 	}
-})
+}])

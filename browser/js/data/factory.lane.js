@@ -1,4 +1,4 @@
-app.factory('LaneFactory', function($http) {
+app.factory('LaneFactory', ['$http', function($http) {
 	var LaneFactory =  {
 		createLane: function(newLane) {
 			return $http.post('api/board/lanes/', newLane);
@@ -6,4 +6,4 @@ app.factory('LaneFactory', function($http) {
 	}
 
 	return LaneFactory;
-});
+}]);

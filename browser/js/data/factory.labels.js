@@ -1,4 +1,4 @@
-app.factory('LabelFactory', function($http) {
+app.factory('LabelFactory', ['$http', function($http) {
 	var LabelFactory =  {
 		createLabel: function(newLabel) {
 			return $http.post('api/labels/', newLabel);
@@ -6,4 +6,4 @@ app.factory('LabelFactory', function($http) {
 	}
 
 	return LabelFactory;
-});
+}]);

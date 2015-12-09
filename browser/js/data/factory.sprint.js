@@ -1,4 +1,4 @@
-app.factory("SprintFactory",function($http,BoardFactory,$rootScope){
+app.factory("SprintFactory", ['$http', 'BoardFactory', '$rootScope', function($http, BoardFactory, $rootScope){
 	function toData(res) {
 		return res.data
 	};
@@ -41,11 +41,11 @@ app.factory("SprintFactory",function($http,BoardFactory,$rootScope){
 			return cachSprints;
 		},
 		setCachedSprints:function(){
-			
+
 		}
 
 
 
 	}
 	return SprintFactory;
-});
+}]);

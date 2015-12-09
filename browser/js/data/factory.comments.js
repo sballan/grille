@@ -1,4 +1,4 @@
-app.factory('CommentFactory',function($http, BoardFactory){
+app.factory('CommentFactory', ['$http', 'BoardFactory', function($http, BoardFactory){
 	var toData = function(response){
 		return response.data
 	}
@@ -26,4 +26,4 @@ app.factory('CommentFactory',function($http, BoardFactory){
 		}
 
 	}
-})
+}])
