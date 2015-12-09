@@ -90,7 +90,7 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
           var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: 'js/home/template.editCardModal.html',
-            controller: function($scope, $uibModalInstance){
+            controller: ['$scope', '$uibModalInstance', function($scope, $uibModalInstance){
 
 
               //Sets the scope of this modal to the card whose 'comments' icon you just clicked on
@@ -139,7 +139,7 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
                   // $uibModalInstance.close(data);
               };
 
-            }
+            }]
           });
 
           modalInstance.result.then(function () {

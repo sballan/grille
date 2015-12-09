@@ -4,9 +4,9 @@ app.config(function ($stateProvider) {
 				templateUrl: 'js/home/template.home.html',
 				controller: 'HomeCtrl',
 				resolve: {
-						loadGrille: function(BoardFactory, $stateParams){
+						loadGrille: ['BoardFactory', '$stateParams', function(BoardFactory, $stateParams){
 								return BoardFactory.getBoardAndMakeCurrent($stateParams.githubID)
-						}
+						}]
 				}
 		});
 });

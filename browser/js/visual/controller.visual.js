@@ -1,4 +1,4 @@
-app.controller("VisualCtrl",function($scope, $rootScope, SprintFactory, CardFactory){
+app.controller("VisualCtrl", ['$scope', '$rootScope', 'SprintFactory', 'CardFactory', function($scope, $rootScope, SprintFactory, CardFactory){
 
 	$scope.daysToComplete;
     $scope.daysToComplete=20;
@@ -74,7 +74,7 @@ app.controller("VisualCtrl",function($scope, $rootScope, SprintFactory, CardFact
 		     .orient('left')
 		     .tickSubdivide(true);
 
-		     
+
 vis.append('svg:g')
  .attr('class', 'x axis')
  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
@@ -100,5 +100,5 @@ var lineFunc = d3.svg.line()
   .attr('stroke-width', 2)
   .attr('fill', 'none');
 
-});
+}]);
 
