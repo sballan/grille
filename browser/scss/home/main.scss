@@ -125,7 +125,7 @@ textarea{
 }
 
 .cardModalSubmitButton {
-    margin:auto; 
+    margin:auto;
     border-bottom: 0px;
 }
 .editCardModalButtons {
@@ -135,8 +135,8 @@ textarea{
     width: 100%;
     border-top: 1px solid #cdcdcd;
     border-bottom: 1px solid white;
-    margin: 20px 0; 
-    margin-top: 2px; 
+    margin: 20px 0;
+    margin-top: 2px;
     margin-bottom: 0px;
 }
 .modalCardUser{
@@ -159,10 +159,10 @@ textarea{
     height:0px;
 }
 .editCardModalTitle {
-    font-weight:bold; 
-    text-align:center; 
-    font-size: 18px; 
-    margin-top: 0px; 
+    font-weight:bold;
+    text-align:center;
+    font-size: 18px;
+    margin-top: 0px;
     margin-bottom: 0px;
 }
 .cardNumber{
@@ -208,7 +208,6 @@ textarea{
 }
 .dropdown ul.dropdown-menu {
     box-shadow:none;
-    width:60px;
 }
 .dropdown ul.dropdown-menu:before {
     content: "";
@@ -248,8 +247,8 @@ textarea{
     padding-bottom: 0px;
 }
 .editCardModalWindow {
-    border-style: solid; 
-    border-width: 2px; 
+    border-style: solid;
+    border-width: 2px;
     border-radius: 5px;
 }
 .editCommentCardNumber {
@@ -275,6 +274,7 @@ a:hover{
 }
 .dropdown-menu > li >a {
     padding-left: 0px;
+    padding-right:0px;
 }
 .card-text{
     width:90%;
@@ -290,3 +290,16 @@ a:hover{
     width: 100%;
     text-align: left;
 }
+
+.collab-img {
+    height: 18px;
+    border-radius: 15px;
+}
+
+.card-body{
+    max-width:100%;
+}
+.cursorily{
+    cursor:pointer;
+}
+

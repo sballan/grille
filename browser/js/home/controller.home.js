@@ -1,16 +1,21 @@
 
-app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory,boardSprints) {
+app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory,SprintFactory) {
 
   $scope.board = loadGrille;
-
   $scope.cards = $scope.board.cards;
-
+  $scope.collaborators = $scope.board.collaborators
   $scope.viewLanes = BoardFactory.getViewLanes
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
-  $scope.boardSprintArray= boardSprints;
-  
+  $scope.boardSprintArray=[];
+
+  $rootScope.$on('Sprint created',function(event,args){
+    console.log("on sprint", args.sprint)
+    boardsprintArray.push(args.sprint);
+    $scope.$digest();
+  })
+  console.log("board",$scope.board)
   console.log("boardsprintArray",$scope.boardSprintArray)
 
   $scope.cardExpansion=function($event,card){
@@ -23,12 +28,14 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
     return $scopeboardSprintArray;
   };
 
-  $scope.getAllSprints = function(){
+  ($scope.getAllSprints = function(){
      SprintFactory.getAllSprints($scope.board._id)
      .then(function(allSprints){
-      boardSprintArray= allSprints;
+      console.log("allSprints",allSprints)
+      $scope.boardSprintArray= allSprints;
+      console.log("scopeboards",$scope.boardSprintArray)
      })
-  }
+  })()
 
   var textAreaSize = function($event,card){
     var textRowVal=$($event.target).closest('div').children('.card-text');
