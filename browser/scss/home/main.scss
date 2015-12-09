@@ -208,7 +208,6 @@ textarea{
 }
 .dropdown ul.dropdown-menu {
     box-shadow:none;
-    width:60px;
 }
 .dropdown ul.dropdown-menu:before {
     content: "";
@@ -275,6 +274,7 @@ a:hover{
 }
 .dropdown-menu > li >a {
     padding-left: 0px;
+    padding-right:0px;
 }
 .card-text{
     width:90%;
@@ -294,4 +294,8 @@ a:hover{
 .collab-img {
     height: 18px;
     border-radius: 15px;
+}
+
+.card-body{
+    max-width:100%;
 }

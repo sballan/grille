@@ -7,11 +7,6 @@ app.config(function ($stateProvider) {
 						loadGrille: function(BoardFactory, $stateParams){
 								return BoardFactory.getBoardAndMakeCurrent($stateParams.githubID)
 						}
-						,
-						boardSprints:function(SprintFactory,$stateParams){
-							console.log("stateParams", $stateParams.boardId);
-							return SprintFactory.getAllSprints($stateParams.boardId);
-						}
 				}
 		});
 });
