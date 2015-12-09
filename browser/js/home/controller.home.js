@@ -11,7 +11,7 @@ app.controller('HomeCtrl', function($rootScope, $scope,$uibModal, HomeFactory, B
   $scope.boardSprintArray;
 
   $rootScope.$on('Sprint created',function(event,args){
-    boardsprintArray.push(args);
+    boardsprintArray.push(args.sprint);
   })
   console.log("board",$scope.board)
   console.log("boardsprintArray",$scope.boardSprintArray)
