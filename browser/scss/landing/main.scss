@@ -4,25 +4,32 @@
 
 .landingSize1{
     font-size: 50px;
+    text-decoration: underline;
 }
 
 .landingSize2{
+    font-weight: normal;
     font-size: 20px;
+}
+
+.landingBlue{
+    color: #3366cc;
 }
 
 .centerText{
     text-align: center;
 }
 
-.tableStyle{
-    align: center;
-    border: 2px solid black;
-    border-radius: 100px;
+.landingBtn{
+    height: 50px;
+    width: 200px;
+    background-color: #3366aa;
+    font-size: 18px;
+    border-radius: 7px;
 }
 
-.colStyle{
-    border: 1px solid black;
-    vertical-align: top;
-    width: 50%;
-    background-color: #cccccc;
+.landingGrille{
+    border: 2px solid #3366aa;
+    height: 300px;
+    border-radius: 5px;
 }
