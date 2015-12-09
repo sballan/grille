@@ -14,3 +14,37 @@
 	left:80%;
 	right:80%;
 }
+
+.tableStyle{
+    align: center;
+    //border: 2px solid black;
+    border-radius: 100px;
+    height: 500px;
+    overflow: scroll;
+}
+
+.colStyle{
+    //border: 1px solid black;
+    vertical-align: top;
+    width: 400px;
+    background-color: #cccccc;
+}
+
+.tableHeight {
+	height: 500px;
+	//overflow: scroll;
+}
+
+.blueText {
+	color: #3366cc;
+
+}
+
+.listStyle {
+	list-style-type: circle;
+}
+
+.textUnderline {
+	text-decoration: underline;
+}
+

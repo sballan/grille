@@ -1,28 +1,29 @@
 <div class="boardPage landingFont">
-	<table class="tableStyle" align="center">
-		<td class="colStyle">
-		    <h3 class="centerText">GrilleBoards</h3>
-			<ul>
-				<!-- home(board) works too :) -->
-				<li ui-sref="home({ githubID: board.githubID, boardId:board._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
-					{{ board.name }}
-				</li>
-
-			</ul>
-		</td>
-		<td class="colStyle">
-			<h3 class="centerText">RawBoards</h3>
-			<div ng-show="rawSelected">
-				<ul>
-					<h6>Choose One to put on your Grille</h6>
-					<label>Search: <input ng-model="searchText"></label>
-
-					<li ng-repeat="board in inActiveBoards() | filter:{name: searchText}">
-						<p ng-click="setActive(board.githubID)">{{ board.name }}</p>
+	<h4 class="centerText"> Welcome to Grille! Please click on a raw board (GitHub project) to select into your GrilleBoard list</h4>
+	<div class="tableHeight">
+		<table class="tableStyle" align="center">
+			<td class="colStyle">
+			    <h3 class="centerText blueText textUnderline">GrilleBoards</h3>
+				<ul class="listStyle">
+					<!-- home(board) works too :) -->
+					<li class="blueText" ui-sref="home({ githubID: board.githubID, boardId:board._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
+						<button>{{ board.owner.username + '/' + board.name }}</button>
 					</li>
 
 				</ul>
-			</div>
-		</td>
-	</table>
+			</td>
+			<td class="colStyle">
+				<h3 class="centerText textUnderline">RawBoards</h3>
+				<div ng-show="rawSelected">
+					<ul class="listStyle">
+						<label>Search: <input size="35" ng-model="searchText"></label>
+						<li ng-repeat="board in inActiveBoards() | filter:{name: searchText}" ng-show="$index < 15">
+							<button ng-click="setActive(board.githubID)">{{ board.owner.username + '/' + board.name }}</button>
+						</li>
+
+					</ul>
+				</div>
+			</td>
+		</table>
+	</div>
 </div>
