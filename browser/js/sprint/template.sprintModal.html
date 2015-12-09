@@ -5,24 +5,31 @@
 
 
       <md-input-container class="md-block">
-        <label>Sprint title</label>
+        <label class="addSprintHeadings">Sprint title</label>
         <input ng-model="sprint.title" ng-required="true">
       </md-input-container>
 
       <md-input-container md-no-float class="md-block">
-      <label>Sprint description</label>
+      <label class="addSprintHeadings">Sprint description</label>
         <input ng-model="sprint.description" ng-required="true">
       </md-input-container>
 
-<input type="date" ng-model="sprint.startDate" ng-required="true">
-<input type="date" ng-model="sprint.endDate" ng-required="true">
+<table style="width:100%">
+  <tr>
+    <td><div class="startDateTitle">Start</div></td>
+    <td>Finish</td>
+  <tr>
+    <td class="startDate"><input type="date" ng-model="sprint.startDate" ng-required="true"></td>
+    <td class="endDate"><input type="date" ng-model="sprint.endDate" ng-required="true"></td>
+  <tr>
+</table>
 
 	<div layout layout-sm="column">
 	<md-input-container flex>
     <md-button class="btn btn-warning" type="button" ng-click="cancel()" aria-label="cancel">Cancel</md-button>
     </md-input-container>
     <md-input-container flex>
-    <md-button> <input type="submit" ng-click="ok(sprint)" value="Submit" aria-label="submit"></md-button>
+    <md-button class="btn btn-warning" type="button" ng-click="ok(sprint)" aria-label="submit">Submit</md-button>
     </md-input-container>
     </div>
 
