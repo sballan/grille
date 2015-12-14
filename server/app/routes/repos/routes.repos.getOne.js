@@ -1,6 +1,8 @@
 'use strict';
 var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
+var asyncIssues = require('../../github-data/async-functions/github/github.issues')
+var asyncComments = require('../../github-data/async-functions/github/github.comments')
 var Promise = require('bluebird')
 
 var User = require('mongoose').model('User');
@@ -66,40 +68,32 @@ router.get('/:repo', function(req, res, next) {
 				} else {
 
 					return Promise.map(issues, function(issue) {
-						var parsed_issue = payloadParser.issue(issue);
-						parsed_issue.board = theRepo._id
+						issue = payloadParser.issue(issue);
+						issue.board = theRepo._id
 
 						var issueLabels;
 
-						return Card.findOne({ githubID: parsed_issue.githubID })
-							.then(function(card) {
-								return getIssueLabelsAsync({
-									user: repo.owner.username,
-									repo: repo.name,
-									number: issue.number,
-								})
-								.then(function(labels) {
-									return Promise.map(labels, function(label) {
-										return Label.findOneAndUpdate({board: theRepo._id, name: label.name}, label, {new: true, upsert: true})
-									})
-									.then(function(newLabels) {
-										parsed_issue.labels = newLabels
-										return card
-									})
-								})
+							return asyncIssues.getIssueLabels(issue, repo, github)
+							.then(function(labels) {
+								issueLabels = labels
+								return Card.findOne({githubID: issue.githubID})
 							})
 							.then(function(card) {
 
-							if(!card) {
-								parsed_issue.lane = theLane._id
+								if(!card) {
+									issue.lane = theLane._id
 
-								return Card.create(parsed_issue)
-							} else {
-								return card.set(parsed_issue).save()
-							}
+									return Card.create(issue)
+								} else {
+									return card.set(issue).save()
+								}
 						})
 					})
-					.then(attachComments)
+					.then(function(issues) {
+						return Promise.map(issues, function(issue) {
+							return asyncComments.getComments(issue, theRepo, github)
+						})
+					})
 					.then(getCollaborators)
 					.then(sendData)
 					.then(null, next)
@@ -108,20 +102,6 @@ router.get('/:repo', function(req, res, next) {
 		.then(null, next)
 	}
 
-	function attachComments(issues) {
-		return Promise.map(issues, function(issue) {
-			return getCommentsAsync({user: theRepo.owner.username, repo: theRepo.name, number: issue.issueNumber, per_page: 100})
-			.then(function(comments) {
-				comments = comments.map(function(comment) {
-					comment = payloadParser.comment(comment)
-					if(comment) return comment
-				})
-				return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
-				.populate('comments lane sprint')
-			})
-		})
-		.then(null, next)
-	}
 
 	function getCollaborators(cards) {
 		theCards = cards;

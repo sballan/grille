@@ -1,6 +1,4 @@
-asyncFunctions = {
-  github: require('./github')
+module.exports = {
+  github: require('./github'),
   mongo: require('./mongo')
 }
-
-module.exports = asyncFunctions

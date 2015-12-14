@@ -1,5 +1,3 @@
-var mongo = {
-  lanes: require('./mongo.labels')
+module.exports = {
+  labels: require('./mongo.labels')
 }
-
-module.exports = github

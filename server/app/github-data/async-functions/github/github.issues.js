@@ -10,7 +10,7 @@ var getIssueLabels = function(issue, repo, github) {
   return getIssueLabelsAsync({
     user: repo.owner.username,
     repo: repo.name,
-    number: issue.number,
+    number: issue.issueNumber,
   })
   .then(function(labels) {
     return Promise.map(labels, function(label) {
@@ -23,6 +23,6 @@ var getIssueLabels = function(issue, repo, github) {
 }
 
 module.exports = {
-  getIssueLabels: getIssueLabels,
+  getIssueLabels: getIssueLabels
 
 }

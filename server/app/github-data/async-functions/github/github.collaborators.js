@@ -26,6 +26,6 @@ var getCollaborators = function(repo, github) {
 }
 
 module.exports = {
-  getCollaborators: getCollaborators,
+  getCollaborators: getCollaborators
 
 }

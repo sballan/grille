@@ -3,7 +3,7 @@ var Promise = require('bluebird')
 var payloadParser = require('../../parsers')
 
 //Takes one issue, gets comments for it and upserts them to the issue.
-var getCommentsOneIssue = function(issue, repo, github) {
+var getComments = function(issue, repo, github) {
   var getCommentsAsync =  Promise.promisify(github.issues.getComments)
 
   return getCommentsAsync({user: repo.owner.username, repo: repo.name, number: issue.issueNumber, per_page: 100})
@@ -19,6 +19,6 @@ var getCommentsOneIssue = function(issue, repo, github) {
 }
 
 module.exports = {
-  getCommentsOneIssue: getCommentsOneIssue,
+  getComments: getComments
 
 }
