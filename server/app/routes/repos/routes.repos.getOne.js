@@ -3,6 +3,7 @@ var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
 var asyncIssues = require('../../github-data/async-functions/github/github.issues')
 var asyncComments = require('../../github-data/async-functions/github/github.comments')
+var asyncCollaborators = require('../../github-data/async-functions/github/github.collaborators')
 var Promise = require('bluebird')
 
 var User = require('mongoose').model('User');
@@ -24,11 +25,7 @@ router.get('/:repo', function(req, res, next) {
 
 	var github = req.user.githubAccess;
 
-	var getCommentsAsync =  Promise.promisify(github.issues.getComments)
 	var repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
-	var getCollaboratorsAsync = Promise.promisify(github.repos.getCollaborators)
-	var getIssueLabelsAsync = Promise.promisify(github.issues.getIssueLabels)
-
 
 	Board.findOne({ githubID: req.params.repo })
 		.then(function(repo) {
@@ -94,7 +91,15 @@ router.get('/:repo', function(req, res, next) {
 							return asyncComments.getComments(issue, theRepo, github)
 						})
 					})
-					.then(getCollaborators)
+					.then(function(cards) {
+						theCards = cards
+
+						return asyncCollaborators.getCollaborators(theRepo, github)
+						.then(function(collaborators) {
+							theRepo.set({collaborators: collaborators}).populate('collaborators')
+							return theRepo.save()
+						})
+					})
 					.then(sendData)
 					.then(null, next)
 				}
@@ -103,34 +108,10 @@ router.get('/:repo', function(req, res, next) {
 	}
 
 
-	function getCollaborators(cards) {
-		theCards = cards;
-		return getCollaboratorsAsync(
-			{
-				user: theRepo.owner.username,
-				repo: theRepo.name,
-				per_page: 100
-			})
-			.then(function(collaborators) {
-				collaborators = collaborators.map(function(collaborator) {
-					collaborator = payloadParser.collaborator(collaborator)
-					if(typeof collaborator.githubID === 'string') return collaborator
-				})
-
-				return Promise.map(collaborators, function(collaborator) {
-					return User.findOneAndUpdate({githubID: collaborator.githubID}, collaborator, {upsert: true, new: true}).select('-accessToken')
-				})
-			})
-			.then(function(collaborators) {
-				theRepo.set({collaborators: collaborators}).populate('collaborators')
-				return theRepo.save()
-			})
-	}
-
 	//OP: res is global, not good
 	function sendData(theBoard) {
 		var attachedLabels;
-		var theBoard = theBoard;
+		// var theBoard = theBoard;
 
 		Label.find({board: theBoard})
 		.then(function(labels) {

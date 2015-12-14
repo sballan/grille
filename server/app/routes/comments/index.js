@@ -1,7 +1,6 @@
 'use strict';
 var router = require('express').Router();
 
-router.use('/', require('./comments.post.js'));
+router.use('/', require('./comments.js'));
 
 module.exports = router;
-

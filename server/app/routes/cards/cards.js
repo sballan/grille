@@ -2,11 +2,42 @@
 var router = require('express').Router();
 var payloadParser = require('../../github-data/parsers')
 var Promise = require('bluebird')
+var Lane = require('mongoose').model('Lane');
 var Sprint = require('mongoose').model('Sprint');
 var Card = require('mongoose').model('Card');
 var Board = require('mongoose').model('Board');
 
 module.exports = router;
+
+router.post('/', function(req, res, next) {
+
+	var github = req.user.githubAccess;
+	var createIssueAsync = Promise.promisify(github.issues.create)
+
+	var msg = {
+		user: req.body.board.owner.username,
+		repo: req.body.board.name,
+		title: req.body.title,
+		body: req.body.body
+	}
+
+	createIssueAsync(msg)
+	.then(function(issue) {
+
+		issue = payloadParser.issue(issue)
+		issue.lane = req.body.lane
+		issue.board = req.body.board._id
+
+		return Card.create(issue)
+	})
+	.then(function(card) {
+		return Lane.populate(card, {path: 'lane', model: 'Lane'})
+	})
+	.then(function(card) {
+		res.send(card)
+	})
+
+})
 
 router.put('/priority/many', function(req, res, next) {
 
@@ -17,30 +48,6 @@ router.put('/priority/many', function(req, res, next) {
 	})
 	.then(function(cards) {
 		res.send(cards)
-	})
-
-})
-
-router.put('/lane/many', function(req, res, next) {
-
-	var cards = req.body
-
-	Promise.map(cards, function(card) {
-		return Card.findOneAndUpdate({githubID: card.githubID}, card, {new: true})
-	})
-	.then(function(cards) {
-		res.send(cards)
-	})
-
-})
-
-router.put('/lane/:cardID', function(req, res, next) {
-
-	var card = req.body
-	Card.findOneAndUpdate({githubID: card.githubID}, card, {new: true})
-	.populate('lane sprint')
-	.then(function(card) {
-		res.send(card)
 	})
 
 })
@@ -92,19 +99,16 @@ router.put("/storyPoints/:cardId",function(req,res,next){
 router.put("/sprint/:cardId/:sprintId",function(req,res){
 	Card.findById(req.params.cardId)
 	.then(function(foundCard){
-		console.log("got in card srpint")
 		return foundCard;
 	})
 	.then(function(foundCard){
 		return Sprint.findById(req.params.sprintId)
 		.then(function(foundSprint){
-			console.log("got in foundsprint",foundSprint)
 			foundCard.sprint=foundSprint;
 			return foundCard.save()
 		})
 	})
 	.then(function(savedCard){
-		console.log("savedCard",savedCard)
 		res.send(savedCard)
 	})
 })

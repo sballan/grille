@@ -1,4 +1,3 @@
-var Card = require('mongoose').model('Card');
 var User = require('mongoose').model('User');
 var Promise = require('bluebird')
 var payloadParser = require('../../parsers')

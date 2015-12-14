@@ -1,5 +1,4 @@
 var Label = require('mongoose').model('Label');
-var Card = require('mongoose').model('Card');
 var Promise = require('bluebird')
 
 

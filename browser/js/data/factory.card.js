@@ -10,7 +10,7 @@ app.factory("CardFactory", ['$http', function($http){
 					_id: card.board._id
 				}
 				console.log("From CardFactory, right before post:", card)
-				return $http.post('/api/cards/post', card)
+				return $http.post('/api/cards', card)
 				.then(toData)
 			},
 			updatePriorityMany: function(cards) {
@@ -24,7 +24,7 @@ app.factory("CardFactory", ['$http', function($http){
 					})
 				})
 
-				return $http.put('/api/cards/put/priority/many', data)
+				return $http.put('/api/cards/priority/many', data)
 				.then(toData)
 			},
 			updateLaneOne: function(card) {
@@ -33,7 +33,7 @@ app.factory("CardFactory", ['$http', function($http){
 					githubID: card.githubID,
 					lane: card.lane._id
 				}
-				return $http.put('/api/cards/put/lane/' + card.githubID, data)
+				return $http.put('/api/cards/lane/' + card.githubID, data)
 			},
 			updateLaneMany: function(cards) {
 				var data = []
@@ -46,14 +46,14 @@ app.factory("CardFactory", ['$http', function($http){
 					})
 				})
 
-				return $http.put('/api/cards/put/lane/many', data)
+				return $http.put('/api/cards/lane/many', data)
 				.then(toData)
 			},
 
 
 			updateCardTitle:function(card){
 				//the card title has been updated by this point, in ng-model
-				return $http.put('/api/cards/put/title/' + card.githubID, card)
+				return $http.put('/api/cards/title/' + card.githubID, card)
 				.then(function(response){
 					return response.data
 				})
@@ -62,13 +62,13 @@ app.factory("CardFactory", ['$http', function($http){
 				if(points=="Clear"){
 				 points=null;
 				}
-				return $http.put('/api/cards/put/storyPoints/'+card._id, {storyPoints:points})
+				return $http.put('/api/cards/storyPoints/'+card._id, {storyPoints:points})
 				.then(function(response){
 					return response.data;
 				});
 			},
 			chooseSprint:function(card,sprint){
-				return $http.put('/api/cards/put/sprint/'+card._id+"/"+sprint._id)
+				return $http.put('/api/cards/sprint/'+card._id+"/"+sprint._id)
 				.then(toData);
 			}
 	}
