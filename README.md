@@ -7,5 +7,6 @@ Features:
 - Take your existing GitHub repos and manage them using Agile/Scrum interface
 - Add lanes, cards, story points, sprints
 - Issues, Comments, Collaborators
+- Integration with GitHub API - http://mikedeboer.github.io/node-github/
 
 Check it out at www.grille.io!
