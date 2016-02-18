@@ -1,6 +1,6 @@
+'use strict'
 var Promise = require('bluebird');
 var Board = require('mongoose').model('Board');
-var repoParser = require('./github.parse').repo;
 
 // FIXME This function is just an outline of what it could be
 exports.dataUpsert = function(dataArr, model) {
@@ -19,16 +19,15 @@ exports.dataUpsert = function(dataArr, model) {
       })
 };
 
-// A generic function for getting the remaining pages of a github request
+// A generic function for getting the remaining pages of a github request. Expects a github client, a config object, and a function to get data from github
 exports.getRemainingPages = function(gitRes, concatData=[]) {
   var self = this;
   var hasNextPage = self.client.hasNextPage(gitRes.meta.link);
-  gitRes = repoParser(gitRes);
   concatData = concatData.concat(gitRes);
 
   if(hasNextPage) {
     self.config.page++;
-    return self.repoFunc(config)
+    return self.githubFunc(config)
         .then(function(newRes) {
           return self.getRemainingPages(newRes, concatData)
         })
