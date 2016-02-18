@@ -2,14 +2,8 @@
 var Promise = require('bluebird');
 var parser = require('./github.parse');
 
-// A generic function for getting the remaining pages of a github request
-var getRemainingPages = require('./github.utils').getRemainingPages
-
 // Can return promise
-exports.getAll = function(req) {
-  if(req.repos) req.repo = req.repos[0];
-  if(!req.repo) console.log("--Error, no repo found on req body")
-
+exports.getAll = function(req, repo, dep) {
   this.client = req.user.githubAccess;
   this.githubFunc = Promise.promisify(github.issues.repoIssues)
   this.config = {
@@ -20,7 +14,7 @@ exports.getAll = function(req) {
     state: "all"
   };
 
-  this.getRemainingPages = getRemainingPages.bind(this);
+  this.getRemainingPages = dep.utils.getRemainingPages.bind(this);
 
   return this.githubFunc(this.config)
       .then(this.getRemainingPages)

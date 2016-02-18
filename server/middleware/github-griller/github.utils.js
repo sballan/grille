@@ -27,7 +27,7 @@ exports.getRemainingPages = function(gitRes, concatData=[]) {
 
   if(hasNextPage) {
     self.config.page++;
-    return self.githubFunc(config)
+    return self.githubFunc(self.config)
         .then(function(newRes) {
           return self.getRemainingPages(newRes, concatData)
         })

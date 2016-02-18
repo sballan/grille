@@ -5,6 +5,8 @@ let parse = require('./github.parse');
 let utils = require('./github.utils');
 
 let GithubGriller = function(req) {
+  if(!req) throw Error("Can't make new GithubGriller with out a request object");
+
   this.req = req;
   this.client = req.user.githubAccess;
   this.repo = undefined;
@@ -16,17 +18,17 @@ let GithubGriller = function(req) {
 GithubGriller.prototype = {
   // Returns Promise
   getAllRepos: function() {
-    return repos.getAll(this.req)
+    return repos.getAll(this.req, {utils})
   },
   getOneRepo: function(repo) {
-    return repos.getOne(this.req, repo)
+    return repos.getOne(this.req, repo, {issues, comments, utils})
+  },
+  getAllIssues: function(repo) {
+    return issues.getAll(this.req, repo, {utils})
   }
 };
 
 // Make these methods available for use outside
-GithubGriller.prototype.Repos = repos;
-GithubGriller.prototype.Issues = issues;
-GithubGriller.prototype.Comments = comments;
 GithubGriller.prototype.Parse = parse;
 GithubGriller.prototype.Util = utils;
 

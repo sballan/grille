@@ -55,10 +55,16 @@ function issue(body) {
   return issue;
 }
 
+// This function may need to do some clever work to figure out which issue a comment belongs to.
+function comment(body) {
+
+}
+
 function parse(req, res, next) {
-  if(req.repos) req.repos = repos(req)
-  if(req.repo) req.repo = repo(req.repo)
-  if(req.issue) req.issue = issue(req.issue)
+  // TODO Figure out the actual syntax for the body coming in
+  if(req.repos) req.repos = repos(req.repos);
+  if(req.repo) req.repo = repo(req.repo);
+  if(req.issue) req.issue = issue(req.issue);
 
   return req;
 }
