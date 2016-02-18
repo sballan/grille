@@ -8,7 +8,7 @@ var getAllIssues = require('./github.issues.js')
 var getRemainingPages = require('./github.utils').getRemainingPages
 
 // Can return promise
-exports.getAllRepos = function(req, res, next) {
+exports.getAll = function(req) {
   this.client = req.user.githubAccess;
   this.githubFunc = Promise.promisify(this.client.repos.getAll);
   this.config = { per_page: 100, page: 0, sort: 'updated' };
@@ -23,7 +23,7 @@ exports.getAllRepos = function(req, res, next) {
   })
 };
 
-exports.getOneRepo = function(req, res, next) {
+exports.getOne = function(req, issue) {
   return getAllIssues(req, res, next)
   .then(function(issues) {
 

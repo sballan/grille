@@ -6,7 +6,7 @@ var parser = require('./github.parse');
 var getRemainingPages = require('./github.utils').getRemainingPages
 
 // Can return promise
-exports.getAllIssues = function(req, res, next) {
+exports.getAll = function(req) {
   if(req.repos) req.repo = req.repos[0];
   if(!req.repo) console.log("--Error, no repo found on req body")
 
@@ -30,6 +30,6 @@ exports.getAllIssues = function(req, res, next) {
       })
 };
 
-exports.getOneIssue = function(req, res, next) {
+exports.getOne = function(req, issue) {
 
-}
+};
