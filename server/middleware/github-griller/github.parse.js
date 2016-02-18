@@ -55,7 +55,7 @@ function issue(body) {
   return issue;
 }
 
-function parse(req) {
+function parse(req, res, next) {
   if(req.repos) req.repos = repos(req)
   if(req.repo) req.repo = repo(req.repo)
   if(req.issue) req.issue = issue(req.issue)

@@ -26,10 +26,10 @@ exports.getAllIssues = function(req, res, next) {
       .then(this.getRemainingPages)
       .then(function(allIssues) {
         req.issues = allIssues;
-        return parser(req);
+        return parser(req).issues;
       })
 };
 
-exports.getOneRepo = function(req, res, next) {
+exports.getOneIssue = function(req, res, next) {
 
 }
