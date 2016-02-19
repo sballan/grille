@@ -54,6 +54,12 @@ function issue(body) {
   return issue;
 }
 
+function issues(body) {
+  return body.map(function(item) {
+    return issue(item)
+  });
+}
+
 // This function may need to do some clever work to figure out which issue a comment belongs to.
 function comment(body) {
 
@@ -64,7 +70,7 @@ function parse(req) {
   if(req.repos) req.repos = repos(req.repos);
   if(req.repo) req.repo = repo(req.repo);
   if(req.issue) req.issue = issue(req.issue);
-  if(req.issues) req.issues = issue(req.issues);
+  if(req.issues) req.issues = issues(req.issues);
   if(req.comment) req.comment = comment(req.comment);
   if(req.comments) req.comments = comments(req.comments);
 

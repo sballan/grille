@@ -29,12 +29,12 @@ exports.getOne = function(req, githubId, dep) {
 
   return dep.utils.dbFindOne('Board', {githubId: githubId})
   .then(function(repo) {
-    console.log('------repo is', repo)
-    req.repo = parser(repo).repo
+    console.log('mm------repo is', repo)
+    //req.repo = parser(repo).repo
     return dep.issues.getAll(req, repo, dep)
   })
   .then(function(issues) {
-    console.log('-----all issues', issues);
+    console.log('mm-----all issues', issues);
     // may be unneeded
     req.issues = issues;
 

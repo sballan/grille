@@ -40,18 +40,13 @@ exports.getRemainingPages = function(gitRes, concatData=[]) {
 exports.dbFind = function (schema, query) {
   console.log('got to find', schema, query)
   return mongoose.model(schema).find(query)
-  .then(function(data) {
-    console.log('mongoose gave us', data)
-  })
+
 };
 
 exports.dbFindOne = function (schema, query) {
   console.log('got to find', schema, query)
   return mongoose.model(schema).findOne(query)
-  .then(function(data) {
-    console.log('mongoose gave us', data)
-    return data
-  })
+
 };
 
 exports.dbFindAll = function (schema, query) {

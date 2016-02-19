@@ -5,7 +5,7 @@ var parser = require('./github.parse');
 // Can return promise
 exports.getAll = function(req, repo, dep) {
   this.client = req.user.githubAccess;
-  this.githubFunc = Promise.promisify(github.issues.repoIssues)
+  this.githubFunc = Promise.promisify(this.client.issues.repoIssues);
   this.config = {
     user: repo.owner.username,
     repo: repo.name,
@@ -15,14 +15,20 @@ exports.getAll = function(req, repo, dep) {
     state: "all"
   };
 
+
+
   this.getRemainingPages = dep.utils.getRemainingPages.bind(this);
 
   return this.githubFunc(this.config)
-      .then(this.getRemainingPages)
-      .then(function(allIssues) {
-        req.issues = allIssues;
-        return parser(req).issues;
-      })
+    .then(this.getRemainingPages)
+    .then(function(allIssues) {
+      req.issues = allIssues;
+      return parser.parse(req).issues;
+    },
+    function(error) {
+      console.log('THERE WAS AN ERROR', error)
+    })
+
 };
 
 exports.getOne = function(req, issue) {
