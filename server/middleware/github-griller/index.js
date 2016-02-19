@@ -32,4 +32,6 @@ GithubGriller.prototype = {
 GithubGriller.prototype.Parse = parse;
 GithubGriller.prototype.Util = utils;
 
-module.exports = GithubGriller;
+module.exports = function(req) {
+  return new GithubGriller(req)
+};

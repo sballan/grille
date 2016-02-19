@@ -60,11 +60,14 @@ function comment(body) {
 
 }
 
-function parse(req, res, next) {
+function parse(req) {
   // TODO Figure out the actual syntax for the body coming in
   if(req.repos) req.repos = repos(req.repos);
   if(req.repo) req.repo = repo(req.repo);
   if(req.issue) req.issue = issue(req.issue);
+  if(req.issues) req.issues = issue(req.issues);
+  if(req.comment) req.comment = comment(req.comment);
+  if(req.comments) req.comments = comments(req.comments);
 
   return req;
 }
