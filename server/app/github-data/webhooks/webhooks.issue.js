@@ -15,10 +15,10 @@ module.exports = {
 
 		this.assigned = function(payload) {
 			var card;
-			Card.findOne({githubID: payload.issue.githubID})
+			Card.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				card = theCard;
-				return User.findOne({githubID: payload.assignee.githubID})
+				return User.findOne({githubId: payload.assignee.githubId})
 			})
 			.then(function(user) {
 				card.assignee = user._id
@@ -29,10 +29,10 @@ module.exports = {
 
 		this.unassigned = function(payload) {
 			var card;
-			Card.findOne({githubID: payload.issue.githubID})
+			Card.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				card = theCard;
-				return User.findOne({githubID: payload.assignee.githubID})
+				return User.findOne({githubId: payload.assignee.githubId})
 			})
 			.then(function(user) {
 				card.assignee = null;
@@ -42,7 +42,7 @@ module.exports = {
 		}
 
 		this.labeled = function(payload) {
-			Card.findOne({githubID: payload.issue.githubID})
+			Card.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				// Replaces a card's labels with the ones from the payload
 				theCard.labels = payload.issue.labels
@@ -52,7 +52,7 @@ module.exports = {
 		}
 
 		this.unlabeled = function(payload) {
-			Card.findOne({githubID: payload.issue.githubID})
+			Card.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				// Replaces a card's labels with the ones from the payload
 				theCard.labels = payload.issue.labels
@@ -66,7 +66,7 @@ module.exports = {
 		}
 
 		this.closed = function(payload) {
-			Card.findOne({githubID: payload.issue.githubID})
+			Card.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard){
 					theCard.status = 'closed'
 					return theCard.save()
@@ -74,7 +74,7 @@ module.exports = {
 		}
 
 		this.reopened = function(payload) {
-			Card.findOne({githubID: payload.issue.githubID})
+			Card.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard){
 					theCard.status = 'opened'
 					return theCard.save()

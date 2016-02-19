@@ -4,7 +4,7 @@ var Lane = mongoose.model('Lane')
 
 var commentSchema = new mongoose.Schema({
 	body: String,
-	githubID: {
+	githubId: {
 		type: Number,
 		unique: true
 	},
@@ -19,7 +19,7 @@ var commentSchema = new mongoose.Schema({
 
 
 var cardSchema = new mongoose.Schema({
-	githubID: {
+	githubId: {
 		type: Number,
 		unique: true
 	},
@@ -33,7 +33,7 @@ var cardSchema = new mongoose.Schema({
 	lane: {type: mongoose.Schema.Types.ObjectId, ref: 'Lane'},
 	state: String, //enum
 	owner: {
-		githubID: Number,
+		githubId: Number,
 		url: String,
 		username: String
 	},

@@ -20,8 +20,11 @@ GithubGriller.prototype = {
   getAllRepos: function() {
     return repos.getAll(this.req, {utils})
   },
-  getOneRepo: function(repo) {
-    return repos.getOne(this.req, repo, {issues, comments, utils})
+  getOneRepo: function(githubId) {
+    console.log('githubId')
+    githubId = githubId || this.req.params.boardID
+    console.log("got to githubgriller", githubId)
+    return repos.getOne(this.req, githubId, {issues, comments, utils})
   },
   getAllIssues: function(repo) {
     return issues.getAll(this.req, repo, {utils})

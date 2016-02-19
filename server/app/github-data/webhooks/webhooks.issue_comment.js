@@ -12,7 +12,7 @@ module.exports = {
 		var payload = parser.payload(body)
 		if(payload.action !== 'created') console.error("Action for issue_comment should be 'created'")
 
-		Card.findOne({githubID: payload.issue.githubID})
+		Card.findOne({githubId: payload.issue.githubId})
 		.then(function(card) {
 			if(!card) console.error("Cannot add comment to a card that does not exist")
 

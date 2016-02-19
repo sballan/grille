@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    githubID: {
+    githubId: {
         type: String,
         require: true,
         unique: true

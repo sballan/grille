@@ -15,11 +15,11 @@ var getCollaborators = function(repo, github) {
     .then(function(collaborators) {
       collaborators = collaborators.map(function(collaborator) {
         collaborator = payloadParser.collaborator(collaborator)
-        if(typeof collaborator.githubID === 'string') return collaborator
+        if(typeof collaborator.githubId === 'string') return collaborator
       })
 
       return Promise.map(collaborators, function(collaborator) {
-        return User.findOneAndUpdate({githubID: collaborator.githubID}, collaborator, {upsert: true, new: true}).select('-accessToken')
+        return User.findOneAndUpdate({githubId: collaborator.githubId}, collaborator, {upsert: true, new: true}).select('-accessToken')
       })
     })
 }

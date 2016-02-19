@@ -53,7 +53,7 @@ router.get('/', function(req, res, next) {
 //				return Promise.map(data, function(board) {
 //
 //					return Board.findOne({
-//						githubID: board.githubID
+//						githubId: board.githubId
 //					})
 //				})
 //				.then(dataUpsert)
@@ -61,10 +61,10 @@ router.get('/', function(req, res, next) {
 //
 //			function dataUpsert(boards) {
 //				Promise.map(boards, function(board, index) {
-//					if (!board) board = { githubID: null }
+//					if (!board) board = { githubId: null }
 //
 //					return Board.findOneAndUpdate({
-//						githubID: board.githubID
+//						githubId: board.githubId
 //					}, data[index], {
 //						upsert: true,
 //						new: true

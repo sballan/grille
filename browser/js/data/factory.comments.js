@@ -4,21 +4,21 @@ app.factory('CommentFactory', ['$http', 'BoardFactory', function($http, BoardFac
 	}
 	return {
 		addComment: function(card,comment){
-			return $http.post('api/comments/' + card.githubID, {comment: comment, card: card})
+			return $http.post('api/comments/' + card.githubId, {comment: comment, card: card})
 			.then(function(response){
 				BoardFactory.refreshCurrentBoard()
 				return response.data;
 			})
 		},
 		updateComment: function(card,comment){
-			return $http.put('api/comments/' + card.githubID, {comment: comment, card: card})
+			return $http.put('api/comments/' + card.githubId, {comment: comment, card: card})
 			.then(function(response){
 				BoardFactory.refreshCurrentBoard()
 				return response.data
 			})
 		},
 		deleteComment: function(card,comment){
-			return $http.delete('api/comments/' + card.githubID + '/' + card.board + '/' + comment.githubID)
+			return $http.delete('api/comments/' + card.githubId + '/' + card.board + '/' + comment.githubId)
 			.then(function(response){
 				BoardFactory.refreshCurrentBoard()
 				return response.data

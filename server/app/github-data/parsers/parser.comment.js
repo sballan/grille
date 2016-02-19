@@ -10,12 +10,12 @@ function parse(body) {
 	comment.html_url = body.html_url
 	comment.issue_url = body.issue_url
 
-	comment.githubID = body.id
+	comment.githubId = body.id
 	comment.body = body.body
 
 	comment.user = {
 		username: body.user.login,
-		githubID: body.user.id,
+		githubId: body.user.id,
 		url: body.user.url
 	}
 	comment.created_at = body.created_at

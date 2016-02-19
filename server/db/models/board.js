@@ -20,16 +20,16 @@ var Lane = mongoose.model('Lane')
 
 var boardSchema = new mongoose.Schema({
     name: String, //The name of the repo
-    githubID: {
+    githubId: {
         type: Number,
-        unique: true
+        //unique: true
     },
     isActive: {
         type: Boolean,
         default: false
     },
     owner: {
-        githubID: Number,
+        githubId: Number,
         url: String,
         username: String
     },

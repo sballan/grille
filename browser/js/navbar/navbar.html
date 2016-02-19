@@ -25,7 +25,7 @@
                   </md-menu-item>
                   <md-menu-item>
                     <md-button ng-click="logout()">Logout</md-button>
-                  </md-menu-item>              
+                  </md-menu-item>
              </md-menu-content>
 
            </md-menu>
@@ -35,7 +35,7 @@
         <div class="dropper" ng-show="user && currentBoard()">
           <md-button ng-click="addCard()"><span class="app-name">Issue</span> <i class="fa fa-plus"></i></md-button>
         </div>
-        
+
         <span class="app-name navbar-username" ng-show="user && !currentBoard()">{{user.username}}</span>
  <!--        <md-menu> -->
           <md-button class="app-name boardName" ng-show="user && currentBoard()" ng-click="$mdOpenMenu($event)">
@@ -43,7 +43,7 @@
           </md-button>
           <!-- <md-menu-content class="boardMenu">
             <md-menu-item ng-repeat="board in getActiveRepoCache()">
-              <md-button ui-sref="home({ githubID: board.githubID })">{{board.name}}</md-button>
+              <md-button ui-sref="home({ githubId: board.githubId })">{{board.name}}</md-button>
             </md-menu-item>
           </md-menu-content>
         </md-menu> -->

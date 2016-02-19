@@ -1,13 +1,13 @@
 function repo(body) {
   if(!body) return null;
   var repo = {};
-  repo.githubID = body.id || null;
+  repo.githubId = body.id || null;
   repo.name = body.name || null;
   repo.description = body.description || null;
   //Use presave hook to turn this field into a proper User
   repo.owner = {
     username: body.owner.login,
-    githubID: body.owner.id,
+    githubId: body.owner.id,
     url: body.owner.url
   };
 
@@ -18,16 +18,15 @@ function repo(body) {
 }
 
 function repos(body) {
-  body.forEach(function(item) {
-    item = repo(item)
+  return body.map(function(item) {
+    return repo(item)
   });
-  return body
 }
 
 function issue(body) {
   if(!body) return null;
   var issue = {};
-  issue.githubID = body.id;
+  issue.githubId = body.id;
   issue.issueNumber = 0 + body.number;
   issue.title = body.title;
   issue.body = body.body;
@@ -45,7 +44,7 @@ function issue(body) {
 
   issue.owner = {
     username: body.user.login,
-    githubID: body.user.id,
+    githubId: body.user.id,
     url: body.user.url
   };
 

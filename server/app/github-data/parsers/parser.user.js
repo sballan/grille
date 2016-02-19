@@ -8,7 +8,7 @@ function parse(body) {
 	user.email = body.email
 	user.username = body.username || body.login
 
-	user.githubID = body.id
+	user.githubId = body.id
 	user.url = body.url
 	user.html_url = body.html_url
 	user.organizations_url = body.organizations_url

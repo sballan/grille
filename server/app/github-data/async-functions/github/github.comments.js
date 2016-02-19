@@ -13,7 +13,7 @@ var getComments = function(issue, repo, github) {
       comment = payloadParser.comment(comment)
       if(comment) return comment
     })
-    return Card.findOneAndUpdate({githubID: issue.githubID}, {comments: comments}, {new: true, upsert: true})
+    return Card.findOneAndUpdate({githubId: issue.githubId}, {comments: comments}, {new: true, upsert: true})
     .populate('comments lane sprint')
   })
 }

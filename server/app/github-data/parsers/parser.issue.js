@@ -4,7 +4,7 @@ function parse(body) {
 	if(!body) return null;
 	var issue = {};
 
-	issue.githubID = body.id;
+	issue.githubId = body.id;
 	issue.issueNumber = 0 + body.number;
 	issue.title = body.title;
 	issue.body = body.body;
@@ -23,7 +23,7 @@ function parse(body) {
 
 	issue.owner = {
 		username: body.user.login,
-		githubID: body.user.id,
+		githubId: body.user.id,
 		url: body.user.url
 	}
 
