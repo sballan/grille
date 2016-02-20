@@ -28,6 +28,9 @@ GithubGriller.prototype = {
   },
   getAllIssues: function(repo) {
     return issues.getAll(this.req, repo, {utils})
+  },
+  getAllComments: function(repo) {
+    return issues.getAll(this.req, repo, {utils})
   }
 };
 

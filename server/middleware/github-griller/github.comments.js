@@ -2,22 +2,27 @@
 var Promise = require('bluebird');
 var parser = require('./github.parse');
 
-exports.getAllComments = function(req) {
+exports.getAll = function(req, repo, dep) {
+  console.log("mm-----in the get all comments")
   this.client = req.user.githubAccess;
-  this.githubFunc = Promise.promisify(github.issues.getComments);
+  console.log('0Little farther down')
+  this.githubFunc = Promise.promisify(this.client.issues.repoComments);
+  console.log('1Little farther down')
   this.config = {
     user: repo.owner.username,
     repo: repo.name,
-    number: 0,
+    sort: 'updated',
+    direction:'desc',
+    page: 0,
     per_page: 100
   };
-
+  console.log('2Little farther down')
   this.getRemainingPages = dep.utils.getRemainingPages.bind(this);
-
+  console.log('3Little farther down')
   return this.githubFunc(this.config)
       .then(this.getRemainingPages)
       .then(function(allComments) {
-        req.comments = allComments;
-        return parser(req).comments;
+        console.log("mmm-----Got all the comments", allComments.length)
+        return req.comment = parser.comments(allComments)
       })
 };

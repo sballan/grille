@@ -62,7 +62,25 @@ function issues(body) {
 
 // This function may need to do some clever work to figure out which issue a comment belongs to.
 function comment(body) {
+  if(!body) return null;
+  var comment = {};
+  comment.githubId = body.id;
+  comment.body = body.body;
+  comment.path = body.path;
+  comment.position = body.position;
+  comment.line = body.line;
+  comment.commit_id = body.commit_id;
+  comment.user = body.user;
+  comment.created_at = body.created_at;
+  comment.updated_at = body.updated_at;
 
+  return body;
+}
+
+function comments(body) {
+  return body.map(function(item) {
+    return comment(item)
+  });
 }
 
 function parse(req) {
@@ -78,5 +96,11 @@ function parse(req) {
 }
 
 module.exports = {
-  parse
+  parse,
+  repo,
+  repos,
+  issue,
+  issues,
+  comment,
+  comments
 };

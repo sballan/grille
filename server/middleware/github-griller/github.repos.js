@@ -16,7 +16,7 @@ exports.getAll = function(req, dep) {
   .then(this.getRemainingPages)
   .then(function(allRepos) {
     req.repos = allRepos;
-    return parser.parse(req).repos;
+    return req.repos = parser.repos(allRepos);
 
     //console.log("final step:", req.repos)
     //return Board.create(req.repos)
@@ -29,16 +29,17 @@ exports.getOne = function(req, githubId, dep) {
 
   return dep.utils.dbFindOne('Board', {githubId: githubId})
   .then(function(repo) {
-    console.log('mm------repo is', repo)
+    req.repo = repo;
+    console.log('mm------repo is', repo.name);
     //req.repo = parser(repo).repo
     return dep.issues.getAll(req, repo, dep)
   })
   .then(function(issues) {
-    console.log('mm-----all issues', issues);
+    console.log('mm-----all issues, length:', issues.length);
     // may be unneeded
     req.issues = issues;
 
-    return dep.comments.getAll(req, repo, dep)
+    return dep.comments.getAll(req, req.repo, dep)
   })
   .then(function(comments) {
     req.comments = comments

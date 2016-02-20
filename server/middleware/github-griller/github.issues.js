@@ -22,8 +22,7 @@ exports.getAll = function(req, repo, dep) {
   return this.githubFunc(this.config)
     .then(this.getRemainingPages)
     .then(function(allIssues) {
-      req.issues = allIssues;
-      return parser.parse(req).issues;
+      return req.issues = parser.issues(allIssues)
     },
     function(error) {
       console.log('THERE WAS AN ERROR', error)
