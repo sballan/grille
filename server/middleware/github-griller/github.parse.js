@@ -83,14 +83,36 @@ function comments(body) {
   });
 }
 
+function collab(body) {
+  if(!body) return null;
+  var collab = {};
+  collab.username= body.login;
+
+  collab.githubId = "" + body.id;
+  collab.avatar_url = body.avatar_url;
+  collab.url = body.url;
+  collab.html_url = body.html_url;
+  collab.site_admin = body.site_admin;
+
+  collab.organizations_url = body.organizations_url;
+  collab.repos_url = body.repos_url
+}
+
+function collabs(body) {
+  return body.map(function(item) {
+    return collab(item)
+  });
+}
+
 function parse(req) {
-  // TODO Figure out the actual syntax for the body coming in
   if(req.repos) req.repos = repos(req.repos);
   if(req.repo) req.repo = repo(req.repo);
   if(req.issue) req.issue = issue(req.issue);
   if(req.issues) req.issues = issues(req.issues);
   if(req.comment) req.comment = comment(req.comment);
   if(req.comments) req.comments = comments(req.comments);
+  if(req.collab) req.collab = collab(req.collab);
+  if(req.collabs) req.collabs = collabs(req.collabs);
 
   return req;
 }
@@ -102,5 +124,7 @@ module.exports = {
   issue,
   issues,
   comment,
-  comments
+  comments,
+  collab,
+  collabs
 };

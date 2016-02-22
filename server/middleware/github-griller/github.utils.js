@@ -49,6 +49,11 @@ exports.dbFindOne = function (schema, query) {
 
 };
 
+exports.dbAssembleRepo = function(req) {
+  if(req.comments) var comments = req.comments
+  if(req.issues) var issues = req.issues
+};
+
 exports.dbFindAll = function (schema, query) {
 
 };

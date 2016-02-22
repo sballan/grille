@@ -3,9 +3,7 @@ var Promise = require('bluebird');
 var parser = require('./github.parse');
 var Board = require('mongoose').model('Board');
 
-// A generic function for getting the remaining pages of a github request
-
-// Can return promise
+// These functions all return req
 exports.getAll = function(req, dep) {
   this.client = req.user.githubAccess;
   this.githubFunc = Promise.promisify(this.client.repos.getAll);
@@ -15,8 +13,8 @@ exports.getAll = function(req, dep) {
   return this.githubFunc(this.config)
   .then(this.getRemainingPages)
   .then(function(allRepos) {
-    req.repos = allRepos;
-    return req.repos = parser.repos(allRepos);
+    req.repos = parser.repos(allRepos);
+    return req;
 
     //console.log("final step:", req.repos)
     //return Board.create(req.repos)
@@ -42,9 +40,16 @@ exports.getOne = function(req, githubId, dep) {
     return dep.comments.getAll(req, req.repo, dep)
   })
   .then(function(comments) {
-    req.comments = comments
-    console.log('-----all comments', comments)
-    return req
+    console.log('mm-----all comments, length:', comments.length);
+    // may be unneeded
+    req.comments = comments;
+
+    return dep.collabs.getAll(req, req.repo, dep)
+  })
+  .then(function(collabs) {
+    req.collabs = collabs;
+    console.log('-----all collabs', collabs.length)
+    return parser(req)
   })
 
 };
