@@ -11,14 +11,14 @@ exports.getAll = function(req, repo, dep) {
     repo: repo.name,
     sort: 'updated',
     direction:'desc',
-    page: 0,
+    page: 1,
     per_page: 100
   };
   this.getRemainingPages = dep.utils.getRemainingPages.bind(this);
   return this.githubFunc(this.config)
       .then(this.getRemainingPages)
       .then(function(allComments) {
-        req.comment = parser.comments(allComments)
+        req.comments = parser.comments(allComments)
         return req;
       })
 };

@@ -96,6 +96,7 @@ function collab(body) {
 
   collab.organizations_url = body.organizations_url;
   collab.repos_url = body.repos_url
+  return collab
 }
 
 function collabs(body) {

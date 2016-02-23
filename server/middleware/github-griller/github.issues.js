@@ -10,23 +10,18 @@ exports.getAll = function(req, repo, dep) {
     user: repo.owner.username,
     repo: repo.name,
     per_page: 100,
-    page: 0,
+    page: 1,
     sort: 'updated',
     state: "all"
   };
-
-
 
   this.getRemainingPages = dep.utils.getRemainingPages.bind(this);
 
   return this.githubFunc(this.config)
     .then(this.getRemainingPages)
     .then(function(allIssues) {
-      req.issues = parser.issues(allIssues)
+      req.issues = parser.issues(allIssues);
       return req;
-    },
-    function(error) {
-      console.log('THERE WAS AN ERROR', error)
     })
 
 };
