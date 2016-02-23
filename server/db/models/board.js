@@ -22,7 +22,7 @@ var boardSchema = new mongoose.Schema({
     name: String, //The name of the repo
     githubId: {
         type: Number,
-        //unique: true
+        unique: true
     },
     isActive: {
         type: Boolean,
