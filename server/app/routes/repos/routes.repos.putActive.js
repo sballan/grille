@@ -8,6 +8,7 @@ var Board = require('mongoose').model('Board');
 
 module.exports = router;
 
+/* For Testing Purposes
 
 router.put('/:boardID/active', function(req, res, next) {
   return Griller(req).getOneRepo(req.params.boardID)
@@ -17,12 +18,14 @@ router.put('/:boardID/active', function(req, res, next) {
 
 });
 
-//router.put('/:boardID/active', function(req, res, next) {
-//	var github = req.user.githubAccess;
-//
-//	Board.findOneAndUpdate({ githubId: req.params.boardID}, { isActive: true}, {new : true})
-//	.then(function(board){
-//		res.send(board)
-//	})
-//
-//})
+*/
+
+router.put('/:boardID/active', function(req, res, next) {
+	var github = req.user.githubAccess;
+
+	Board.findOneAndUpdate({ githubId: req.params.boardID}, { isActive: true}, {new : true})
+	.then(function(board){
+		res.send(board)
+	})
+
+})
