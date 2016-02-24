@@ -1,3 +1,6 @@
+var Utils = require('./github.utils');
+var Promise = require('bluebird');
+
 function repo(body) {
   if(!body) return null;
   var repo = {};
@@ -14,11 +17,17 @@ function repo(body) {
   repo.url = body.url || null;
   repo.collaborators_url = body.collaborators_url || null;
 
-  return repo;
+  return Utils.dbParse('User', repo.owner)
+  .then(function(dbUser) {
+    repo.owner = dbUser;
+
+    return Utils.dbParse('Repo', repo)
+  })
+
 }
 
 function repos(body) {
-  return body.map(function(item) {
+  return Promise.map(body, function(item) {
     return repo(item)
   });
 }
@@ -42,20 +51,34 @@ function issue(body) {
   issue.events_url = body.events_url;
   issue.html_url = body.html_url;
 
-  issue.owner = {
-    username: body.user.login,
+  issue.user = {
+    login: body.user.login,
     githubId: body.user.id,
     url: body.user.url
   };
 
-  if (body.assignee) issue.assignee =  body.assignee.login;
+  issue.assignee = {
+    login: body.assignee.login,
+    githubId: body.assignee.id,
+    url: body.assignee.url
+  };
+
   if (body.pull_request) issue.isPullRequest = true;
 
-  return issue;
+  return Utils.dbParse('User', issue.user)
+  .then(function(dbUser) {
+    // refactor the dbParse function to do this next step
+    issue.user = dbUser;
+    return Utils.dbParse('User', issue.assignee)
+  })
+  .then(function(dbUser) {
+    issue.assignee = dbUser;
+    return Utils.dbParse('Issue', issue)
+  })
 }
 
 function issues(body) {
-  return body.map(function(item) {
+  return Promise.map(body, function(item) {
     return issue(item)
   });
 }
@@ -70,15 +93,24 @@ function comment(body) {
   comment.position = body.position;
   comment.line = body.line;
   comment.commit_id = body.commit_id;
-  comment.user = body.user;
   comment.created_at = body.created_at;
   comment.updated_at = body.updated_at;
 
-  return body;
+  comment.user = {
+    login: body.user.login,
+    githubId: body.user.id,
+    url: body.user.url
+  }
+
+  return Utils.dbParse('User', comment.user)
+  .then(function(dbUser) {
+    comment.user = dbUser;
+    return Utils.dbParse('Comment', comment)
+  })
 }
 
 function comments(body) {
-  return body.map(function(item) {
+  return Promise.map(body, function(item) {
     return comment(item)
   });
 }
@@ -86,21 +118,21 @@ function comments(body) {
 function collab(body) {
   if(!body) return null;
   var collab = {};
-  collab.username= body.login;
+  collab.username = body.login;
 
   collab.githubId = "" + body.id;
   collab.avatar_url = body.avatar_url;
   collab.url = body.url;
   collab.html_url = body.html_url;
-  collab.site_admin = body.site_admin;
-
-  collab.organizations_url = body.organizations_url;
-  collab.repos_url = body.repos_url
-  return collab
+  // come back to this - may be repo specific
+  // collab.site_admin = body.site_admin;
+  //collab.organizations_url = body.organizations_url;
+  collab.repos_url = body.repos_url;
+  return Utils.dbParse('User', collab);
 }
 
 function collabs(body) {
-  return body.map(function(item) {
+  return Promise.map(body, function(item) {
     return collab(item)
   });
 }
@@ -115,7 +147,7 @@ function parse(req) {
   if(req.collab) req.collab = collab(req.collab);
   if(req.collabs) req.collabs = collabs(req.collabs);
 
-  return req;
+  return Promise.resolve(req);
 }
 
 module.exports = {

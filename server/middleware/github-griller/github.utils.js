@@ -53,7 +53,11 @@ exports.dbAssembleRepo = function(req) {
   if(req.issues) var issues = req.issues
 };
 
-exports.dbFindAll = function (schema, query) {
-
+exports.dbParse = function(schema, raw) {
+  return mongoose.model(schema).findOne(raw.githubId)
+  .then(function(model) {
+    if(model) return model
+    else return mongoose.model(schema).create(raw)
+  })
 };
 
