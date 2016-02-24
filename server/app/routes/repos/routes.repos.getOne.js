@@ -27,7 +27,7 @@ router.get('/:repo', function(req, res, next) {
 
 	var repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
 
-	Board.findOne({ githubID: req.params.repo })
+	Board.findOne({ githubId: req.params.repo })
 		.then(function(repo) {
 			theRepo = repo
 			return Lane.find({board: repo})
@@ -73,7 +73,7 @@ router.get('/:repo', function(req, res, next) {
 							return asyncIssues.getIssueLabels(issue, repo, github)
 							.then(function(labels) {
 								issueLabels = labels
-								return Card.findOne({githubID: issue.githubID})
+								return Card.findOne({githubId: issue.githubId})
 							})
 							.then(function(card) {
 

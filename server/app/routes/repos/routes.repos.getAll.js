@@ -1,11 +1,23 @@
 'use strict';
 var router = require('express').Router();
-var payloadParser = require('../../github-data/parsers')
-var Promise = require('bluebird')
+var payloadParser = require('../../github-data/parsers');
+var Promise = require('bluebird');
+var griller = require('../../../middleware/github-griller');
 
 var Board = require('mongoose').model('Board');
 
 module.exports = router;
+/* For Testing purposes
+
+router.get('/', function(req, res, next) {
+  return new griller(req).getAllRepos()
+  .then(function(repos) {
+    console.log('------length', repos.length)
+    res.send(repos)
+  })
+});
+
+*/
 
 router.get('/', function(req, res, next) {
 
@@ -40,7 +52,7 @@ router.get('/', function(req, res, next) {
 				return Promise.map(data, function(board) {
 
 					return Board.findOne({
-						githubID: board.githubID
+						githubId: board.githubId
 					})
 				})
 				.then(dataUpsert)
@@ -48,10 +60,10 @@ router.get('/', function(req, res, next) {
 
 			function dataUpsert(boards) {
 				Promise.map(boards, function(board, index) {
-					if (!board) board = { githubID: null }
+					if (!board) board = { githubId: null }
 
 					return Board.findOneAndUpdate({
-						githubID: board.githubID
+						githubId: board.githubId
 					}, data[index], {
 						upsert: true,
 						new: true

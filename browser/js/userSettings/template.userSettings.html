@@ -8,7 +8,7 @@
 				<ul class="listStyle">
 					<li class="blueText">  Please select a Grille to manage</li>
 					<!-- home(board) works too :) -->
-					<li class="blueText" ui-sref="home({ githubID: board.githubID, boardId:board._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
+					<li class="blueText" ui-sref="home({ githubId: board.githubId, boardId:board._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="board in activeBoards()">
 						<button class="listBtnStyle">{{ board.owner.username + '/' + board.name }}</button>
 					</li>
 
@@ -20,7 +20,7 @@
 					<ul class="listStyle">
 						<label>Search: <input size="35" ng-model="searchText"></label>
 						<li ng-repeat="board in inActiveBoards() | filter:{name: searchText}" ng-show="$index < 15">
-							<button class="listBtnStyle" ng-click="setActive(board.githubID)">{{ board.owner.username + '/' + board.name }}</button>
+							<button class="listBtnStyle" ng-click="setActive(board.githubId)">{{ board.owner.username + '/' + board.name }}</button>
 						</li>
 
 					</ul>

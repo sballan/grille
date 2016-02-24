@@ -15,7 +15,7 @@ app.factory('GitHubFactory', ['$http', '$rootScope', function($http, $rootScope)
 		getRepoFromCache: function(repoID) {
 			var repo;
 			repoCache.forEach(function(theRepo) {
-				if(theRepo.githubID === repoID) {
+				if(theRepo.githubId === repoID) {
 					repo = theRepo
 				}
 			})
@@ -36,7 +36,7 @@ app.factory('GitHubFactory', ['$http', '$rootScope', function($http, $rootScope)
 			.then(function(data){
 				 var repo
 				repoCache.forEach(function(cachedRepo){
-					if (cachedRepo.githubID === data.board.githubID){
+					if (cachedRepo.githubId === data.board.githubId){
 						cachedRepo = data.board;
 						cachedRepo.lanes = data.lanes
 						cachedRepo.cards = data.cards
@@ -63,7 +63,7 @@ app.factory('GitHubFactory', ['$http', '$rootScope', function($http, $rootScope)
 			.then(toData)
 			.then(function(repo){
 				repoCache.forEach(function(cachedRepo){
-					if (cachedRepo.githubID === repo.githubID){
+					if (cachedRepo.githubId === repo.githubId){
 						cachedRepo.isActive = repo.isActive;
 					}
 				})

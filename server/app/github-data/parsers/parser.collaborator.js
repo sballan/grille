@@ -5,7 +5,7 @@ function parse(body) {
 
 	collaborator.username= body.login
 
-	collaborator.githubID = "" + body.id
+	collaborator.githubId = "" + body.id
 	collaborator.avatar_url = body.avatar_url
 	collaborator.url = body.url
 	collaborator.html_url = body.html_url

@@ -32,7 +32,7 @@ router.post('/:cardID', function(req,res,next){
 		newComment = payloadParser.comment(comment)
 
 		//find the Card the comment was on, so we can update the card in the Database
-		return Card.findOne({ githubID: req.params.cardID})
+		return Card.findOne({ githubId: req.params.cardID})
 	})
 	.then(function(card){
 		//Add the new comment to the Database
@@ -52,7 +52,7 @@ router.put('/:cardID', function(req,res,next){
 	var msg = {
 		user: null,
 		repo: null,
-		id: req.body.comment.githubID,
+		id: req.body.comment.githubId,
 		body: req.body.comment.body
 	}
 	Board.findById(req.body.card.board)
@@ -64,11 +64,11 @@ router.put('/:cardID', function(req,res,next){
 	})
 	.then(function(response){
 		//find the Card the comment was on, so we can update the card in the Database
-		return Card.findOne({ githubID: req.params.cardID})
+		return Card.findOne({ githubId: req.params.cardID})
 	})
 	.then(function(card){
 		card.comments.forEach(function(comment){
-			if (comment.githubID == req.body.comment.githubID){
+			if (comment.githubId == req.body.comment.githubId){
 				comment.body = req.body.comment.body;
 				comment.user.username = req.body.comment.user.username
 				comment.save()
@@ -96,11 +96,11 @@ router.delete('/:cardID/:boardID/:commentID', function(req,res,next){
 	})
 	.then(function(response){
 		//find the Card the comment was on, so we can delete the comment
-		return Card.findOne({ githubID: req.params.cardID})
+		return Card.findOne({ githubId: req.params.cardID})
 	})
 	.then(function(card){
 		card.comments.forEach(function(comment, idx){
-			if (comment.githubID == req.params.commentID){
+			if (comment.githubId == req.params.commentID){
 				card.comments.splice(idx,1)
 			}
 		})

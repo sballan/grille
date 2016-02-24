@@ -13,7 +13,7 @@ router.put('/many', function(req, res, next) {
 	var cards = req.body
 
 	Promise.map(cards, function(card) {
-		return Card.findOneAndUpdate({githubID: card.githubID}, card, {new: true})
+		return Card.findOneAndUpdate({githubId: card.githubId}, card, {new: true})
 	})
 	.then(function(cards) {
 		res.send(cards)
@@ -24,7 +24,7 @@ router.put('/many', function(req, res, next) {
 router.put('/:cardID', function(req, res, next) {
 
 	var card = req.body
-	Card.findOneAndUpdate({githubID: card.githubID}, card, {new: true})
+	Card.findOneAndUpdate({githubId: card.githubId}, card, {new: true})
 	.populate('lane sprint')
 	.then(function(card) {
 		res.send(card)

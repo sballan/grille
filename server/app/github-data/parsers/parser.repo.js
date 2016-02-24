@@ -4,14 +4,14 @@ function parse(body) {
 	if(!body) return null
 	var repo = {}
 
-	repo.githubID = body.id || null
+	repo.githubId = body.id || null
 	repo.name = body.name || null
 	repo.description = body.description || null
 	// Change this to a field, not a user.  Use presave hook to populate a username/etc
 
 	repo.owner = {
 		username: body.owner.login,
-		githubID: body.owner.id,
+		githubId: body.owner.id,
 		url: body.owner.url
 	}
 

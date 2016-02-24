@@ -19,7 +19,7 @@ app.factory("CardFactory", ['$http', function($http){
 				cards.forEach(function(card) {
 					data.push({
 						_id: card._id,
-						githubID: card.githubID,
+						githubId: card.githubId,
 						priority: card.priority
 					})
 				})
@@ -30,10 +30,10 @@ app.factory("CardFactory", ['$http', function($http){
 			updateLaneOne: function(card) {
 				var data = {
 					_id: card._id,
-					githubID: card.githubID,
+					githubId: card.githubId,
 					lane: card.lane._id
 				}
-				return $http.put('/api/cards/lane/' + card.githubID, data)
+				return $http.put('/api/cards/lane/' + card.githubId, data)
 			},
 			updateLaneMany: function(cards) {
 				var data = []
@@ -41,7 +41,7 @@ app.factory("CardFactory", ['$http', function($http){
 				cards.forEach(function(card) {
 					data.push({
 						_id: card._id,
-						githubID: card.githubID,
+						githubId: card.githubId,
 						lane: card.lane
 					})
 				})
@@ -53,7 +53,7 @@ app.factory("CardFactory", ['$http', function($http){
 
 			updateCardTitle:function(card){
 				//the card title has been updated by this point, in ng-model
-				return $http.put('/api/cards/title/' + card.githubID, card)
+				return $http.put('/api/cards/title/' + card.githubId, card)
 				.then(function(response){
 					return response.data
 				})

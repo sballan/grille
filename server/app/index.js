@@ -27,23 +27,18 @@ app.use('/api', require('./routes'));
 app.use('/test', function(req, res, next) {
 	var github = new GitHubApi({ debug: true, version: "3.0.0" } );
 
-
 	github.authenticate({
       type: "oauth",
       token: req.user.accessToken
   });
   next()
 
-
-
 })
-
 
 app.use('/logout', function(req, res, next) {
 	req.logout()
 	res.redirect('/')
 })
-
 
 /*
  This middleware will catch any URLs resembling a file extension

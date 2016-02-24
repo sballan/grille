@@ -26,7 +26,7 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 			var self = this;
 
 			//OP: ES6 => context remains same as outer scope, don't need self
-			return GitHubFactory.getRepo(currentBoard.githubID)
+			return GitHubFactory.getRepo(currentBoard.githubId)
 			.then(function(board) {
 				return self.setCurrentBoard(board)
 			})
@@ -117,7 +117,7 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 			.then(function(cards) {
 				cards.forEach(function(card) {
 					currentBoard.cards.forEach(function(c) {
-						if(c.githubID === card.githubID) {
+						if(c.githubId === card.githubId) {
 							c.priority = card.priority
 						}
 					})
@@ -129,7 +129,7 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 			.then(function(cards) {
 				cards.forEach(function(card) {
 					currentBoard.cards.forEach(function(c) {
-						if(c.githubID === card.githubID) {
+						if(c.githubId === card.githubId) {
 							c.lane = card.lane
 						}
 					})

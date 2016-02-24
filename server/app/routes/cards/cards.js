@@ -44,7 +44,7 @@ router.put('/priority/many', function(req, res, next) {
 	var cards = req.body
 
 	Promise.map(cards, function(card) {
-		return Card.findOneAndUpdate({githubID: card.githubID}, card, {new: true})
+		return Card.findOneAndUpdate({githubId: card.githubId}, card, {new: true})
 	})
 	.then(function(cards) {
 		res.send(cards)
@@ -74,7 +74,7 @@ router.put('/title/:cardId', function(req, res, next){
 		return updateTitleAsync(msg)
 	})
 	.then(function(response){
-		return Card.findOne({ githubID: req.params.cardId })
+		return Card.findOne({ githubId: req.params.cardId })
 	})
 	.then(function(foundCard){
 			foundCard.title = req.body.title;
