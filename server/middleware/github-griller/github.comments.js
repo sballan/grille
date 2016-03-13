@@ -17,8 +17,9 @@ exports.getAll = function(req, repo, dep) {
   this.getRemainingPages = dep.utils.getRemainingPages.bind(this);
   return this.githubFunc(this.config)
       .then(this.getRemainingPages)
+      .then(parser.comments)
       .then(function(allComments) {
-        req.comments = parser.comments(allComments)
+        req.comments = allComments
         return req;
       })
 };

@@ -1,5 +1,7 @@
 var Utils = require('./github.utils');
 var Promise = require('bluebird');
+var User = require('mongoose').model('User')
+var Card = require('mongoose').model('Card')
 
 function repo(body) {
   if(!body) return null;
@@ -33,7 +35,8 @@ function repos(body) {
 }
 
 function issue(body) {
-  if(!body) return null;
+  console.log("In the issue")
+  if (!body) return null;
   var issue = {};
   issue.githubId = body.id;
   issue.issueNumber = 0 + body.number;
@@ -50,34 +53,46 @@ function issue(body) {
   issue.labels_url = body.labels_url;
   issue.events_url = body.events_url;
   issue.html_url = body.html_url;
-
-  issue.user = {
+  console.log("before user", body.user, body.assignee)
+  issue.user = new User({
     login: body.user.login,
     githubId: body.user.id,
     url: body.user.url
-  };
-
-  issue.assignee = {
-    login: body.assignee.login,
-    githubId: body.assignee.id,
-    url: body.assignee.url
-  };
+  });
+  if (body.assignee) {
+    issue.assignee = new User({
+      login: body.assignee.login,
+      githubId: body.assignee.id,
+      url: body.assignee.url
+    });
+  }
+  console.log("after user")
 
   if (body.pull_request) issue.isPullRequest = true;
-
-  return Utils.dbParse('User', issue.user)
+  console.log("before dbParse")
+  return Utils.dbFindOneOrCreate('User', {githubId:issue.user.githubId}, issue.user)
   .then(function(dbUser) {
-    // refactor the dbParse function to do this next step
-    issue.user = dbUser;
-    return Utils.dbParse('User', issue.assignee)
+    console.log("dbUser")
+
+    return Utils.dbFindOneOrCreate('User', {githubId:issue.user.githubId}, issue.assignee)
   })
   .then(function(dbUser) {
     issue.assignee = dbUser;
-    return Utils.dbParse('Issue', issue)
+    console.log("second dbUser")
+
+    issue = new Card(issue);
+    return Utils.dbFindOneOrCreate('Card', {githubId: issue.gitHubId}, issue)
   })
+  .then(function(obj) {
+    console.log("-----and here is what we get: ", obj)
+  }, function(err) {
+    console.log('--*-- Error: ', err);
+  })
+
 }
 
 function issues(body) {
+  console.log("got to parser issues")
   return Promise.map(body, function(item) {
     return issue(item)
   });

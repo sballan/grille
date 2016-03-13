@@ -16,10 +16,11 @@ exports.getAll = function(req, repo, dep) {
 
   return this.githubFunc(this.config)
     .then(this.getRemainingPages)
+    .then(parser.collabs)
     .then(function(allCollabs) {
-          req.collabs = parser.collabs(allCollabs);
-          return req;
-        })
+      req.collabs = allCollabs;
+      return req;
+    })
 
 };
 

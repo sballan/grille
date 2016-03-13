@@ -29,6 +29,7 @@ GithubGriller.prototype = {
     githubId = githubId || this.req.params.boardID;
     return repos.getOne(this.req, githubId, {issues, comments, collabs, utils})
     .then(function(request) {
+      console.log('This is the request', request)
       //there is a lot more data here than just the repo = the repo currently isn't populated with it's issues and comments. A function in the utils is needed to link all this together.
       return request.repo
     })

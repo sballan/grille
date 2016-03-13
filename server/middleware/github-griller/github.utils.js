@@ -48,16 +48,29 @@ exports.dbFindOne = function (schema, query) {
 
 };
 
+exports.dbFindOneOrCreate = function (schema, query, newData) {
+  console.log("SCHEMA", schema)
+  return mongoose.model(schema).findOne(query)
+  .then(function(dbData) {
+    if(!dbData) dbData = newData;
+    console.log("-----queries and stuff worked")
+    console.log("SCHEMA", schema)
+    console.log("dbData", dbData)
+    return dbData.save()
+  })
+
+};
+
 exports.dbAssembleRepo = function(req) {
   if(req.comments) var comments = req.comments
   if(req.issues) var issues = req.issues
 };
 
 exports.dbParse = function(schema, raw) {
+  console.log("got to dbParse")
   return mongoose.model(schema).findOne(raw.githubId)
   .then(function(model) {
     if(model) return model
     else return mongoose.model(schema).create(raw)
   })
 };
-
