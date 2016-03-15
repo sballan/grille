@@ -1,3 +1,7 @@
+### SSL
+Grille makes use of Let's Encrypt for SSL certificates.  You may need to install the CLI.  You can find more information here:
+https://www.npmjs.com/package/letsencrypt
+
 
 ### The GithubGriller Module:
 

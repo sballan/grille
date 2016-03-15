@@ -51,6 +51,7 @@
     "karma-mocha": "^0.1.10",
     "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.1.4",
+    "letsencrypt": "^1.4.3",
     "lodash": "^3.9.3",
     "mocha-mongoose": "^1.0.3",
     "mongodb": "^1.4.33",
