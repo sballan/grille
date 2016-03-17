@@ -4,6 +4,7 @@ var User = require('mongoose').model('User')
 var Card = require('mongoose').model('Card')
 
 function repo(body) {
+  console.log("--start Parse")
   if(!body) return null;
   var repo = {};
   repo.githubId = body.id || null;
@@ -29,6 +30,7 @@ function repo(body) {
 }
 
 function repos(body) {
+  console.log("--Foreach Parse")
   return Promise.map(body, function(item) {
     return repo(item)
   });

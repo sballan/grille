@@ -1,1 +1,1 @@
-module.exports = require('./griller')
+module.exports = require('./griller');

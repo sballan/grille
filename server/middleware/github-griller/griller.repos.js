@@ -3,19 +3,39 @@ var Promise = require('bluebird');
 var parser = require('./griller.parse.js');
 
 // These functions all return req
-exports.getAll = function(req, dep) {
-  this.client = req.user.githubAccess;
-  this.githubFunc = Promise.promisify(this.client.repos.getAll);
-  this.config = { per_page: 100, page: 1, sort: 'updated' };
-  this.getRemainingPages = dep.utils.getRemainingPages.bind(this);
+exports.getAll = function(g) {
+  const context = {
+    client: g.client,
+    githubFunc: Promise.promisify(g.client.repos.getAll),
+    config: { per_page: 100, page: 1, sort: 'updated' }
+  };
+  //this.client = g.client;
+  //this.githubFunc = Promise.promisify(this.client.repos.getAll);
+  //this.config = { per_page: 100, page: 1, sort: 'updated' };
 
-  return this.githubFunc(this.config)
-  .then(this.getRemainingPages)
-  .then(parser.repos)
+  const getRemainingPages = g.utils.getRemainingPages.bind(context);
+  console.log("getRemainingPages", getRemainingPages)
+  //var getRemainingPages = this.getRemainingPages;
+  console.log("--getAll");
+
+  return context.githubFunc(context.config)
+  .then(getRemainingPages,
+    function(err) {
+      console.log('---',err)
+    })
+  .then(g.parser.repos,
+    function(err) {
+      console.log('---',err)
+    })
   .then(function(allRepos) {
-    req.repos =allRepos;
-    return req;
-  })
+    console.log("--Last .then");
+    g.req.repos = allRepos;
+    return g.req;
+  },
+    function(err) {
+      console.log('---',err)
+    })
+
 };
 
 exports.getOne = function(req, githubId, dep) {
