@@ -1,6 +1,6 @@
 'use strict';
 var Promise = require('bluebird');
-var parser = require('./github.parse');
+var parser = require('./griller.parse.js');
 
 // Returns req
 exports.getAll = function(req, repo, dep) {

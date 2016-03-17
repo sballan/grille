@@ -1,4 +1,4 @@
-var Utils = require('./github.utils');
+var Utils = require('./griller.utils.js');
 var Promise = require('bluebird');
 var User = require('mongoose').model('User')
 var Card = require('mongoose').model('Card')
