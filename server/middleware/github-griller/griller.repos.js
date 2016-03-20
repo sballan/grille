@@ -4,17 +4,16 @@ var parser = require('./griller.parse.js');
 
 // These functions all return req
 exports.getAll = function(g) {
-  const context = {
+  let context = {
     client: g.client,
     githubFunc: Promise.promisify(g.client.repos.getAll),
     config: { per_page: 100, page: 1, sort: 'updated' }
   };
+  let getRemainingPages = g.utils.getRemainingPages.bind(context);
   //this.client = g.client;
   //this.githubFunc = Promise.promisify(this.client.repos.getAll);
   //this.config = { per_page: 100, page: 1, sort: 'updated' };
 
-  const getRemainingPages = g.utils.getRemainingPages.bind(context);
-  console.log("getRemainingPages", getRemainingPages)
   //var getRemainingPages = this.getRemainingPages;
   console.log("--getAll");
 
@@ -23,7 +22,7 @@ exports.getAll = function(g) {
     function(err) {
       console.log('---',err)
     })
-  .then(g.parser.repos,
+  .then(g.parse.repos,
     function(err) {
       console.log('---',err)
     })

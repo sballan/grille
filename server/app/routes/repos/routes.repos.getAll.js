@@ -8,10 +8,8 @@ var Board = require('mongoose').model('Board');
 
 module.exports = router;
 ///* For Testing purposes
-console.log("hit the route")
 router.get('/', function(req, res, next) {
-  console.log("hit the route")
-  return new griller(req).getAllRepos()
+  return griller(req).getAllRepos()
   .then(function(repos) {
     console.log('------length', repos.length)
     res.send({hey:"hel"})

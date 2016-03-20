@@ -26,14 +26,16 @@ const getRemainingPages = function(gitRes, concatData) {
   console.log("hey");
 
   concatData = concatData || [];
-  var self = this;
-  var hasNextPage = self.client.hasNextPage(gitRes.meta.link);
+  const self = this;
+  const hasNextPage = self.client.hasNextPage(gitRes.meta.link);
   concatData = concatData.concat(gitRes);
 
   if(hasNextPage) {
     self.config.page++;
     return self.githubFunc(self.config)
         .then(function(newRes) {
+          console.log("--inGetRemain: newRes", newRes.length)
+          console.log("--self:", self)
           return getRemainingPages.call(self, newRes, concatData)
         })
   } else {
