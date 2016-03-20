@@ -1,4 +1,4 @@
-const GithubGriller = function(req, res, next) {
+const GithubGriller = function(req, res=undefined, next=undefined) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
   this.req = req;
@@ -20,17 +20,18 @@ GithubGriller.prototype = {
   // Returns Promise
   getAllRepos: function() {
     const self = this;
-    return self.repos.getAll(this)
+    return self.repos.getAll(self)
     .then(function(g) {
       return g.repos
     })
-    .catch(self.next)
   },
   getOneRepo: function(githubId) {
     githubId = githubId || this.req.params.repo;
-    return this.repos.getOne(this, githubId)
+
+    const self = this;
+    return self.repos.getOne(self, githubId)
     .then(function(g) {
-      console.log(g.repo);
+      console.log("FINISHED FUNC", g.repo.toString())
       return g.repo
     })
   },
@@ -42,6 +43,4 @@ GithubGriller.prototype = {
   }
 };
 
-module.exports = function(req, res=undefined, next=undefined) {
-  return new GithubGriller(req, res, next)
-};
+module.exports = GithubGriller

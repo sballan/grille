@@ -54,7 +54,7 @@ const dbAssembleRepo = function(g) {
   if(g.comments) g.repo.comments = g.comments
   if(g.issues) g.repo.issues = g.issues
   if(g.collabs) g.repo.collabs = g.collabs
-  console.log("assembled: ", g)
+
   return g;
 };
 

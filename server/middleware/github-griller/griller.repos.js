@@ -27,19 +27,15 @@ const getOne = function(g, githubId) {
     // TODO try to get these assignments into dbFindOne, or consider some other way of getting them out of here.
     g.req.repo = repo;
     g.repo = repo;
-    console.log('----repo')
     return g.issues.getAll(g)
   })
   .then(function() {
-    console.log('----issues')
     return g.comments.getAll(g)
   })
   .then(function() {
-    console.log('----comments')
     return g.collabs.getAll(g)
   })
   .then(function() {
-    console.log('----collabs')
     return g.utils.dbAssembleRepo(g)
   })
 
