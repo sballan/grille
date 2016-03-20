@@ -15,22 +15,22 @@ const GithubGriller = function(req, res, next) {
 
 };
 
-// These functions all return a modified req for now.  Maybe part of the parsing process should be making them into objects that can be persisted easily with a single call to a .create() function.
+// These functions all return a modified g object.  Maybe part of the parsing process should be making them into objects that can be persisted easily with a single call to a .create() function.
 GithubGriller.prototype = {
   // Returns Promise
   getAllRepos: function() {
     const self = this;
     return self.repos.getAll(this)
-    .then(function(request) {
-      return request.repos
+    .then(function(g) {
+      return g.repos
     })
     .catch(self.next)
   },
   getOneRepo: function(githubId) {
     githubId = githubId || this.req.params.repo;
     return this.repos.getOne(this, githubId)
-    .then(function(request) {
-      return request.repo
+    .then(function(g) {
+      return g.repo
     })
   },
   getAllIssues: function(repo) {

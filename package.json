@@ -1,6 +1,6 @@
 {
   "name": "Grille",
-  "version": "1.0.0",
+  "version": "0.1.2",
   "description": "A project management system for GitHub",
   "main": "server/start.js",
   "scripts": {

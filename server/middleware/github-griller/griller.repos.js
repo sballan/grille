@@ -1,46 +1,46 @@
 'use strict';
 var Promise = require('bluebird');
-var parser = require('./griller.parse.js');
 
 // These functions all return req
 const getAll = function(g) {
-  let context = {
+  const context = {
     client: g.client,
     githubFunc: Promise.promisify(g.client.repos.getAll),
     config: { per_page: 100, page: 1, sort: 'updated' }
   };
-  let getRemainingPages = g.utils.getRemainingPages.bind(context);
+  const getRemainingPages = g.utils.getRemainingPages.bind(context);
 
   return context.githubFunc(context.config)
   .then(getRemainingPages)
   .then(g.parse.repos)
   .then(function(allRepos) {
     g.req.repos = allRepos;
-    return g.req;
+    g.repos = allRepos;
+    return g;
   })
 
 };
 
 const getOne = function(g, githubId) {
-  this.client = g.client;
-
   return g.utils.dbFindOne('Repo', {githubId: githubId})
   .then(function(repo) {
+    // TODO try to get these assignments into dbFindOne, or consider some other way of getting them out of here.
     g.req.repo = repo;
+    g.repo = repo;
     console.log('----repo')
-    return g.issues.getAll(req, repo, g)
+    return g.issues.getAll(g)
   })
   .then(function() {
     console.log('----issues')
-    return g.comments.getAll(req, req.repo, g)
+    return g.comments.getAll(g)
   })
   .then(function() {
     console.log('----comments')
-    return g.collabs.getAll(req, req.repo, g)
+    return g.collabs.getAll(g)
   })
   .then(function() {
     console.log('----collabs')
-    return g.req
+    return g.utils.dbAssembleRepo(g)
   })
 
 };

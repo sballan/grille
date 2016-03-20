@@ -1,21 +1,21 @@
 'use strict';
 const router = require('express').Router();
 const griller = require('../../../middleware/github-griller');
+const Promise = require('bluebird')
 
 
-
-var payloadParser = require('../../github-data/parsers')
-var asyncIssues = require('../../github-data/async-functions/github/github.issues')
-var asyncComments = require('../../github-data/async-functions/github/github.comments')
-var asyncCollaborators = require('../../github-data/async-functions/github/github.collaborators')
-var Promise = require('bluebird')
-
-var User = require('mongoose').model('User');
-var Repo = require('mongoose').model('Repo');
-var Card = require('mongoose').model('Card');
-var Lane = require('mongoose').model('Lane');
-var Label = require('mongoose').model('Label');
-var Sprint = require('mongoose').model('Sprint');
+//
+// var payloadParser = require('../../github-data/parsers')
+// var asyncIssues = require('../../github-data/async-functions/github/github.issues')
+// var asyncComments = require('../../github-data/async-functions/github/github.comments')
+// var asyncCollaborators = require('../../github-data/async-functions/github/github.collaborators')
+//
+// var User = require('mongoose').model('User');
+// var Repo = require('mongoose').model('Repo');
+// var Card = require('mongoose').model('Card');
+// var Lane = require('mongoose').model('Lane');
+// var Label = require('mongoose').model('Label');
+// var Sprint = require('mongoose').model('Sprint');
 
 module.exports = router;
 
@@ -26,7 +26,6 @@ router.get('/:repo', function(req, res, next) {
   .then(function(repos) {
     res.send(repos)
   })
-  .catch(next)
 
 })
 

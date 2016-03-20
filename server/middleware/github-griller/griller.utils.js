@@ -2,23 +2,6 @@
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
 
-// FIXME This function is just an outline of what it could be
-const dataUpsert = function(dataArr, model) {
-  Promise.map(dataArr, function(dataItem, index) {
-        if (!dataItem) dataItem = { githubId: null }
-
-        return model.findOneAndUpdate({
-          githubId: dataItem.githubId
-        }, data[index], {
-          upsert: true,
-          new: true
-        })
-      })
-      .then(function(dataUpserted) {
-        res.send(dataUpserted)
-      })
-};
-
 // A generic function for getting the remaining pages of a github request. Expects a github client, a config object, and a function to get data from github
 const getRemainingPages = function(gitRes, concatData) {
   const self = this;
@@ -38,14 +21,21 @@ const getRemainingPages = function(gitRes, concatData) {
   }
 };
 
-const dbFind = function (schema, query) {
-  return mongoose.model(schema).find(query)
+const dbParse = function(schema, raw) {
+  return mongoose.model(schema).findOne(raw.githubId)
+  .then(function(model) {
+    if(model) return model
+    else return mongoose.model(schema).create(raw)
+  })
+};
+
+const dbFind = function (schema, query, populate) {
+  return mongoose.model(schema).find(query).exec()
 
 };
 
-const dbFindOne = function (schema, query) {
-  return mongoose.model(schema).findOne(query)
-
+const dbFindOne = function (schema, query, populate) {
+  return mongoose.model(schema).findOne(query).exec()
 };
 
 const dbFindOneOrCreate = function (schema, query, newData) {
@@ -57,21 +47,19 @@ const dbFindOneOrCreate = function (schema, query, newData) {
 
 };
 
-const dbAssembleRepo = function(req) {
-  if(req.comments) var comments = req.comments
-  if(req.issues) var issues = req.issues
+// TODO This might belong somewhere else; maybe on the griller object itself? Also passing g seems weird here.
+const dbAssembleRepo = function(g) {
+  if(!g.repo) return false;
+
+  if(g.comments) g.repo.comments = g.comments
+  if(g.issues) g.repo.issues = g.issues
+  if(g.collabs) g.repo.collabs = g.collabs
+
+  return g;
 };
 
-const dbParse = function(schema, raw) {
-  return mongoose.model(schema).findOne(raw.githubId)
-  .then(function(model) {
-    if(model) return model
-    else return mongoose.model(schema).create(raw)
-  })
-};
 
 module.exports = {
-  dataUpsert,
   getRemainingPages,
   dbFind,
   dbFindOne,
