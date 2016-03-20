@@ -20,22 +20,17 @@ const dataUpsert = function(dataArr, model) {
 };
 
 // A generic function for getting the remaining pages of a github request. Expects a github client, a config object, and a function to get data from github
-var n = 1;
 const getRemainingPages = function(gitRes, concatData) {
-  console.log("--getRemaining", n++);
-  console.log("hey");
-
-  concatData = concatData || [];
   const self = this;
   const hasNextPage = self.client.hasNextPage(gitRes.meta.link);
+
+  concatData = concatData || [];
   concatData = concatData.concat(gitRes);
 
   if(hasNextPage) {
     self.config.page++;
     return self.githubFunc(self.config)
         .then(function(newRes) {
-          console.log("--inGetRemain: newRes", newRes.length)
-          console.log("--self:", self)
           return getRemainingPages.call(self, newRes, concatData)
         })
   } else {
@@ -54,13 +49,9 @@ const dbFindOne = function (schema, query) {
 };
 
 const dbFindOneOrCreate = function (schema, query, newData) {
-  console.log("SCHEMA", schema)
   return mongoose.model(schema).findOne(query)
   .then(function(dbData) {
     if(!dbData) dbData = newData;
-    console.log("-----queries and stuff worked")
-    console.log("SCHEMA", schema)
-    console.log("dbData", dbData)
     return dbData.save()
   })
 
@@ -72,7 +63,6 @@ const dbAssembleRepo = function(req) {
 };
 
 const dbParse = function(schema, raw) {
-  console.log("got to dbParse")
   return mongoose.model(schema).findOne(raw.githubId)
   .then(function(model) {
     if(model) return model

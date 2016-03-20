@@ -1,4 +1,4 @@
-var GithubGriller = function(req, res, next) {
+const GithubGriller = function(req, res, next) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
   this.req = req;
@@ -13,24 +13,23 @@ var GithubGriller = function(req, res, next) {
   this.parse = require('./griller.parse.js');
   this.utils = require('./griller.utils.js');
 
-  console.log("Griller", typeof this.parse)
 };
 
 // These functions all return a modified req for now.  Maybe part of the parsing process should be making them into objects that can be persisted easily with a single call to a .create() function.
 GithubGriller.prototype = {
   // Returns Promise
   getAllRepos: function() {
-    return this.repos.getAll(this)
+    const self = this;
+    return self.repos.getAll(this)
     .then(function(request) {
       return request.repos
     })
+    .catch(self.next)
   },
   getOneRepo: function(githubId) {
-    githubId = githubId || this.req.params.boardID;
-    return this.repos.getOne(this)
+    githubId = githubId || this.req.params.repo;
+    return this.repos.getOne(this, githubId)
     .then(function(request) {
-      console.log('This is the request', request);
-      //there is a lot more data here than just the repo = the repo currently isn't populated with it's issues and comments. A function in the utils is needed to link all this together.
       return request.repo
     })
   },

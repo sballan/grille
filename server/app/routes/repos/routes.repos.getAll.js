@@ -1,10 +1,10 @@
 'use strict';
-var router = require('express').Router();
-var payloadParser = require('../../github-data/parsers');
-var Promise = require('bluebird');
-var griller = require('../../../middleware/github-griller');
+const router = require('express').Router();
+const payloadParser = require('../../github-data/parsers');
+const Promise = require('bluebird');
+const griller = require('../../../middleware/github-griller');
 
-var Repo = require('mongoose').model('Repo');
+const Repo = require('mongoose').model('Repo');
 
 module.exports = router;
 ///* For Testing purposes
@@ -12,73 +12,6 @@ router.get('/', function(req, res, next) {
   return griller(req, res, next).getAllRepos()
   .then(function(repos) {
     res.send(repos)
-  },
-  function(err) {
-    console.log('error', err)
-    res.send({hey:"hel", err: err})
   })
+  .catch(next)
 });
-
-//*/
-
-//
-//router.get('/', function(req, res, next) {
-//
-//	var response;
-//
-//	var github = req.user.githubAccess;
-//
-//	var getAllAsync = Promise.promisify(github.repos.getAll)
-//
-//	// This function is called recursively, to get all the pages of repos
-//	getPages(1, [])
-//
-//	function getPages(currentPage, theData) {
-//		// returns all 100 repos from the currentPage
-//		return getAllAsync({ per_page: 100, page: currentPage, sort: 'updated' })
-//		.then(function(data) {
-//
-//			var hasNextPage = github.hasNextPage(data.meta.link)
-//
-//			// Here the list of repos is concatenated with the list from the previous recursion
-//			data = theData.concat(data)
-//
-//			if(hasNextPage) {
-//				getPages(currentPage + 1, data)
-//			} else {
-//
-//				data = data.map(function(repo) {
-//					return payloadParser.repo(repo)
-//				})
-//
-//				// This puts all the boards from our database that correspond to the github repos in an array
-//				return Promise.map(data, function(board) {
-//
-//					return Repo.findOne({
-//						githubId: board.githubId
-//					})
-//				})
-//				.then(dataUpsert)
-//			}
-//
-//			function dataUpsert(boards) {
-//				Promise.map(boards, function(board, index) {
-//					if (!board) board = { githubId: null }
-//
-//					return Repo.findOneAndUpdate({
-//						githubId: board.githubId
-//					}, data[index], {
-//						upsert: true,
-//						new: true
-//					})
-//				})
-//				.then(function(boards) {
-//					res.send(boards)
-//				})
-//			}
-//
-//		})
-//	}
-//
-//})
-//

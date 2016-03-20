@@ -3,8 +3,7 @@ var Promise = require('bluebird');
 var User = require('mongoose').model('User')
 var Card = require('mongoose').model('Card')
 
-function repo(body) {
-  console.log("--start Parse")
+const repo = function(body) {
   if(!body) return null;
   var repo = {};
   repo.githubId = body.id || null;
@@ -29,15 +28,13 @@ function repo(body) {
 
 }
 
-function repos(body) {
-  console.log("--Foreach Parse")
+const repos = function(body) {
   return Promise.map(body, function(item) {
     return repo(item)
   });
 }
 
-function issue(body) {
-  console.log("In the issue")
+const issue = function(body) {
   if (!body) return null;
   var issue = {};
   issue.githubId = body.id;
@@ -55,7 +52,7 @@ function issue(body) {
   issue.labels_url = body.labels_url;
   issue.events_url = body.events_url;
   issue.html_url = body.html_url;
-  console.log("before user", body.user, body.assignee)
+  // FIXME don't make new user object
   issue.user = new User({
     login: body.user.login,
     githubId: body.user.id,
@@ -93,7 +90,7 @@ function issue(body) {
 
 }
 
-function issues(body) {
+const issues = function(body) {
   console.log("got to parser issues")
   return Promise.map(body, function(item) {
     return issue(item)
@@ -101,7 +98,7 @@ function issues(body) {
 }
 
 // This function may need to do some clever work to figure out which issue a comment belongs to.
-function comment(body) {
+const comment = function(body) {
   if(!body) return null;
   var comment = {};
   comment.githubId = body.id;
@@ -126,13 +123,13 @@ function comment(body) {
   })
 }
 
-function comments(body) {
+const comments = function(body) {
   return Promise.map(body, function(item) {
     return comment(item)
   });
 }
 
-function collab(body) {
+const collab = function(body) {
   if(!body) return null;
   var collab = {};
   collab.username = body.login;
@@ -148,13 +145,13 @@ function collab(body) {
   return Utils.dbParse('User', collab);
 }
 
-function collabs(body) {
+const collabs = function(body) {
   return Promise.map(body, function(item) {
     return collab(item)
   });
 }
 
-function parse(req) {
+const parse = function(req) {
   if(req.repos) req.repos = repos(req.repos);
   if(req.repo) req.repo = repo(req.repo);
   if(req.issue) req.issue = issue(req.issue);
