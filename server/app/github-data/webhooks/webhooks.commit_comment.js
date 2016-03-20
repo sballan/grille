@@ -1,9 +1,9 @@
 'use strict';
 var parser = require('../parsers')
 var mongoose = require('mongoose')
-var Board = mongoose.model('Board')
+var Repo = mongoose.model('Repo')
 var Card = mongoose.model('Card')
-var Board = mongoose.model('Board')
+var Repo = mongoose.model('Repo')
 var User = mongoose.model('User')
 var io = require('../../../io')
 
@@ -11,5 +11,3 @@ module.exports = {
 	commit_comment: function(body) {
 	}
 }
-
-

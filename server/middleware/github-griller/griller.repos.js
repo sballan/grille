@@ -40,7 +40,7 @@ exports.getAll = function(g) {
 exports.getOne = function(req, githubId, dep) {
   this.client = req.user.githubAccess;
 
-  return dep.utils.dbFindOne('Board', {githubId: githubId})
+  return dep.utils.dbFindOne('Repo', {githubId: githubId})
   .then(function(repo) {
     req.repo = repo;
     console.log('----repo')

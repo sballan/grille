@@ -1,7 +1,9 @@
-var GithubGriller = function(req) {
+var GithubGriller = function(req, res, next) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
   this.req = req;
+  this.res = res;
+  this.next = next;
   this.client = req.user.githubAccess;
 
   this.repos = require('./griller.repos.js');
@@ -40,6 +42,6 @@ GithubGriller.prototype = {
   }
 };
 
-module.exports = function(req) {
-  return new GithubGriller(req)
+module.exports = function(req, res=undefined, next=undefined) {
+  return new GithubGriller(req, res, next)
 };

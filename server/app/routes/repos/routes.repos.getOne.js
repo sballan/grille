@@ -7,7 +7,7 @@ var asyncCollaborators = require('../../github-data/async-functions/github/githu
 var Promise = require('bluebird')
 
 var User = require('mongoose').model('User');
-var Board = require('mongoose').model('Board');
+var Repo = require('mongoose').model('Repo');
 var Card = require('mongoose').model('Card');
 var Lane = require('mongoose').model('Lane');
 var Label = require('mongoose').model('Label');
@@ -27,7 +27,7 @@ router.get('/:repo', function(req, res, next) {
 
 	var repoIssuesAsync = Promise.promisify(github.issues.repoIssues)
 
-	Board.findOne({ githubId: req.params.repo })
+	Repo.findOne({ githubId: req.params.repo })
 		.then(function(repo) {
 			theRepo = repo
 			return Lane.find({board: repo})
@@ -109,18 +109,18 @@ router.get('/:repo', function(req, res, next) {
 
 
 	//OP: res is global, not good
-	function sendData(theBoard) {
+	function sendData(theRepo) {
 		var attachedLabels;
-		// var theBoard = theBoard;
+		// var theRepo = theRepo;
 
-		Label.find({board: theBoard})
+		Label.find({board: theRepo})
 		.then(function(labels) {
 			attachedLabels = labels
-			return Sprint.find({board: theBoard})
+			return Sprint.find({board: theRepo})
 		})
 		.then(function(sprints) {
 			var theData = {
-				board: theBoard,
+				board: theRepo,
 				cards: theCards,
 				lanes: theLanes,
 				labels: attachedLabels,

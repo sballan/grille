@@ -4,15 +4,14 @@ var payloadParser = require('../../github-data/parsers');
 var Promise = require('bluebird');
 var griller = require('../../../middleware/github-griller');
 
-var Board = require('mongoose').model('Board');
+var Repo = require('mongoose').model('Repo');
 
 module.exports = router;
 ///* For Testing purposes
 router.get('/', function(req, res, next) {
-  return griller(req).getAllRepos()
+  return griller(req, res, next).getAllRepos()
   .then(function(repos) {
-    console.log('------length', repos.length)
-    res.send({hey:"hel"})
+    res.send(repos)
   },
   function(err) {
     console.log('error', err)
@@ -55,7 +54,7 @@ router.get('/', function(req, res, next) {
 //				// This puts all the boards from our database that correspond to the github repos in an array
 //				return Promise.map(data, function(board) {
 //
-//					return Board.findOne({
+//					return Repo.findOne({
 //						githubId: board.githubId
 //					})
 //				})
@@ -66,7 +65,7 @@ router.get('/', function(req, res, next) {
 //				Promise.map(boards, function(board, index) {
 //					if (!board) board = { githubId: null }
 //
-//					return Board.findOneAndUpdate({
+//					return Repo.findOneAndUpdate({
 //						githubId: board.githubId
 //					}, data[index], {
 //						upsert: true,
