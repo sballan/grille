@@ -23,8 +23,8 @@ module.exports = router;
 
 router.get('/:repo', function(req, res, next) {
 	return griller(req, res, next).getOneRepo()
-  .then(function(repos) {
-    res.send(repos)
+  .then(function(repo) {
+    res.send(repo)
   })
 
 })

@@ -53,39 +53,34 @@ const issue = function(body) {
   issue.events_url = body.events_url;
   issue.html_url = body.html_url;
   // FIXME don't make new user object
-  issue.user = new User({
+  issue.user = {
     login: body.user.login,
     githubId: body.user.id,
     url: body.user.url
-  });
+  };
   if (body.assignee) {
-    issue.assignee = new User({
+    issue.assignee = {
       login: body.assignee.login,
       githubId: body.assignee.id,
       url: body.assignee.url
-    });
+    };
   }
   console.log("after user")
 
   if (body.pull_request) issue.isPullRequest = true;
   console.log("before dbParse")
-  return Utils.dbFindOneOrCreate('User', {githubId:issue.user.githubId}, issue.user)
+
+  return Utils.dbParse('User', issue.user)
   .then(function(dbUser) {
     console.log("dbUser")
-
-    return Utils.dbFindOneOrCreate('User', {githubId:issue.user.githubId}, issue.assignee)
+    issue.user = dbUser;
+    return Utils.dbParse('User', issue.assignee)
   })
   .then(function(dbUser) {
     issue.assignee = dbUser;
     console.log("second dbUser")
 
-    issue = new Card(issue);
-    return Utils.dbFindOneOrCreate('Card', {githubId: issue.gitHubId}, issue)
-  })
-  .then(function(obj) {
-    console.log("-----and here is what we get: ", obj)
-  }, function(err) {
-    console.log('--*-- Error: ', err);
+    return Utils.dbParse('Card', issue)
   })
 
 }

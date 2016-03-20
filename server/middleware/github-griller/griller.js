@@ -30,6 +30,7 @@ GithubGriller.prototype = {
     githubId = githubId || this.req.params.repo;
     return this.repos.getOne(this, githubId)
     .then(function(g) {
+      console.log(g.repo);
       return g.repo
     })
   },
