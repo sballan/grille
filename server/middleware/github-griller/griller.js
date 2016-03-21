@@ -1,4 +1,4 @@
-const GithubGriller = function(req, res=undefined, next=undefined) {
+const GithubGriller = function(req, res=null, next=null) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
   this.req = req;
@@ -19,6 +19,7 @@ const GithubGriller = function(req, res=undefined, next=undefined) {
 GithubGriller.prototype = {
   // Returns Promise
   getAllRepos: function() {
+    console.log("got here")
     const self = this;
     return self.repos.getAll(self)
     .then(function(g) {

@@ -8,8 +8,8 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 		getCurrentBoard: function() {
 			return currentBoard;
 		},
-		setCurrentBoard: function(board) {
-			currentBoard = board
+		setCurrentBoard: function(repo) {
+			currentBoard = repo
 
 			currentBoard.lanes.forEach(function(lane) {
 				hashLanes[lane.title] = lane._id
@@ -27,8 +27,8 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 
 			//OP: ES6 => context remains same as outer scope, don't need self
 			return GitHubFactory.getRepo(currentBoard.githubId)
-			.then(function(board) {
-				return self.setCurrentBoard(board)
+			.then(function(repo) {
+				return self.setCurrentBoard(repo)
 			})
 
 		},
@@ -107,8 +107,8 @@ app.factory('BoardFactory', function(GitHubFactory, CardFactory, $rootScope) {
 		getBoardAndMakeCurrent: function(repoID) {
 			var self = this;
 			return GitHubFactory.getRepo(repoID)
-			.then(function(board) {
-				return self.setCurrentBoard(board)
+			.then(function(repo) {
+				return self.setCurrentBoard(repo)
 			})
 
 		},

@@ -7,18 +7,18 @@ app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'getCache', funct
 	$scope.rawSelected = true;
 
 	$scope.activeBoards = function(){
-		return $scope.repoCache.filter(function(board) {
-			if (board.isActive){
-					return board;
+		return $scope.repoCache.filter(function(repo) {
+			if (repo.isActive){
+					return repo;
 				}
 
 		})
 	}
 
 	$scope.inActiveBoards = function(){
-		return $scope.repoCache.filter(function(board) {
-			if (!board.isActive){
-					return board;
+		return $scope.repoCache.filter(function(repo) {
+			if (!repo.isActive){
+					return repo;
 				}
 
 		})
