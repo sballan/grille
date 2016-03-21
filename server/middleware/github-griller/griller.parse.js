@@ -74,7 +74,9 @@ const issue = function(body) {
   .then(function(dbUser) {
     console.log("dbUser")
     issue.user = dbUser;
-    return Utils.dbParse('User', issue.assignee)
+
+    if(issue.assignee) return Utils.dbParse('User', issue.assignee)
+    return Promise.resolve()
   })
   .then(function(dbUser) {
     issue.assignee = dbUser;
