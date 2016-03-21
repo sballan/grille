@@ -1,9 +1,9 @@
 
 app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 'BoardFactory', 'CommentFactory', 'Socket', 'loadGrille', 'CardFactory','SprintFactory', function($rootScope, $scope, $uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory, SprintFactory) {
 
-  $scope.board = loadGrille;
-  $scope.cards = $scope.board.cards;
-  $scope.collaborators = $scope.board.collaborators
+  $scope.repo = loadGrille;
+  $scope.cards = $scope.repo.cards;
+  $scope.collaborators = $scope.repo.collaborators
   $scope.viewLanes = BoardFactory.getViewLanes
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
@@ -15,7 +15,7 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
     boardsprintArray.push(args.sprint);
     $scope.$digest();
   })
-  console.log("board",$scope.board)
+  console.log("repo",$scope.repo)
   console.log("boardsprintArray",$scope.boardSprintArray)
 
   $scope.cardExpansion=function($event,card){
@@ -29,7 +29,7 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
   };
 
   ($scope.getAllSprints = function(){
-     SprintFactory.getAllSprints($scope.board._id)
+     SprintFactory.getAllSprints($scope.repo._id)
      .then(function(allSprints){
       console.log("allSprints",allSprints)
       $scope.boardSprintArray= allSprints;

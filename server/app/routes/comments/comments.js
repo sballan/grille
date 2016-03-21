@@ -1,7 +1,7 @@
 var router = require('express').Router();
 var Card = require('mongoose').model('Card');
 var User = require('mongoose').model('User');
-var Board = require('mongoose').model('Board');
+var Repo = require('mongoose').model('Repo');
 var Promise = require('bluebird')
 var GitHubApi = require('github')
 var payloadParser = require('../../github-data/parsers')
@@ -20,7 +20,7 @@ router.post('/:cardID', function(req,res,next){
 		body: req.body.comment.body
 	}
 
-	Board.findById(req.body.card.board)
+	Repo.findById(req.body.card.board)
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
@@ -55,7 +55,7 @@ router.put('/:cardID', function(req,res,next){
 		id: req.body.comment.githubId,
 		body: req.body.comment.body
 	}
-	Board.findById(req.body.card.board)
+	Repo.findById(req.body.card.board)
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name
@@ -87,7 +87,7 @@ router.delete('/:cardID/:boardID/:commentID', function(req,res,next){
 		repo: null,
 		id: req.params.commentID
 	}
-	Board.findById(req.params.boardID)
+	Repo.findById(req.params.boardID)
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name

@@ -4,10 +4,10 @@ app.factory("CardFactory", ['$http', function($http){
 	}
 	return {
 			addCard:function(card){
-				card.board = {
-					owner: card.board.owner,
-					name: card.board.name,
-					_id: card.board._id
+				card.repo = {
+					owner: card.repo.owner,
+					name: card.repo.name,
+					_id: card.repo._id
 				}
 				console.log("From CardFactory, right before post:", card)
 				return $http.post('/api/cards', card)

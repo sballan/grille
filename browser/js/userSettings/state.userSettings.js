@@ -6,18 +6,18 @@ app.config(function ($stateProvider){
 		resolve: {
 			// inActiveBoards: function(GitHubFactory){
 			// 	return GitHubFactory.getAllRepos()
-			// 	.then(function(boards){
-			// 		console.log("boards:", boards)
-			// 		return boards.filter(function(board){
-			// 			if (!board.isActive){
-			// 				return board;
+			// 	.then(function(repos){
+			// 		console.log("repos:", repos)
+			// 		return repos.filter(function(repo){
+			// 			if (!repo.isActive){
+			// 				return repo;
 			// 			}
 			// 		})
 			// 	})
 			// },
 			getCache: function(GitHubFactory){
 				return GitHubFactory.getAllRepos()
-				
+
 			}
 		}
 	});

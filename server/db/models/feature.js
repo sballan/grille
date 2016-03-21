@@ -13,7 +13,7 @@ var featureSchema = new mongoose.Schema({
 	cards: [cardSchema],
 	board: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Board'
+		ref: 'Repo'
 	},
 
 	created_at: {

@@ -28,7 +28,7 @@ app.factory('HomeFactory', ['$uibModal', 'CardFactory', 'BoardFactory', 'LaneFac
 				console.log("We hit the home factory")
 				console.log("Modal instance card", newCard)
 				newCard.lane = BoardFactory.getCurrentBoard().lanes[0]
-				newCard.board = BoardFactory.getCurrentBoard()
+				newCard.repo = BoardFactory.getCurrentBoard()
 
 				CardFactory.addCard(newCard)
 				.then(function(card) {
@@ -48,8 +48,8 @@ app.factory('HomeFactory', ['$uibModal', 'CardFactory', 'BoardFactory', 'LaneFac
 				controller: 'HomeModalCtrl'
 			});
 			modalInstance.result.then(function(newSprint) {
-				var board =BoardFactory.getCurrentBoard();
-				newSprint.board=board._id;
+				var repo =BoardFactory.getCurrentBoard();
+				newSprint.repo=repo._id;
 				console.log("sprint add modal instance card", newSprint)
 				SprintFactory.addSprint(newSprint)
 				.then(function(createdSprint){

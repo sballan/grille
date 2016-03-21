@@ -3,7 +3,7 @@ var router = require('express').Router();
 var Promise = require('bluebird')
 var Griller = require('../../../middleware/github-griller');
 
-var Board = require('mongoose').model('Board');
+var Repo = require('mongoose').model('Repo');
 
 module.exports = router;
 
@@ -23,7 +23,7 @@ module.exports = router;
 router.put('/:boardID/active', function(req, res, next) {
 	var github = req.user.githubAccess;
 
-	Board.findOneAndUpdate({ githubId: req.params.boardID}, { isActive: true}, {new : true})
+	Repo.findOneAndUpdate({ githubId: req.params.boardID}, { isActive: true}, {new : true})
 	.then(function(board){
 		res.send(board)
 	})

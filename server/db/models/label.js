@@ -14,7 +14,7 @@ var labelSchema = new mongoose.Schema({
     },
     board: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Board'
+        ref: 'Repo'
     }
 });
 

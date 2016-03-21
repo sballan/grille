@@ -5,7 +5,7 @@ var Promise = require('bluebird')
 var Lane = require('mongoose').model('Lane');
 var Sprint = require('mongoose').model('Sprint');
 var Card = require('mongoose').model('Card');
-var Board = require('mongoose').model('Board');
+var Repo = require('mongoose').model('Repo');
 
 module.exports = router;
 
@@ -65,7 +65,7 @@ router.put('/title/:cardId', function(req, res, next){
 		title: req.body.title
 	}
 
-	Board.findById(req.body.board)
+	Repo.findById(req.body.board)
 	.then(function(board){
 		//Send the comment to Github with msg body
 		msg.repo = board.name

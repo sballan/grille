@@ -10,7 +10,7 @@ var _ = require('lodash')
 // var GitHubApi = Promise.promisifyAll(require("github"));
 var GitHubApi = require('github')
 var payloadParser = require('./github-data/parsers')
-var Board = mongoose.model('Board')
+var Repo = mongoose.model('Repo')
 
 
 module.exports = app;
@@ -65,4 +65,3 @@ app.use(function (err, req, res, next) {
 		console.error(err, typeof next);
 		res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
-

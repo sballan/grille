@@ -18,7 +18,7 @@ app.factory('CommentFactory', ['$http', 'BoardFactory', function($http, BoardFac
 			})
 		},
 		deleteComment: function(card,comment){
-			return $http.delete('api/comments/' + card.githubId + '/' + card.board + '/' + comment.githubId)
+			return $http.delete('api/comments/' + card.githubId + '/' + card.repo + '/' + comment.githubId)
 			.then(function(response){
 				BoardFactory.refreshCurrentBoard()
 				return response.data
