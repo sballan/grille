@@ -1,6 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const payloadParser = require('../../github-data/parsers');
 const Promise = require('bluebird');
 const Griller = require('../../../middleware/github-griller');
 

@@ -9,7 +9,6 @@ var _ = require('lodash')
 
 // var GitHubApi = Promise.promisifyAll(require("github"));
 var GitHubApi = require('github')
-var payloadParser = require('./github-data/parsers')
 var Repo = mongoose.model('Repo')
 
 
