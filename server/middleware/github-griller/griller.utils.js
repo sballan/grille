@@ -1,6 +1,7 @@
 'use strict'
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
+var chalk = require('chalk');
 
 // A generic function for getting the remaining pages of a github request. Expects a github client, a config object, and a function to get data from github
 const getRemainingPages = function(gitRes, concatData) {
@@ -49,7 +50,8 @@ const dbFindOneOrCreate = function (schema, query, newData) {
 
 // TODO This might belong somewhere else; maybe on the griller object itself? Also passing g seems weird here.
 const dbAssembleRepo = function(g) {
-  if(!g.repo) return false;
+  if(!g) return console.error(chalk.red("Context wasn't passed to dbAssembleRepo()"))
+  if(!g.repo) return console.error(chalk.red("Repo wasn't passed to dbAssembleRepo()"))
 
   if(g.comments) g.repo.comments = g.comments
   if(g.issues) g.repo.issues = g.issues

@@ -2,10 +2,13 @@
 var Promise = require('bluebird');
 
 // Returns req
-const getAll = function(g, repo=g.repo) {
+const getAll = function(g, repo) {
+  const self = !!g ? g : this;
+  repo = repo || self.repo
+  console.log("This is the repo", repo)
   const context = {
-    client: g.client,
-    githubFunc: Promise.promisify(g.client.issues.repoIssues),
+    client: self.client,
+    githubFunc: Promise.promisify(self.client.issues.repoIssues),
     config: {
       user: repo.owner.username,
       repo: repo.name,
@@ -15,19 +18,17 @@ const getAll = function(g, repo=g.repo) {
       state: "all"
     }
   };
-  const getRemainingPages = g.utils.getRemainingPages.bind(context);
+  const getRemainingPages = self.utils.getRemainingPages.bind(context);
 
-  return context.githubFunc(context.config)
+  return Promise.resolve(context.githubFunc(context.config))
     .then(getRemainingPages)
     .then(function(rawIssues) {
-      console.log('rawIssues')
-      return g.parse.issues(rawIssues)
+      return self.parse.issues(rawIssues)
     })
     .then(function(allIssues) {
-      console.log('allIssues')
-      g.req.issues = allIssues;
-      g.issues = allIssues;
-      return g;
+      self.req.issues = allIssues;
+      self.issues = allIssues;
+      return self;
     })
 
 };
@@ -36,7 +37,7 @@ const getOne = function(req, issue) {
 
 };
 
-module.exports = {
-  getAll,
-  getOne
-}
+module.exports = (context=this)=> ({
+  getAll: getAll.bind(context),
+  getOne: getOne.bind(context)
+})
