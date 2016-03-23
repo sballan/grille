@@ -1,7 +1,8 @@
 'use strict';
 const router = require('express').Router();
 const Griller = require('../../../middleware/github-griller');
-const Promise = require('bluebird')
+const Promise = require('bluebird');
+const chalk = require('chalk');
 
 
 module.exports = router;
@@ -15,7 +16,8 @@ router.get('/:repo', function(req, res, next) {
 		console.log("------REPO", repo)
     res.send(repo)
   }, function(err) {
-		console.log("ERROR", err)
+		console.error(chalk.red("Failed to get repo" + err))
+		res.send(500);
 	})
 
 })

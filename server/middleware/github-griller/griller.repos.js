@@ -27,10 +27,8 @@ const getOne = function(g, githubId) {
   githubId = githubId || self.req.params.repo
   console.log("made it to get One")
 
-  return self.utils.dbFindOne('Repo', {githubId: githubId})
+  return Promise.resolve(self.utils.dbFindOne('Repo', {githubId: githubId}))
   .then(function(repo) {
-    console.log('get the repo')
-    // TODO try to get these assignments into dbFindOne, or consider some other way of getting them out of here.
     self.req.repo = repo;
     self.repo = repo;
     return self

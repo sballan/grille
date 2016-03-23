@@ -27,7 +27,7 @@ GithubGriller.prototype = {
   },
   getOneRepo: function(githubId) {
     githubId = githubId || this.req.params.repo;
-    return Promise.resolve(this.repos.getOne.call(this, null, githubId))
+    return this.repos.getOne.call(this, null, githubId)
     .then(function(g) {
       console.log("FINISHED FUNC", g.repo.toString())
       return g.repo

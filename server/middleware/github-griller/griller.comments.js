@@ -19,7 +19,7 @@ const getAll = function(g, repo) {
   };
   const getRemainingPages = self.utils.getRemainingPages.bind(context);
 
-  return context.githubFunc(context.config)
+  return Promise.resolve(context.githubFunc(context.config))
       .then(getRemainingPages)
       .then(self.parse.comments)
       .then(function(allComments) {

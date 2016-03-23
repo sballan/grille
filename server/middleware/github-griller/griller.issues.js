@@ -23,11 +23,9 @@ const getAll = function(g, repo) {
   return Promise.resolve(context.githubFunc(context.config))
     .then(getRemainingPages)
     .then(function(rawIssues) {
-      console.log('rawIssues')
       return self.parse.issues(rawIssues)
     })
     .then(function(allIssues) {
-      console.log('allIssues')
       self.req.issues = allIssues;
       self.issues = allIssues;
       return self;
