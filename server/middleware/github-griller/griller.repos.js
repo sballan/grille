@@ -40,7 +40,7 @@ const getOne = function(g, githubId) {
 
 };
 
-module.exports = {
-  getAll,
-  getOne
-}
+module.exports = (context=this)=> ({
+    getAll: getAll.bind(context),
+    getOne: getOne.bind(context)
+})

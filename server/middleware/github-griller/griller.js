@@ -7,10 +7,10 @@ const GithubGriller = function(req, res=null, next=null) {
   this.next = next;
   this.client = req.user.githubAccess;
 
-  this.repos = require('./griller.repos.js');
-  this.issues = require('./griller.issues.js');
-  this.comments = require('./griller.comments.js');
-  this.collabs = require('./griller.collabs.js');
+  this.repos = require('./griller.repos.js')(this);
+  this.issues = require('./griller.issues.js')(this);
+  this.comments = require('./griller.comments.js')(this);
+  this.collabs = require('./griller.collabs.js')(this);
   this.parse = require('./griller.parse.js');
   this.utils = require('./griller.utils.js');
 
@@ -20,24 +20,24 @@ const GithubGriller = function(req, res=null, next=null) {
 GithubGriller.prototype = {
   // Returns Promise
   getAllRepos: function() {
-    return this.repos.getAll.call(this)
+    return this.repos.getAll()
     .then(function(g) {
       return g.repos
     })
   },
   getOneRepo: function(githubId) {
     githubId = githubId || this.req.params.repo;
-    return this.repos.getOne.call(this, null, githubId)
+    return this.repos.getOne(null, githubId)
     .then(function(g) {
       console.log("FINISHED FUNC", g.repo.toString())
       return g.repo
     })
   },
   getAllIssues: function(repo) {
-    return this.issues.getAll.call(this)
+    return this.issues.getAll()
   },
   getAllComments: function(repo) {
-    return this.issues.getAll.call(this)
+    return this.issues.getAll()
   }
 };
 

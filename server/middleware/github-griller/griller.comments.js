@@ -29,4 +29,6 @@ const getAll = function(g, repo) {
       })
 };
 
-module.exports = {getAll}
+module.exports = (context=this)=> ({
+  getAll: getAll.bind(context)
+})
