@@ -9,6 +9,7 @@ module.exports = router;
 
 
 router.get('/:repo', function(req, res, next) {
+	console.log("made it to route")
 	return new Griller(req, res, next).getOneRepo()
   .then(function(repo) {
 		console.log("------REPO", repo)

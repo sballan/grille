@@ -49,6 +49,7 @@ const dbFindOneOrCreate = function (schema, query, newData) {
 
 // TODO This might belong somewhere else; maybe on the griller object itself? Also passing g seems weird here.
 const dbAssembleRepo = function(g) {
+  if(!g) console.log("Context wasn't passed")
   if(!g.repo) return false;
 
   if(g.comments) g.repo.comments = g.comments

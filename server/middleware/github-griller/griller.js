@@ -1,3 +1,4 @@
+Promise = require('bluebird');
 const GithubGriller = function(req, res=null, next=null) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
@@ -19,28 +20,24 @@ const GithubGriller = function(req, res=null, next=null) {
 GithubGriller.prototype = {
   // Returns Promise
   getAllRepos: function() {
-    console.log("got here")
-    const self = this;
-    return self.repos.getAll(self)
+    return this.repos.getAll.call(this)
     .then(function(g) {
       return g.repos
     })
   },
   getOneRepo: function(githubId) {
     githubId = githubId || this.req.params.repo;
-
-    const self = this;
-    return self.repos.getOne(self, githubId)
+    return Promise.resolve(this.repos.getOne.call(this, null, githubId))
     .then(function(g) {
       console.log("FINISHED FUNC", g.repo.toString())
       return g.repo
     })
   },
   getAllIssues: function(repo) {
-    return this.issues.getAll(this)
+    return this.issues.getAll.call(this)
   },
   getAllComments: function(repo) {
-    return this.issues.getAll(this)
+    return this.issues.getAll.call(this)
   }
 };
 
