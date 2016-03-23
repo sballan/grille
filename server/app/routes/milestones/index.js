@@ -17,8 +17,8 @@ router.get('/:id',function(req,res, next){
 
 })
 
-router.get('/all/:boardId',function(req,res, next){
-	Sprint.find({board:req.params.boardId})
+router.get('/all/:repoId',function(req,res, next){
+	Sprint.find({repo:req.params.repoId})
 	.then(function(allFound){
 		res.send(allFound);
 	})

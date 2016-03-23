@@ -1,4 +1,4 @@
-var Card = require('mongoose').model('Card');
+var Issue = require('mongoose').model('Issue');
 var Promise = require('bluebird')
 var payloadParser = require('../../parsers')
 
@@ -13,7 +13,7 @@ var getComments = function(issue, repo, github) {
       comment = payloadParser.comment(comment)
       if(comment) return comment
     })
-    return Card.findOneAndUpdate({githubId: issue.githubId}, {comments: comments}, {new: true, upsert: true})
+    return Issue.findOneAndUpdate({githubId: issue.githubId}, {comments: comments}, {new: true, upsert: true})
     .populate('comments lane sprint')
   })
 }

@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var Card = require('mongoose').model('Card');
+var Issue = require('mongoose').model('Issue');
 var User = require('mongoose').model('User');
 var Repo = require('mongoose').model('Repo');
 var Promise = require('bluebird')
@@ -20,19 +20,19 @@ router.post('/:cardID', function(req,res,next){
 		body: req.body.comment.body
 	}
 
-	Repo.findById(req.body.card.board)
-	.then(function(board){
+	Repo.findById(req.body.card.repo)
+	.then(function(repo){
 		//Send the comment to Github with msg body
-		msg.repo = board.name
-		msg.user = board.owner.username
+		msg.repo = repo.name
+		msg.user = repo.owner.username
 		var createCommentAsync = Promise.promisify(github.issues.createComment);
 		return createCommentAsync(msg)
 	})
 	.then(function(comment){
 		newComment = payloadParser.comment(comment)
 
-		//find the Card the comment was on, so we can update the card in the Database
-		return Card.findOne({ githubId: req.params.cardID})
+		//find the Issue the comment was on, so we can update the card in the Database
+		return Issue.findOne({ githubId: req.params.cardID})
 	})
 	.then(function(card){
 		//Add the new comment to the Database
@@ -55,16 +55,16 @@ router.put('/:cardID', function(req,res,next){
 		id: req.body.comment.githubId,
 		body: req.body.comment.body
 	}
-	Repo.findById(req.body.card.board)
-	.then(function(board){
+	Repo.findById(req.body.card.repo)
+	.then(function(repo){
 		//Send the comment to Github with msg body
-		msg.repo = board.name
-		msg.user = board.owner.username
+		msg.repo = repo.name
+		msg.user = repo.owner.username
 		return editCommentAsync(msg)
 	})
 	.then(function(response){
-		//find the Card the comment was on, so we can update the card in the Database
-		return Card.findOne({ githubId: req.params.cardID})
+		//find the Issue the comment was on, so we can update the card in the Database
+		return Issue.findOne({ githubId: req.params.cardID})
 	})
 	.then(function(card){
 		card.comments.forEach(function(comment){
@@ -79,7 +79,7 @@ router.put('/:cardID', function(req,res,next){
 	})
 })
 
-router.delete('/:cardID/:boardID/:commentID', function(req,res,next){
+router.delete('/:cardID/:repoID/:commentID', function(req,res,next){
 	var github = req.user.githubAccess;
 	var deleteCommentAsync = Promise.promisify(github.issues.deleteComment);
 	var msg = {
@@ -87,16 +87,16 @@ router.delete('/:cardID/:boardID/:commentID', function(req,res,next){
 		repo: null,
 		id: req.params.commentID
 	}
-	Repo.findById(req.params.boardID)
-	.then(function(board){
+	Repo.findById(req.params.repoID)
+	.then(function(repo){
 		//Send the comment to Github with msg body
-		msg.repo = board.name
-		msg.user = board.owner.username
+		msg.repo = repo.name
+		msg.user = repo.owner.username
 		return deleteCommentAsync(msg)
 	})
 	.then(function(response){
-		//find the Card the comment was on, so we can delete the comment
-		return Card.findOne({ githubId: req.params.cardID})
+		//find the Issue the comment was on, so we can delete the comment
+		return Issue.findOne({ githubId: req.params.cardID})
 	})
 	.then(function(card){
 		card.comments.forEach(function(comment, idx){

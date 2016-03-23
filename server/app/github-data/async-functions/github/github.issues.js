@@ -13,7 +13,7 @@ var getIssueLabels = function(issue, repo, github) {
   })
   .then(function(labels) {
     return Promise.map(labels, function(label) {
-      return Label.findOneAndUpdate({board: repo._id, name: label.name}, label, {new: true, upsert: true})
+      return Label.findOneAndUpdate({repo: repo._id, name: label.name}, label, {new: true, upsert: true})
     })
   })
 

@@ -1,7 +1,7 @@
 var Utils = require('./griller.utils.js');
 var Promise = require('bluebird');
 var User = require('mongoose').model('User')
-var Card = require('mongoose').model('Card')
+var Issue = require('mongoose').model('Issue')
 
 const repo = function(body) {
   if(!body) return null;
@@ -82,7 +82,7 @@ const issue = function(body) {
     issue.assignee = dbUser;
     console.log("second dbUser")
 
-    return Utils.dbParse('Card', issue)
+    return Utils.dbParse('Issue', issue)
   })
 
 }
