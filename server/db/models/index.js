@@ -1,8 +1,10 @@
-// Require our models -- these should register the model into mongoose
-// so the rest of the application can simply call mongoose.model('User')
-// anywhere the User model needs to be used.
-require('./user');
-require('./repo');
-require('./card');
-require('./sprint');
+require('./comment');
+//require('./feature');
+require('./issue');
 require('./label');
+require('./repo');
+require('./sprint');
+//require('./team');
+require('./user');
+
+

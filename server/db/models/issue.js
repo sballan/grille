@@ -1,24 +1,9 @@
 'use strict';
 var mongoose = require('mongoose');
-var Lane = mongoose.model('Lane')
-
-var commentSchema = new mongoose.Schema({
-	body: String,
-	githubId: {
-		type: Number,
-		unique: true
-	},
-	author: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
-	},
-	created_at: Date,
-	updated_at: Date,
-	user: {}
-})
+//var Lane = mongoose.model('Lane')
 
 
-var cardSchema = new mongoose.Schema({
+var issueSchema = new mongoose.Schema({
 	githubId: {
 		type: Number,
 		unique: true
@@ -28,9 +13,8 @@ var cardSchema = new mongoose.Schema({
 	issueNumber: Number,
 	title: String,
 	body: String,
-	comments: [commentSchema],
-	board: {type: mongoose.Schema.Types.ObjectId, ref: 'Repo'},
-	lane: {type: mongoose.Schema.Types.ObjectId, ref: 'Lane'},
+	comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
+	repo: {type: mongoose.Schema.Types.ObjectId, ref: 'Repo'},
 	state: String, //enum
 	owner: {
 		githubId: Number,
@@ -61,19 +45,6 @@ var cardSchema = new mongoose.Schema({
 	isPullRequest: {type: Boolean, default: false}
 })
 
-// cardSchema.post('init', function(doc) {
-// 	if(!doc.lane) {
-//     Lane.findOne({
-//         board: doc.board._id,
-//         title: 'Backlog'
-//       })
-//       .then(function(lane) {
-//       	doc.lane = lane;
-//       	console.log("Making default lane for new Card:", doc)
-//       	return doc.save()
-//       })
-// 	}
-// })
 
-mongoose.model('Card', cardSchema);
+mongoose.model('Issue', issueSchema);
 // mongoose.model('Comment', commentSchema);

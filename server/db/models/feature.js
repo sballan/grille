@@ -11,7 +11,7 @@ var featureSchema = new mongoose.Schema({
 		ref: 'User'
 	},
 	cards: [cardSchema],
-	board: {
+	repo: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Repo'
 	},

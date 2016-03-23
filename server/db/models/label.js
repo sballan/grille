@@ -1,18 +1,19 @@
 'use strict';
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var labelSchema = new mongoose.Schema({
+const labelSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: true
     },
+    position: Number,
     color: {
     	type: String
     },
     url: {
         type: String
     },
-    board: {
+    repo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Repo'
     }

@@ -9,8 +9,8 @@ module.exports = router;
 
 ///* For Testing Purposes
 
-// router.put('/:boardID/active', function(req, res, next) {
-//   return Griller(req).getOneRepo(req.params.boardID)
+// router.put('/:repoID/active', function(req, res, next) {
+//   return Griller(req).getOneRepo(req.params.repoID)
 //   .then(function() {
 //     console.log("here is the req", Object.keys(req))
 //   })
@@ -20,12 +20,12 @@ module.exports = router;
 //*/
 
 
-router.put('/:boardID/active', function(req, res, next) {
+router.put('/:repoID/active', function(req, res, next) {
 	var github = req.user.githubAccess;
 
-	Repo.findOneAndUpdate({ githubId: req.params.boardID}, { isActive: true}, {new : true})
-	.then(function(board){
-		res.send(board)
+	Repo.findOneAndUpdate({ githubId: req.params.repoID}, { isActive: true}, {new : true})
+	.then(function(repo){
+		res.send(repo)
 	})
 
 })

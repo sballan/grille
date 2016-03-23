@@ -1,22 +1,22 @@
 'use strict';
 var mongoose = require('mongoose');
-
-var laneSchema = new mongoose.Schema({
-   title: {
-       type: String,
-       required: true
-   },
-   active: Boolean,
-   board: {
-       type: mongoose.Schema.Types.ObjectId,
-       ref: 'Repo'
-   }
-});
-
-mongoose.model('Lane', laneSchema);
-
-
-var Lane = mongoose.model('Lane')
+//
+//var laneSchema = new mongoose.Schema({
+//   title: {
+//       type: String,
+//       required: true
+//   },
+//   active: Boolean,
+//   repo: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: 'Repo'
+//   }
+//});
+//
+//mongoose.model('Lane', laneSchema);
+//
+//
+//var Lane = mongoose.model('Lane')
 
 var repoSchema = new mongoose.Schema({
     name: String, //The name of the repo
@@ -46,7 +46,7 @@ var repoSchema = new mongoose.Schema({
 
 //repoSchema.post('init', function(doc) {
 //    Lane.find({
-//            board: doc._id
+//            repo: doc._id
 //        })
 //        .then(function(theLanes) {
 //
@@ -56,7 +56,7 @@ var repoSchema = new mongoose.Schema({
 //                    Lane.create({
 //                        title: laneTitle,
 //                        active: true,
-//                        board: doc._id
+//                        repo: doc._id
 //                    });
 //                })
 //            }

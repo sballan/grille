@@ -35,7 +35,7 @@ router.get('/:repo', function(req, res, next) {
 // 	Repo.findOne({ githubId: req.params.repo })
 // 		.then(function(repo) {
 // 			theRepo = repo
-// 			return Lane.find({board: repo})
+// 			return Lane.find({repo: repo})
 // 		})
 // 		.then(function(lanes) {
 // 			theLanes = lanes
@@ -71,21 +71,21 @@ router.get('/:repo', function(req, res, next) {
 //
 // 					return Promise.map(issues, function(issue) {
 // 						issue = payloadParser.issue(issue);
-// 						issue.board = theRepo._id
+// 						issue.repo = theRepo._id
 //
 // 						var issueLabels;
 //
 // 							return asyncIssues.getIssueLabels(issue, repo, github)
 // 							.then(function(labels) {
 // 								issueLabels = labels
-// 								return Card.findOne({githubId: issue.githubId})
+// 								return Issue.findOne({githubId: issue.githubId})
 // 							})
 // 							.then(function(card) {
 //
 // 								if(!card) {
 // 									issue.lane = theLane._id
 //
-// 									return Card.create(issue)
+// 									return Issue.create(issue)
 // 								} else {
 // 									return card.set(issue).save()
 // 								}
@@ -118,14 +118,14 @@ router.get('/:repo', function(req, res, next) {
 // 		var attachedLabels;
 // 		// var theRepo = theRepo;
 //
-// 		Label.find({board: theRepo})
+// 		Label.find({repo: theRepo})
 // 		.then(function(labels) {
 // 			attachedLabels = labels
-// 			return Sprint.find({board: theRepo})
+// 			return Sprint.find({repo: theRepo})
 // 		})
 // 		.then(function(sprints) {
 // 			var theData = {
-// 				board: theRepo,
+// 				repo: theRepo,
 // 				cards: theCards,
 // 				lanes: theLanes,
 // 				labels: attachedLabels,

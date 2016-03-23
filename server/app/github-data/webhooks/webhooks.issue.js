@@ -2,7 +2,7 @@
 var parser = require('../parsers')
 var mongoose = require('mongoose')
 var Repo = mongoose.model('Repo')
-var Card = mongoose.model('Card')
+var Issue = mongoose.model('Issue')
 var Repo = mongoose.model('Repo')
 var User = mongoose.model('User')
 var io = require('../../../io')
@@ -15,7 +15,7 @@ module.exports = {
 
 		this.assigned = function(payload) {
 			var card;
-			Card.findOne({githubId: payload.issue.githubId})
+			Issue.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				card = theCard;
 				return User.findOne({githubId: payload.assignee.githubId})
@@ -29,7 +29,7 @@ module.exports = {
 
 		this.unassigned = function(payload) {
 			var card;
-			Card.findOne({githubId: payload.issue.githubId})
+			Issue.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				card = theCard;
 				return User.findOne({githubId: payload.assignee.githubId})
@@ -42,7 +42,7 @@ module.exports = {
 		}
 
 		this.labeled = function(payload) {
-			Card.findOne({githubId: payload.issue.githubId})
+			Issue.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				// Replaces a card's labels with the ones from the payload
 				theCard.labels = payload.issue.labels
@@ -52,7 +52,7 @@ module.exports = {
 		}
 
 		this.unlabeled = function(payload) {
-			Card.findOne({githubId: payload.issue.githubId})
+			Issue.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard) {
 				// Replaces a card's labels with the ones from the payload
 				theCard.labels = payload.issue.labels
@@ -62,11 +62,11 @@ module.exports = {
 		}
 
 		this.opened = function(payload) {
-			Card.create(payload.issue)
+			Issue.create(payload.issue)
 		}
 
 		this.closed = function(payload) {
-			Card.findOne({githubId: payload.issue.githubId})
+			Issue.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard){
 					theCard.status = 'closed'
 					return theCard.save()
@@ -74,7 +74,7 @@ module.exports = {
 		}
 
 		this.reopened = function(payload) {
-			Card.findOne({githubId: payload.issue.githubId})
+			Issue.findOne({githubId: payload.issue.githubId})
 			.then(function(theCard){
 					theCard.status = 'opened'
 					return theCard.save()
