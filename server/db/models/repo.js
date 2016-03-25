@@ -1,22 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-//
-//var laneSchema = new mongoose.Schema({
-//   title: {
-//       type: String,
-//       required: true
-//   },
-//   active: Boolean,
-//   repo: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: 'Repo'
-//   }
-//});
-//
-//mongoose.model('Lane', laneSchema);
-//
-//
-//var Lane = mongoose.model('Lane')
+
 
 var repoSchema = new mongoose.Schema({
     name: String, //The name of the repo

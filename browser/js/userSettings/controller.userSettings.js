@@ -1,5 +1,8 @@
-app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'getCache', function($scope, GitHubFactory, getCache){
+app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'getCache', 'Repo', function($scope, GitHubFactory, getCache, Repo){
 	$scope.repoCache = getCache;
+	var Repos = Repo.getAll()
+	console.log("here is jsData", Repos)
+	
 	$scope.setActive = function(boardID){
 		GitHubFactory.setRepoActive(boardID)
 		// GitHubFactory.getRepo(boardID)
