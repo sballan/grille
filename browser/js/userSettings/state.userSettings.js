@@ -15,9 +15,8 @@ app.config(function ($stateProvider){
 			// 		})
 			// 	})
 			// },
-			getCache: function(GitHubFactory){
-				return GitHubFactory.getAllRepos()
-
+			getCache: function(Repo){
+				return Repo.getAll()
 			}
 		}
 	});

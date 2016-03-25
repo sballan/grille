@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('Grille')
-  .factory('Repo', function ($state, DS, DSHttpAdapter) {
+app.factory('Repo', function ($state, DS, DSHttpAdapter) {
 
     var Repo = DS.defineResource({
       name: 'repos',
@@ -34,7 +33,7 @@ angular.module('Grille')
       //   }
       // }
     });
-
+    Repo.fixRelations = DS.defaults.deserialize.bind(DS.defaults);
     return Repo;
 
   }).run(function (Repo) {});

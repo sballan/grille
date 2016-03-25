@@ -1,7 +1,8 @@
-app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'getCache', 'Repo', function($scope, GitHubFactory, getCache, Repo){
-	$scope.repoCache = getCache;
-	var Repos = Repo.getAll()
-	console.log("here is jsData", Repos)
+app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'getCache', 'Repo', function($scope, GitHubFactory, getCache){
+	// $scope.repoCache = getCache;
+
+
+	console.log("here is jsData", getCache)
 	
 	$scope.setActive = function(boardID){
 		GitHubFactory.setRepoActive(boardID)
@@ -10,21 +11,21 @@ app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'getCache', 'Repo
 	$scope.rawSelected = true;
 
 	$scope.activeBoards = function(){
-		return $scope.repoCache.filter(function(repo) {
-			if (repo.isActive){
-					return repo;
-				}
-
-		})
+		// return $scope.repoCache.filter(function(repo) {
+		// 	if (repo.isActive){
+		// 			return repo;
+		// 		}
+		// 
+		// })
 	}
 
 	$scope.inActiveBoards = function(){
-		return $scope.repoCache.filter(function(repo) {
-			if (!repo.isActive){
-					return repo;
-				}
-
-		})
+		// return $scope.repoCache.filter(function(repo) {
+		// 	if (!repo.isActive){
+		// 			return repo;
+		// 		}
+		// 
+		// })
 	}
 
 
