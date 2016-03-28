@@ -3,6 +3,8 @@ var Promise = require('bluebird');
 var User = require('mongoose').model('User')
 var Issue = require('mongoose').model('Issue')
 
+var num3 = 0;
+var num4 = 0;
 const repo = function(body) {
   if(!body) return null;
   var _repo = {};
@@ -23,25 +25,25 @@ const repo = function(body) {
 
   return Utils.dbParse('User', _repo._owner)
   .then(function(dbUser) {
-    console.log('utils parsed user', dbUser)
+    
     delete _repo._owner
     _repo.owner = dbUser;
 
     return Utils.dbParse('Repo', _repo)
-    .then(function(rep) {
-      console.log("final step", rep)
-      return rep
-    })
+  })
+  .then(function(rep) {
+    
+    return rep
   })
 
 }
-
+var num = 0;
+var num2 = 0;
 const repos = function(body) {
   return Promise.map(body, function(item) {
     return repo(item)
   })
   .then(function(_repos) {
-    console.log('_repos', _repos[0].owner)
     return _repos
   });
 }

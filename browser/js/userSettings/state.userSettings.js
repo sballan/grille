@@ -15,7 +15,7 @@ app.config(function ($stateProvider){
 			// 		})
 			// 	})
 			// },
-			getCache: function(Repo){
+			repos: function(Repo){
 				return Repo.findAll()
 			}
 		}

@@ -23,16 +23,10 @@ const getRemainingPages = function(gitRes, concatData) {
 };
 
 const dbParse = function(schema, raw) {
-  return mongoose.model(schema).findOne(raw.githubId)
+  return mongoose.model(schema).findOne({githubId: raw.githubId}).exec()
   .then(function(model) {
-    if(model) return model
+    if(!!model) return model
     else return mongoose.model(schema).create(raw)
-  })
-  .then(function(repo) {
-    console.log("schema", schema)
-    console.log("dbparse raw", raw)
-    console.log("dbparse ", schema, repo)
-    return repo
   })
 };
 
