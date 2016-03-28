@@ -7,29 +7,25 @@ var num3 = 0;
 var num4 = 0;
 const repo = function(body) {
   if(!body) return null;
-  var _repo = {};
-  _repo.githubId = body.id || null;
-  _repo.name = body.name || null;
-  _repo.description = body.description || null;
+  var repo = {};
+  repo.githubId = body.id || null;
+  repo.name = body.name || null;
+  repo.description = body.description || null;
   //Use presave hook to turn this field into a proper User
-  _repo._owner = {
+  repo.owner = {
     username: body.owner.login,
     githubId: body.owner.id,
     url: body.owner.url
   };
-  
-  if(!body.owner) console.error("THERE WAS NO OWNER")
 
-  _repo.url = body.url || null;
-  _repo.collaborators_url = body.collaborators_url || null;
+  repo.url = body.url || null;
+  repo.collaborators_url = body.collaborators_url || null;
 
-  return Utils.dbParse('User', _repo._owner)
+  return Utils.dbParse('User', repo.owner)
   .then(function(dbUser) {
-    
-    delete _repo._owner
-    _repo.owner = dbUser;
+    repo.owner = dbUser;
 
-    return Utils.dbParse('Repo', _repo)
+    return Utils.dbParse('Repo', repo)
   })
   .then(function(rep) {
     
@@ -43,15 +39,15 @@ const repos = function(body) {
   return Promise.map(body, function(item) {
     return repo(item)
   })
-  .then(function(_repos) {
-    return _repos
+  .then(function(repos) {
+    return repos
   });
 }
 
 const issue = function(body) {
   if (!body) return null;
   var issue = {};
-  issue.githubId = body.id;
+  issue.githubId = 0 + body.id;
   issue.issueNumber = 0 + body.number;
   issue.title = body.title;
   issue.body = body.body;

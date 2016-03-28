@@ -26,7 +26,7 @@ GithubGriller.prototype = {
     })
   },
   getOneRepo: function(githubId) {
-    githubId = githubId || this.req.params.repo;
+    githubId = githubId || this.req.params.repoId;
     return this.repos.getOne(null, githubId)
     .then(function(g) {
       console.log("FINISHED FUNC", g.repo.toString())

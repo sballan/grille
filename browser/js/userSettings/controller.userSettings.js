@@ -1,12 +1,15 @@
-app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'repos', function($scope, GitHubFactory, repos){
+app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'Repo', 'repos', function($scope, GitHubFactory, Repo, repos){
 	$scope.repos = repos;
 
 
 	console.log("here is jsData", repos)
 	
-	$scope.setActive = function(boardID){
-		// GitHubFactory.setRepoActive(boardID)
-		// GitHubFactory.getRepo(boardID)
+	$scope.setActive = function(repoId){
+		let repo = Repo.get(repoId)
+		repo.activeOn()
+		.then(function() {
+			scope.repos = Repo.getAll()
+		})
 	}
 	$scope.rawSelected = true;
 
@@ -16,7 +19,7 @@ app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'repos', function
 					return repo;
 				}
 		
-		})
+		}) || []
 	}
 
 	$scope.inActiveBoards = function(){
@@ -25,7 +28,7 @@ app.controller('UserSettingsCtrl', ['$scope', 'GitHubFactory', 'repos', function
 					return repo;
 				}
 		
-		})
+		}) || []
 	}
 
 

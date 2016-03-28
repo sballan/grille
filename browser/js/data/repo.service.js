@@ -9,7 +9,6 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
           users: {
             localField: 'owner',
             localKey: 'ownerId',
-            parent: true
           }
         }
         // hasMany: {
@@ -20,13 +19,15 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         //   }
         // }
       },
-      // methods: angular.extend({
-      // 
-      //   stateName: function() {
-      //     return 'auth.group.show';
-      //   },
-      // 
-      // }, commentMixin),
+      methods: {
+        activeOn: function() {
+          return this.DSUpdate({active: true});
+        },
+        activeOff: function() {
+          return this.DSUpdate({active: false});
+        }
+      
+      }
       // actions: {
       //   active: {
       //     method: 'GET'

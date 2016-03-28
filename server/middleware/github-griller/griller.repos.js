@@ -17,7 +17,6 @@ const getAll = function(g) {
   .then(function(allRepos) {
     self.req.repos = allRepos;
     self.repos = allRepos;
-    console.log("allRepos", allRepos[0].owner)
     return self;
   })
 

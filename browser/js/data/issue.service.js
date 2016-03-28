@@ -14,7 +14,6 @@ angular.module('Grille')
           repo : {
             localField: 'repo',
             localKey: 'repoId',
-            parent: true
           }
         },
         hasMany: {
