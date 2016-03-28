@@ -13,9 +13,8 @@ var repoSchema = new mongoose.Schema({
         default: false
     },
     owner: {
-        githubId: Number,
-        url: String,
-        username: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     collaborators: [{
         type: mongoose.Schema.Types.ObjectId,

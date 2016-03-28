@@ -5,25 +5,33 @@ var Issue = require('mongoose').model('Issue')
 
 const repo = function(body) {
   if(!body) return null;
-  var repo = {};
-  repo.githubId = body.id || null;
-  repo.name = body.name || null;
-  repo.description = body.description || null;
+  var _repo = {};
+  _repo.githubId = body.id || null;
+  _repo.name = body.name || null;
+  _repo.description = body.description || null;
   //Use presave hook to turn this field into a proper User
-  repo.owner = {
+  _repo._owner = {
     username: body.owner.login,
     githubId: body.owner.id,
     url: body.owner.url
   };
+  
+  if(!body.owner) console.error("THERE WAS NO OWNER")
 
-  repo.url = body.url || null;
-  repo.collaborators_url = body.collaborators_url || null;
+  _repo.url = body.url || null;
+  _repo.collaborators_url = body.collaborators_url || null;
 
-  return Utils.dbParse('User', repo.owner)
+  return Utils.dbParse('User', _repo._owner)
   .then(function(dbUser) {
-    repo.owner = dbUser;
+    console.log('utils parsed user', dbUser)
+    delete _repo._owner
+    _repo.owner = dbUser;
 
-    return Utils.dbParse('Repo', repo)
+    return Utils.dbParse('Repo', _repo)
+    .then(function(rep) {
+      console.log("final step", rep)
+      return rep
+    })
   })
 
 }
@@ -31,6 +39,10 @@ const repo = function(body) {
 const repos = function(body) {
   return Promise.map(body, function(item) {
     return repo(item)
+  })
+  .then(function(_repos) {
+    console.log('_repos', _repos[0].owner)
+    return _repos
   });
 }
 

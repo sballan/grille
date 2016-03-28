@@ -8,6 +8,7 @@ module.exports = router
 router.get('/', function(req, res, next) {
   return new Griller(req, res, next).getAllRepos()
   .then(function(repos) {
+    console.log('repo1', repos[0].owner)
     res.send(repos)
   })
   .catch(next)

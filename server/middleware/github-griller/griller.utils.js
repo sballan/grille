@@ -28,6 +28,12 @@ const dbParse = function(schema, raw) {
     if(model) return model
     else return mongoose.model(schema).create(raw)
   })
+  .then(function(repo) {
+    console.log("schema", schema)
+    console.log("dbparse raw", raw)
+    console.log("dbparse ", schema, repo)
+    return repo
+  })
 };
 
 const dbFind = function (schema, query, populate) {

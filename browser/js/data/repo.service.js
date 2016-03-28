@@ -11,14 +11,14 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             localKey: 'ownerId',
             parent: true
           }
-        },
-        hasMany: {
-          collabs: {
-            localKey: 'collabId',
-            localField: 'collaborators',
-            foreignKey: 'collabRepos'
-          }
         }
+        // hasMany: {
+        //   collabs: {
+        //     localKey: 'collabId',
+        //     localField: 'collaborators',
+        //     foreignKey: 'collabRepos'
+        //   }
+        // }
       },
       // methods: angular.extend({
       // 
@@ -33,7 +33,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
       //   }
       // }
     });
-    Repo.fixRelations = DS.defaults.deserialize.bind(DS.defaults);
+    // Repo.fixRelations = DS.defaults.deserialize.bind(DS.defaults);
     return Repo;
 
   }).run(function (Repo) {});
