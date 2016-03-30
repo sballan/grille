@@ -10,15 +10,14 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             localField: 'owner',
             localKey: 'ownerId',
           }
-        }
+        },
 
-        // hasMany: {
-        //   collabs: {
-        //     localKey: 'collabId',
-        //     localField: 'collaborators',
-        //     foreignKey: 'collabRepos'
-        //   }
-        // }
+        hasMany: {
+          issues: {
+            localField: 'issues',
+            foreignKey: 'repoId'
+          }
+        }
       },
       methods: {
         activeOn: function() {
@@ -36,6 +35,10 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
       // }
     });
     // Repo.fixRelations = DS.defaults.deserialize.bind(DS.defaults);
+    Repo.getFullView = function(id) {
+      console.log("got to getFullView Resolve")
+      return DS.find('repos', id, {suffix: '/fullView'});
+    };
     return Repo;
 
   }).run(function (Repo) {});

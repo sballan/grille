@@ -28,6 +28,20 @@ const getOne = function(g, id) {
   console.log("made it to get One", id);
 
   return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner'))
+      .then(function(repo) {
+        console.log("repo Name")
+        self.req.repo = repo;
+        self.repo = repo;
+        return self
+      })
+};
+
+const getOneFullView = function(g, id) {
+  const self = !!g ? g : this;
+  id = id || self.req.params.repoId;
+  console.log("made it to get One", id);
+
+  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner'))
   .then(function(repo) {
     console.log("repo Name")
     self.req.repo = repo;
@@ -42,6 +56,7 @@ const getOne = function(g, id) {
 };
 
 module.exports = (context=this)=> ({
-    getAll: getAll.bind(context),
-    getOne: getOne.bind(context)
-})
+  getAll: getAll.bind(context),
+  getOne: getOne.bind(context),
+  getOneFullView: getOneFullView.bind(context)
+});

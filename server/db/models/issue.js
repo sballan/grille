@@ -16,12 +16,8 @@ var issueSchema = new mongoose.Schema({
 	comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
 	repo: {type: mongoose.Schema.Types.ObjectId, ref: 'Repo'},
 	state: String, //enum
-	owner: {
-		githubId: Number,
-		url: String,
-		username: String
-	},
-	assignee: String,
+	user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	assignee: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	priority: {
 		type: Number, 
 		default: -1

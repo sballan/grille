@@ -25,16 +25,10 @@ const repo = function(body) {
   .then(function(dbUser) {
     repo.owner = dbUser;
 
-    return Utils.dbParse('Repo', repo)
-  })
-  .then(function(rep) {
-    
-    return rep
+    return Utils.dbParse('Repo', repo, 'owner')
   })
 
-}
-var num = 0;
-var num2 = 0;
+};
 const repos = function(body) {
   return Promise.map(body, function(item) {
     return repo(item)
@@ -42,7 +36,7 @@ const repos = function(body) {
   .then(function(repos) {
     return repos
   });
-}
+};
 
 const issue = function(body) {
   if (!body) return null;
@@ -75,14 +69,11 @@ const issue = function(body) {
       url: body.assignee.url
     };
   }
-  console.log("after user")
 
   if (body.pull_request) issue.isPullRequest = true;
-  console.log("before dbParse")
 
   return Utils.dbParse('User', issue.user)
   .then(function(dbUser) {
-    console.log("dbUser")
     issue.user = dbUser;
 
     if(issue.assignee) return Utils.dbParse('User', issue.assignee)
@@ -90,7 +81,6 @@ const issue = function(body) {
   })
   .then(function(dbUser) {
     issue.assignee = dbUser;
-    console.log("second dbUser")
 
     return Utils.dbParse('Issue', issue)
   })
@@ -121,7 +111,7 @@ const comment = function(body) {
     login: body.user.login,
     githubId: body.user.id,
     url: body.user.url
-  }
+  };
 
   return Utils.dbParse('User', comment.user)
   .then(function(dbUser) {

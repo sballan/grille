@@ -22,12 +22,16 @@ const getRemainingPages = function(gitRes, concatData) {
   }
 };
 
-const dbParse = function(schema, raw) {
-  return mongoose.model(schema).findOne({githubId: raw.githubId}).exec()
-  .then(function(model) {
-    if(!!model) return model
-    else return mongoose.model(schema).create(raw)
-  })
+const dbParse = function(schema, raw, populate) {
+  return mongoose.model(schema).findOne({githubId: raw.githubId})
+    .then(function(model) {
+      if(!!model) return model;
+      else return mongoose.model(schema).create(raw)
+    })
+    .then(function(model) {
+      if(populate) return model.populate(populate).execPopulate()
+      else return model
+    })
 };
 
 const dbFind = function (schema, query, populate) {
@@ -53,12 +57,13 @@ const dbFindOneOrCreate = function (schema, query, newData) {
 const dbAssembleRepo = function(g) {
   if(!g) return console.error(chalk.red("Context wasn't passed to dbAssembleRepo()"))
   if(!g.repo) return console.error(chalk.red("Repo wasn't passed to dbAssembleRepo()"))
-
-  if(g.comments) g.repo.comments = g.comments;
-  if(g.issues) g.repo.issues = g.issues;
-  if(g.collabs) g.repo.collabs = g.collabs;
-
-  console.log(Object.keys(g.repo));
+  g.repo = g.repo.toObject();
+  if(!!g.comments) g.repo.comments = g.comments;
+  if(!!g.issues) g.repo.issues = g.issues;
+  if(!!g.collabs) g.repo.collabs = g.collabs;
+  console.log('assemble repo', g.repo);
+  console.log('G Object Issues', g.issues);
+  console.log('', Object.keys(g.repo));
 
   return g;
 };

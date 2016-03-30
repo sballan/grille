@@ -3,7 +3,7 @@
 angular.module('Grille')
   .factory('Issue', function ($state, DS, DSHttpAdapter) {
 
-    var Repo = DS.defineResource({
+    var Issue = DS.defineResource({
       name: 'issues',
       relations: {
         belongsTo: {
@@ -13,7 +13,7 @@ angular.module('Grille')
           },
           repo : {
             localField: 'repo',
-            localKey: 'repoId',
+            localKey: 'repoId'
           }
         },
         hasMany: {
@@ -23,6 +23,6 @@ angular.module('Grille')
 
     });
 
-    return Repo;
+    return Issue;
 
-  }).run(function (Repo) {});
+  }).run(function (Issue) {});

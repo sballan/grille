@@ -8,6 +8,7 @@ app.controller('UserSettingsCtrl', ['$scope', 'Repo', 'repos', function($scope, 
     console.log("repo", repo);
 		repo.activeOn()
 		.then(function() {
+      console.log(repo.owner)
 			$scope.repos = Repo.getAll()
 		})
 	};

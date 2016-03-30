@@ -2,9 +2,9 @@
 window.app = angular.module('Grille', [
   'fsaPreBuilt',
   'js-data',
-  'ui.router', 
-  'ui.bootstrap', 
-  'ngAnimate', 
+  'ui.router',
+  'ui.bootstrap',
+  'ngAnimate',
   'ui.sortable',
   'ngMaterial'
 ]);
@@ -94,6 +94,9 @@ app.run(function (DS, $state) {
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state, $window, BoardFactory) {
 
+  $rootScope.$on('$stateChangeError', function(e, n, np, p, pp, err) {
+    console.error('State Change Error:', err);
+  });
   // The given state requires an authenticated user.
   var destinationStateRequiresAuth = function (state) {
     return state.data && state.data.authenticate;
@@ -140,6 +143,6 @@ app.run(function ($rootScope, AuthService, $state, $window, BoardFactory) {
 
   });
 
-    
+
 
 });

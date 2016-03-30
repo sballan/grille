@@ -38,11 +38,18 @@ GithubGriller.prototype = {
   getOneRepo: function(id) {
     var repoId = !!this.repo ? this.repo._id : null
     id = id || repoId || this.req.params.repoId;
-    return this.repos.getOne(this, id)
-    .then(function(g) {
-      console.log("FINISHED FUNC", g.repo.toString())
-      return g.repo
-    })
+    const self = this;
+
+    return Promise.resolve({})
+      .then(function() {
+        if(!self.fullView) {
+          return self.repos.getOne(self, id)
+        }
+        else return self.repos.getOneFullView(self, id)
+      })
+      .then(function(g) {
+        return g.repo
+      })
   },
   getAllIssues: function(repo) {
     return this.issues.getAll()

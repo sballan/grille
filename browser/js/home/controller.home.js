@@ -2,9 +2,9 @@
 app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 'BoardFactory', 'CommentFactory', 'Socket', 'loadGrille', 'CardFactory','SprintFactory', function($rootScope, $scope, $uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory, SprintFactory) {
 
   $scope.repo = loadGrille;
-  $scope.cards = $scope.repo.cards;
-  $scope.collaborators = $scope.repo.collaborators
-  $scope.viewLanes = BoardFactory.getViewLanes
+  // $scope.cards = $scope.repo.cards;
+  // $scope.collaborators = $scope.repo.collaborators
+  // $scope.viewLanes = BoardFactory.getViewLanes
 
   $scope.storyPointsRange= ["Clear",1,2,3,5,8,13,20,40,100]
 
@@ -15,8 +15,8 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
     boardsprintArray.push(args.sprint);
     $scope.$digest();
   })
-  console.log("repo",$scope.repo)
-  console.log("boardsprintArray",$scope.boardSprintArray)
+  console.log("the repo",$scope.repo.issues)
+
 
   $scope.cardExpansion=function($event,card){
     textAreaSize($event,card);
@@ -28,14 +28,6 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
     return $scopeboardSprintArray;
   };
 
-  ($scope.getAllSprints = function(){
-     SprintFactory.getAllSprints($scope.repo._id)
-     .then(function(allSprints){
-      console.log("allSprints",allSprints)
-      $scope.boardSprintArray= allSprints;
-      console.log("scopeboards",$scope.boardSprintArray)
-     })
-  })()
 
   var textAreaSize = function($event,card){
     var textRowVal=$($event.target).closest('div').children('.card-text');
@@ -75,19 +67,19 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
 
 
 
-	$scope.sortableOptions = {
-    	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
-      stop: function(e, ui) {
-        BoardFactory.writeLanes()
-        BoardFactory.updateAllLanes()
-        .then(function(data) {
-          return BoardFactory.updateAllPriority()
-        })
-        .then(function(data) {
-          BoardFactory.readLanes()
-        })
-      }
-    };
+	// $scope.sortableOptions = {
+   //  	connectWith: '.connectedItemsExample .list',  //need this to use ui-sortable across 2 lists
+   //    stop: function(e, ui) {
+   //      BoardFactory.writeLanes()
+   //      BoardFactory.updateAllLanes()
+   //      .then(function(data) {
+   //        return BoardFactory.updateAllPriority()
+   //      })
+   //      .then(function(data) {
+   //        BoardFactory.readLanes()
+   //      })
+   //    }
+   //  };
 
     $scope.openCommentModal = function (card) {
 

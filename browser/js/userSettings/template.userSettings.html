@@ -8,7 +8,12 @@
 				<ul class="listStyle">
 					<li class="blueText">  Please select a Grille to manage</li>
 					<!-- home(repo) works too :) -->
-					<li class="blueText" ui-sref="home({ githubId: repo.githubId, repoId:repo._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="repo in repos | filter: {active: true}">
+					<li class="blueText"
+              ui-sref="home({owner:repo.owner.username, repoId:repo._id})"
+              ng-class="{ highlighted: hover }"
+              ng-mouseenter="hover = true"
+              ng-mouseleave="hover = false"
+              ng-repeat="repo in repos | filter: {active: true}">
 						<button class="listBtnStyle">{{ repo.owner.username + '/' + repo.name }}</button>
 					</li>
 
