@@ -8,7 +8,7 @@
 				<ul class="listStyle">
 					<li class="blueText">  Please select a Grille to manage</li>
 					<!-- home(repo) works too :) -->
-					<li class="blueText" ui-sref="home({ githubId: repo.githubId, repoId:repo._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="repo in activeBoards()">
+					<li class="blueText" ui-sref="home({ githubId: repo.githubId, repoId:repo._id })" ng-class="{ highlighted: hover }" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-repeat="repo in repos | filter: {active: true}">
 						<button class="listBtnStyle">{{ repo.owner.username + '/' + repo.name }}</button>
 					</li>
 
@@ -19,8 +19,8 @@
 				<div ng-show="rawSelected">
 					<ul class="listStyle">
 						<label>Search: <input size="35" ng-model="searchText"></label>
-						<li ng-repeat="repo in inActiveBoards() | filter:{name: searchText}" ng-show="$index < 15">
-							<button class="listBtnStyle" ng-click="setActive(repo._id)">{{ repo.owner.username + '/' + repo.name }}</button>
+						<li ng-repeat="repo in repos | filter: {name: searchText, active: false}" ng-show="$index < 15">
+							<button class="listBtnStyle" ng-click="setActive(repo)">{{ repo.owner.username + '/' + repo.name }}</button>
 						</li>
 
 					</ul>

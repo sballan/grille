@@ -1,4 +1,5 @@
 Promise = require('bluebird');
+const  _ = require('lodash')
 const GithubGriller = function(req, res=null, next=null) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
@@ -19,15 +20,25 @@ const GithubGriller = function(req, res=null, next=null) {
 // These functions all return a modified g object.  Maybe part of the parsing process should be making them into objects that can be persisted easily with a single call to a .create() function.
 GithubGriller.prototype = {
   // Returns Promise
+  attach: function(schema, id, populate=null) {
+    const self = this;
+    return self.utils.dbFindOne(schema, {_id: id}, populate)
+      .then(function(dbModel) {
+        if(!dbModel) return Promise.reject("Model not found");
+        self.req[_.lowerFirst(schema)] = dbModel;
+        return self;
+      })
+  },
   getAllRepos: function() {
     return this.repos.getAll()
     .then(function(g) {
       return g.repos
     })
   },
-  getOneRepo: function(githubId) {
-    githubId = githubId || this.req.params.repoId;
-    return this.repos.getOne(null, githubId)
+  getOneRepo: function(id) {
+    var repoId = !!this.repo ? this.repo._id : null
+    id = id || repoId || this.req.params.repoId;
+    return this.repos.getOne(this, id)
     .then(function(g) {
       console.log("FINISHED FUNC", g.repo.toString())
       return g.repo

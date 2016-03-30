@@ -22,13 +22,14 @@ const getAll = function(g) {
 
 };
 
-const getOne = function(g, githubId) {
+const getOne = function(g, id) {
   const self = !!g ? g : this;
-  githubId = githubId || self.req.params.repo
-  console.log("made it to get One")
+  id = id || self.req.params.repoId;
+  console.log("made it to get One", id);
 
-  return Promise.resolve(self.utils.dbFindOne('Repo', {githubId: githubId}))
+  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner'))
   .then(function(repo) {
+    console.log("repo Name")
     self.req.repo = repo;
     self.repo = repo;
     return self

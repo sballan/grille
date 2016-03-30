@@ -36,7 +36,8 @@ const dbFind = function (schema, query, populate) {
 };
 
 const dbFindOne = function (schema, query, populate) {
-  return mongoose.model(schema).findOne(query).exec()
+  if(populate) return Promise.resolve(mongoose.model(schema).findOne(query).populate(populate).exec());
+  return Promise.resolve(mongoose.model(schema).findOne(query).exec());
 };
 
 const dbFindOneOrCreate = function (schema, query, newData) {
@@ -53,9 +54,11 @@ const dbAssembleRepo = function(g) {
   if(!g) return console.error(chalk.red("Context wasn't passed to dbAssembleRepo()"))
   if(!g.repo) return console.error(chalk.red("Repo wasn't passed to dbAssembleRepo()"))
 
-  if(g.comments) g.repo.comments = g.comments
-  if(g.issues) g.repo.issues = g.issues
-  if(g.collabs) g.repo.collabs = g.collabs
+  if(g.comments) g.repo.comments = g.comments;
+  if(g.issues) g.repo.issues = g.issues;
+  if(g.collabs) g.repo.collabs = g.collabs;
+
+  console.log(Object.keys(g.repo));
 
   return g;
 };

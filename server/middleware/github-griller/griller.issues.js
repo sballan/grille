@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  repo = repo || self.repo
+  repo = repo || self.repo;
   console.log("This is the repo", repo)
   const context = {
     client: self.client,
@@ -23,6 +23,7 @@ const getAll = function(g, repo) {
   return Promise.resolve(context.githubFunc(context.config))
     .then(getRemainingPages)
     .then(function(rawIssues) {
+      console.log("raw issues")
       return self.parse.issues(rawIssues)
     })
     .then(function(allIssues) {

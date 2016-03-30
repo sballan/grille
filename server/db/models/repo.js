@@ -8,7 +8,7 @@ var repoSchema = new mongoose.Schema({
         type: Number,
         unique: true
     },
-    isActive: {
+    active: {
         type: Boolean,
         default: false
     },

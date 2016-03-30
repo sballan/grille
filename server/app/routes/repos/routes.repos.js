@@ -7,40 +7,38 @@ module.exports = router
 
 router.param('repoId', function(req, res, next, id) {
   req.griller = new Griller(req, res, next);
-  req.griller.getOneRepo(id);
-  return req.griller;
-})
+  return req.griller.attach('Repo', id)
+    .then(function() {
+      console.log(`Repo ${req.repo.name} was attached.`)
+      next()
+    })
+});
 
 router.get('/', function(req, res, next) {
   return new Griller(req, res, next).getAllRepos()
   .then(function(repos) {
-    console.log('repo1', repos[0].owner)
     res.send(repos)
   })
   .catch(next)
 });
 
 router.get('/:repoId', function(req, res, next) {
-  res.json(req.repo)
-  
-	// return new Griller(req, res, next).getOneRepo()
-  // .then(function(repo) {
-	// 	console.log("------REPO", repo)
-  //   res.send(repo)
-  // }, function(err) {
-	// 	console.error(chalk.red("Failed to get repo" + err))
-	// 	res.send(500);
-	// })
-
-})
+  req.griller.getOneRepo()
+      .then(function(repo) {
+        if(repo) return res.json(repo);
+        res.sendStatus(404);
+      });
+  next()
+});
 
 router.put('/:repoId', function(req, res, next) {
-  req.repo.update(req.body)
+  req.repo.set(req.body);
+  req.repo.save()
   .then(function(repo) {
     res.json(repo)
   })
-  .catch(next)
+  .then(null, next)
 
-})
+});
 
 

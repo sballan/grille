@@ -11,6 +11,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             localKey: 'ownerId',
           }
         }
+
         // hasMany: {
         //   collabs: {
         //     localKey: 'collabId',
@@ -26,7 +27,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         activeOff: function() {
           return this.DSUpdate({active: false});
         }
-      
+
       }
       // actions: {
       //   active: {
