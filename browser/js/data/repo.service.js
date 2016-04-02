@@ -15,7 +15,15 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         hasMany: {
           issues: {
             localField: 'issues',
-            foreignKey: 'repoId'
+            localKey: 'issueId'
+          }
+        },
+        
+        hasMany: {
+          users: {
+            localField: 'collabs',
+            localKey: 'collabId',
+            foreignKey: 'collabRepoId'
           }
         }
       },

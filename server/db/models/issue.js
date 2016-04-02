@@ -14,7 +14,7 @@ var issueSchema = new mongoose.Schema({
 	title: String,
 	body: String,
 	comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
-	repo: {type: mongoose.Schema.Types.ObjectId, ref: 'Repo'},
+	// repo: {type: mongoose.Schema.Types.ObjectId, ref: 'Repo'},
 	state: String, //enum
 	user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	assignee: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -41,6 +41,7 @@ var issueSchema = new mongoose.Schema({
 	isPullRequest: {type: Boolean, default: false}
 })
 
+issueSchema.plugin(require('mongoose-deep-populate')(mongoose));
 
 mongoose.model('Issue', issueSchema);
 // mongoose.model('Comment', commentSchema);

@@ -48,6 +48,7 @@ GithubGriller.prototype = {
         else return self.repos.getOneFullView(self, id)
       })
       .then(function(g) {
+        console.log("REPO", g.repo)
         return g.repo
       })
   },

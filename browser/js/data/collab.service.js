@@ -7,12 +7,12 @@ angular.module('Grille')
       extends: 'users',
       name: 'collabs',
       relations: {
-        // belongsTo: {
-        //   repo: {
-        //     localField: 'repos',
-        //     localKey: 'repoId'
-        //   }
-        // }
+        belongsTo: {
+          repo: {
+            localField: 'repos',
+            localKey: 'repoId'
+          }
+        }
       }
 
     });

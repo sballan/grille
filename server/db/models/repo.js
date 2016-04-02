@@ -16,9 +16,13 @@ var repoSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    collaborators: [{
+    collabs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    }],
+    issues: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Issue'
     }],
     html_url: String,
     url: String, //---- API ----
@@ -47,5 +51,6 @@ var repoSchema = new mongoose.Schema({
 //        })
 //})
 
+repoSchema.plugin(require('mongoose-deep-populate')(mongoose));
 
 mongoose.model('Repo', repoSchema);

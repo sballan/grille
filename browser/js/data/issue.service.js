@@ -7,13 +7,14 @@ angular.module('Grille')
       name: 'issues',
       relations: {
         belongsTo: {
-          owner: {
+          users: {
             localField: 'owner',
             localKey: 'ownerId',
           },
-          repo : {
+          repos : {
             localField: 'repo',
-            localKey: 'repoId'
+            localKey: 'repoId',
+            foreignKey: 'issueId'
           }
         },
         hasMany: {

@@ -7,11 +7,18 @@ angular.module('Grille')
       name: 'users',
       relations: {
         hasMany: {
-          repo: {
+          repos: {
             localField: 'repos',
             foreignKey: 'userId'
           }
         }
+        // hasMany: {
+        //   repos: {
+        //     localField: 'collabRepos',
+        //     localkey: 'collabRepoId',
+        //     foreignKey: 'collabId'
+        //   }
+        // }
       }
 
     });

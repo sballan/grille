@@ -9,8 +9,6 @@ var _ = require('lodash')
 
 // var GitHubApi = Promise.promisifyAll(require("github"));
 var GitHubApi = require('github')
-var Repo = mongoose.model('Repo')
-
 
 module.exports = app;
 

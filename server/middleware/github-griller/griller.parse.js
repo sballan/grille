@@ -1,10 +1,7 @@
-var Utils = require('./griller.utils.js');
+const Utils = require('./griller.utils.js');
 var Promise = require('bluebird');
-var User = require('mongoose').model('User')
-var Issue = require('mongoose').model('Issue')
 
-var num3 = 0;
-var num4 = 0;
+
 const repo = function(body) {
   if(!body) return null;
   var repo = {};
@@ -25,7 +22,7 @@ const repo = function(body) {
   .then(function(dbUser) {
     repo.owner = dbUser;
 
-    return Utils.dbParse('Repo', repo, 'owner')
+    return Utils.dbParse('Repo', repo, 'owner issues collabs')
   })
 
 };
@@ -38,9 +35,11 @@ const repos = function(body) {
   });
 };
 
-const issue = function(body) {
+const issue = function(body, repo) {
   if (!body) return null;
   var issue = {};
+  if(repo) issue.repo = repo;
+  
   issue.githubId = 0 + body.id;
   issue.issueNumber = 0 + body.number;
   issue.title = body.title;
@@ -56,7 +55,6 @@ const issue = function(body) {
   issue.labels_url = body.labels_url;
   issue.events_url = body.events_url;
   issue.html_url = body.html_url;
-  // FIXME don't make new user object
   issue.user = {
     login: body.user.login,
     githubId: body.user.id,
@@ -82,22 +80,25 @@ const issue = function(body) {
   .then(function(dbUser) {
     issue.assignee = dbUser;
 
-    return Utils.dbParse('Issue', issue)
+    return Utils.dbParse('Issue', issue, 'comments')
   })
 
 }
 
-const issues = function(body) {
+const issues = function(body, repo=null) {
   console.log("got to parser issues")
   return Promise.map(body, function(item) {
-    return issue(item)
+    return issue(item, repo)
   });
 }
 
 // This function may need to do some clever work to figure out which issue a comment belongs to.
-const comment = function(body) {
+const comment = function(body, repo) {
   if(!body) return null;
   var comment = {};
+  
+  if(repo) comment.repo = repo
+  
   comment.githubId = body.id;
   comment.body = body.body;
   comment.path = body.path;
@@ -116,13 +117,13 @@ const comment = function(body) {
   return Utils.dbParse('User', comment.user)
   .then(function(dbUser) {
     comment.user = dbUser;
-    return Utils.dbParse('Comment', comment)
+    return Utils.dbParse('Comment', comment, 'repo')
   })
 }
 
-const comments = function(body) {
+const comments = function(body, repo=null) {
   return Promise.map(body, function(item) {
-    return comment(item)
+    return comment(item, repo)
   });
 }
 

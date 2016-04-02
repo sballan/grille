@@ -21,8 +21,11 @@ const getAll = function(g, repo=g.repo) {
     .then(getRemainingPages)
     .then(self.parse.collabs)
     .then(function(allCollabs) {
-      self.req.collabs = allCollabs;
       self.collabs = allCollabs;
+      repo.collabs = allCollabs
+      return repo.save();
+    })
+    .then(function() {
       return self;
     })
 

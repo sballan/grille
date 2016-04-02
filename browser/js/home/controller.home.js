@@ -2,6 +2,7 @@
 app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 'BoardFactory', 'CommentFactory', 'Socket', 'loadGrille', 'CardFactory','SprintFactory', function($rootScope, $scope, $uibModal, HomeFactory, BoardFactory, CommentFactory, Socket, loadGrille, CardFactory, SprintFactory) {
 
   $scope.repo = loadGrille;
+  console.log('LOAD GRILLE',loadGrille)
   // $scope.cards = $scope.repo.cards;
   // $scope.collaborators = $scope.repo.collaborators
   // $scope.viewLanes = BoardFactory.getViewLanes
@@ -15,7 +16,6 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
     boardsprintArray.push(args.sprint);
     $scope.$digest();
   })
-  console.log("the repo",$scope.repo.issues)
 
 
   $scope.cardExpansion=function($event,card){

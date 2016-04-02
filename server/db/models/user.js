@@ -79,4 +79,6 @@ schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
+schema.plugin(require('mongoose-deep-populate')(mongoose));
+
 mongoose.model('User', schema);

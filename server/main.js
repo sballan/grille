@@ -5,13 +5,12 @@ var chalk = require('chalk');
 // mongoose establishing a connection to a MongoDB database.
 var startDb = require('./db');
 
-// Create a node server instance! cOoL!
 var server = require('http').createServer();
 
 var createApplication = function () {
     var app = require('./app');
-    server.on('request', app); // Attach the Express application.
-    require('./io')(server);   // Attach socket.io.
+    server.on('request', app); 
+    require('./io')(server);   
 };
 
 var startServer = function () {

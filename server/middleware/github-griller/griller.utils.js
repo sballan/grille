@@ -22,58 +22,34 @@ const getRemainingPages = function(gitRes, concatData) {
   }
 };
 
-const dbParse = function(schema, raw, populate) {
+const dbParse = function(schema, raw, populate=null) {
   return mongoose.model(schema).findOne({githubId: raw.githubId})
     .then(function(model) {
       if(!!model) return model;
       else return mongoose.model(schema).create(raw)
     })
     .then(function(model) {
-      if(populate) return model.populate(populate).execPopulate()
+      if(!!populate) return model.deepPopulate(populate)
       else return model
     })
 };
 
 const dbFind = function (schema, query, populate) {
-  return mongoose.model(schema).find(query).exec()
+  if(populate) return mongoose.model(schema).find(query).deepPopulate(populate)
+  return mongoose.model(schema).find(query)
 
 };
 
 const dbFindOne = function (schema, query, populate) {
-  if(populate) return Promise.resolve(mongoose.model(schema).findOne(query).populate(populate).exec());
+  if(populate) return Promise.resolve(mongoose.model(schema).findOne(query).deepPopulate(populate));
   return Promise.resolve(mongoose.model(schema).findOne(query).exec());
 };
 
-const dbFindOneOrCreate = function (schema, query, newData) {
-  return mongoose.model(schema).findOne(query)
-  .then(function(dbData) {
-    if(!dbData) dbData = newData;
-    return dbData.save()
-  })
-
-};
-
-// TODO This might belong somewhere else; maybe on the griller object itself? Also passing g seems weird here.
-const dbAssembleRepo = function(g) {
-  if(!g) return console.error(chalk.red("Context wasn't passed to dbAssembleRepo()"))
-  if(!g.repo) return console.error(chalk.red("Repo wasn't passed to dbAssembleRepo()"))
-  g.repo = g.repo.toObject();
-  if(!!g.comments) g.repo.comments = g.comments;
-  if(!!g.issues) g.repo.issues = g.issues;
-  if(!!g.collabs) g.repo.collabs = g.collabs;
-  console.log('assemble repo', g.repo);
-  console.log('G Object Issues', g.issues);
-  console.log('', Object.keys(g.repo));
-
-  return g;
-};
 
 
 module.exports = {
   getRemainingPages,
   dbFind,
   dbFindOne,
-  dbFindOneOrCreate,
-  dbAssembleRepo,
   dbParse
 };

@@ -16,4 +16,6 @@ const commentSchema = new mongoose.Schema({
   user: {}
 });
 
+commentSchema.plugin(require('mongoose-deep-populate')(mongoose));
+
 mongoose.model('Comment', commentSchema);

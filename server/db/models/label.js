@@ -19,4 +19,6 @@ const labelSchema = new mongoose.Schema({
     }
 });
 
+labelSchema.plugin(require('mongoose-deep-populate')(mongoose));
+
 mongoose.model('Label', labelSchema);

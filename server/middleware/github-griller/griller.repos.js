@@ -27,7 +27,7 @@ const getOne = function(g, id) {
   id = id || self.req.params.repoId;
   console.log("made it to get One", id);
 
-  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner'))
+  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner issues'))
       .then(function(repo) {
         console.log("repo Name")
         self.req.repo = repo;
@@ -41,7 +41,7 @@ const getOneFullView = function(g, id) {
   id = id || self.req.params.repoId;
   console.log("made it to get One", id);
 
-  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner'))
+  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner issues collabs'))
   .then(function(repo) {
     console.log("repo Name")
     self.req.repo = repo;
@@ -51,7 +51,6 @@ const getOneFullView = function(g, id) {
   .then(self.issues.getAll)
   .then(self.comments.getAll)
   .then(self.collabs.getAll)
-  .then(self.utils.dbAssembleRepo)
 
 };
 

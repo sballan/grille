@@ -35,8 +35,6 @@ router.get('/:repoId/fullView', function(req, res, next) {
   req.griller.fullView = true;
   req.griller.getOneRepo()
     .then(function(repo) {
-      console.log("FOUND THE REPO", repo);
-      console.log("ISSUE", repo.issues[0]);
       if(repo) res.send(repo);
       else res.sendStatus(404);
     })

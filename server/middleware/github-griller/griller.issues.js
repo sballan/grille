@@ -24,11 +24,14 @@ const getAll = function(g, repo) {
     .then(getRemainingPages)
     .then(function(rawIssues) {
       console.log("raw issues")
-      return self.parse.issues(rawIssues)
+      return self.parse.issues(rawIssues, repo)
     })
     .then(function(allIssues) {
-      self.req.issues = allIssues;
       self.issues = allIssues;
+      g.repo.issues = allIssues
+      return g.repo.save()
+    })
+    .then(function(repo) {
       return self;
     })
 

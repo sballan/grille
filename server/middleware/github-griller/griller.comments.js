@@ -21,9 +21,10 @@ const getAll = function(g, repo) {
 
   return Promise.resolve(context.githubFunc(context.config))
       .then(getRemainingPages)
-      .then(self.parse.comments)
+      .then(function(g) {
+        return self.parse.comments(g, repo)
+      })
       .then(function(allComments) {
-        self.req.comments = allComments
         self.comments = allComments
         return self;
       })
