@@ -5,7 +5,7 @@ var router = require('express').Router();
 module.exports = router;
 
 //router.use('/repo', require('./repo'));
-//router.use('/cards', require('./cards'));
+router.use('/issues', require('./issues'));
 router.use('/repos', require('./repos'));
 router.use('/users', require('./users'));
 //router.use('/comments', require('./comments'));

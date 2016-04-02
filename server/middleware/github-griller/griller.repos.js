@@ -41,10 +41,9 @@ const getOneFullView = function(g, id) {
   id = id || self.req.params.repoId;
   console.log("made it to get One", id);
 
-  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner issues collabs'))
+  return self.utils.dbFindOne('Repo', {_id: id}, 'owner issues collabs')
   .then(function(repo) {
     console.log("repo Name")
-    self.req.repo = repo;
     self.repo = repo;
     return self
   })

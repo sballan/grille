@@ -14,6 +14,7 @@ var issueSchema = new mongoose.Schema({
 	title: String,
 	body: String,
 	comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
+	hasComments: {type: Boolean, default: false},
 	// repo: {type: mongoose.Schema.Types.ObjectId, ref: 'Repo'},
 	state: String, //enum
 	user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},

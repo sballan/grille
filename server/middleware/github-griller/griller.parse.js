@@ -67,6 +67,8 @@ const issue = function(body, repo) {
       url: body.assignee.url
     };
   }
+  
+  issue.hasComments = body.comments !== '0';
 
   if (body.pull_request) issue.isPullRequest = true;
 
@@ -93,7 +95,7 @@ const issues = function(body, repo=null) {
 }
 
 // This function may need to do some clever work to figure out which issue a comment belongs to.
-const comment = function(body, repo) {
+const comment = function(body, repo, issue) {
   if(!body) return null;
   var comment = {};
   
@@ -117,13 +119,24 @@ const comment = function(body, repo) {
   return Utils.dbParse('User', comment.user)
   .then(function(dbUser) {
     comment.user = dbUser;
-    return Utils.dbParse('Comment', comment, 'repo')
+    return Utils.dbParse('Comment', comment)
+  })
+  .then(function(dbComment) {
+    comment = dbComment
+    if(issue && issue.comments) {
+      issue.comments.push(comment)
+      return issue.save()
+    }
+    return comment;
+  })
+  .then(function(){
+    return comment
   })
 }
 
-const comments = function(body, repo=null) {
+const comments = function(body, repo=null, issue=null) {
   return Promise.map(body, function(item) {
-    return comment(item, repo)
+    return comment(item, repo, issue)
   });
 }
 
