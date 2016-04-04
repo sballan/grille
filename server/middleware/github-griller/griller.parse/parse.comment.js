@@ -1,4 +1,4 @@
-const Utils = require('./griller.utils.js');
+const Utils = require('../griller.utils.js');
 const Promise = require('bluebird');
 
 const comment = function(body, repo, issue) {

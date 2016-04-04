@@ -1,11 +1,9 @@
 const Promise = require('bluebird');
 const  _ = require('lodash');
-const GithubGriller = function(req, res=null, next=null) {
+const GithubGriller = function(req) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
   this.req = req;
-  this.res = res;
-  this.next = next;
   this.client = req.user.githubAccess;
 
   this.repos = require('./griller.repos.js')(this);
