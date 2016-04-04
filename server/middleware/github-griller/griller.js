@@ -1,5 +1,5 @@
-Promise = require('bluebird');
-const  _ = require('lodash')
+const Promise = require('bluebird');
+const  _ = require('lodash');
 const GithubGriller = function(req, res=null, next=null) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
@@ -12,7 +12,7 @@ const GithubGriller = function(req, res=null, next=null) {
   this.issues = require('./griller.issues.js')(this);
   this.comments = require('./griller.comments.js')(this);
   this.collabs = require('./griller.collabs.js')(this);
-  this.parse = require('./griller.parse.js');
+  this.parse = require('./griller.parse');
   this.utils = require('./griller.utils.js');
 
 };
