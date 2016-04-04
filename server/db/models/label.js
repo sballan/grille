@@ -8,14 +8,11 @@ const labelSchema = new mongoose.Schema({
     },
     position: Number,
     color: {
-    	type: String
+    	type: String,
+        default: 'EEEEEE'
     },
     url: {
         type: String
-    },
-    repo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Repo'
     }
 });
 

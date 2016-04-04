@@ -49,6 +49,10 @@ GithubGriller.prototype = {
       })
       .then(function(g) {
         console.log("REPO", g.repo)
+        return g.repo.getAllLabels()
+      })
+      .then(function(labels) {
+        console.log("LABELS", labels)
         return g.repo
       })
   },

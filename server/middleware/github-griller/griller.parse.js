@@ -39,14 +39,13 @@ const issue = function(body, repo) {
   if (!body) return null;
   var issue = {};
   if(repo) issue.repo = repo;
-  
+
   issue.githubId = 0 + body.id;
   issue.issueNumber = 0 + body.number;
   issue.title = body.title;
   issue.body = body.body;
   issue.state = body.state;
   issue.milestone = body.milestone;
-  issue.labels = body.labels;
   issue.created_at = body.created_at;
   issue.updated_at = body.updated_at;
   issue.closed_at = body.closed_at;
@@ -55,6 +54,8 @@ const issue = function(body, repo) {
   issue.labels_url = body.labels_url;
   issue.events_url = body.events_url;
   issue.html_url = body.html_url;
+
+  issue.labels = body.labels;
   issue.user = {
     login: body.user.login,
     githubId: body.user.id,
@@ -67,7 +68,7 @@ const issue = function(body, repo) {
       url: body.assignee.url
     };
   }
-  
+
   issue.hasComments = body.comments !== '0';
 
   if (body.pull_request) issue.isPullRequest = true;
@@ -81,8 +82,11 @@ const issue = function(body, repo) {
   })
   .then(function(dbUser) {
     issue.assignee = dbUser;
-
-    return Utils.dbParse('Issue', issue, 'comments')
+    return Utils.dbParse('Label', issue.labels)
+  })
+  .then(function(dbLabels) {
+    issue.labels = dbLabels
+    return Utils.dbParse('Issue', issue, 'comments labels')
   })
 
 }
@@ -98,9 +102,9 @@ const issues = function(body, repo=null) {
 const comment = function(body, repo, issue) {
   if(!body) return null;
   var comment = {};
-  
+
   if(repo) comment.repo = repo
-  
+
   comment.githubId = body.id;
   comment.body = body.body;
   comment.path = body.path;

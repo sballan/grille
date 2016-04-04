@@ -18,7 +18,11 @@ angular.module('Grille')
           }
         },
         hasMany: {
-
+          labels: {
+            localField: 'labels',
+            localKey: 'labelId',
+            foreignKey: 'issueId'
+          }
         }
       }
 
