@@ -1,4 +1,4 @@
-const Utils = require('../griller.utils.js');
+const Core = require('../griller.core.js');
 const Promise = require('bluebird');
 
 const comment = function(body, repo, issue) {
@@ -22,10 +22,10 @@ const comment = function(body, repo, issue) {
     url: body.user.url
   };
 
-  return Utils.dbParse('User', comment.user)
+  return Core.dbParse('User', comment.user)
     .then(function(dbUser) {
       comment.user = dbUser;
-      return Utils.dbParse('Comment', comment)
+      return Core.dbParse('Comment', comment)
     })
     .then(function(dbComment) {
       comment = dbComment;

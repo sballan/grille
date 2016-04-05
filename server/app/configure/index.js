@@ -14,7 +14,7 @@ module.exports = function (app) {
     require('./static-middleware')(app);
     require('./parsing-middleware')(app);
 
-    // Logging middleware, set as application
+    // Logging modules, set as application
     // variable inside of server/app/configure/app-variables.js
     app.use(app.getValue('log'));
 

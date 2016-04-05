@@ -9,13 +9,12 @@ const getAll = function(g) {
     githubFunc: Promise.promisify(self.client.repos.getAll),
     config: { per_page: 100, page: 1, sort: 'updated' }
   };
-  const getRemainingPages = self.utils.getRemainingPages.bind(context);
+  const getRemainingPages = self.Core.getRemainingPages.bind(context);
 
   return Promise.resolve(context.githubFunc(context.config))
   .then(getRemainingPages)
-  .then(self.parse.repos)
+  .then(self.Parse.repos)
   .then(function(allRepos) {
-    self.req.repos = allRepos;
     self.repos = allRepos;
     return self;
   })
@@ -27,10 +26,9 @@ const getOne = function(g, id) {
   id = id || self.req.params.repoId;
   console.log("made it to get One", id);
 
-  return Promise.resolve(self.utils.dbFindOne('Repo', {_id: id}, 'owner issues'))
+  return Promise.resolve(self.Core.dbFindOne('Repo', {_id: id}, 'owner issues'))
       .then(function(repo) {
-        console.log("repo Name")
-        self.req.repo = repo;
+        console.log("repo Name");
         self.repo = repo;
         return self
       })
@@ -41,15 +39,14 @@ const getOneFullView = function(g, id) {
   id = id || self.req.params.repoId;
   console.log("made it to get One", id);
 
-  return self.utils.dbFindOne('Repo', {_id: id}, 'owner issues collabs')
+  return self.Core.dbFindOne('Repo', {_id: id}, 'owner issues collabs')
   .then(function(repo) {
-    console.log("repo Name")
     self.repo = repo;
     return self
   })
-  .then(self.issues.getAll)
-  .then(self.comments.getAll)
-  .then(self.collabs.getAll)
+  .then(self.Issues.getAll)
+  .then(self.Comments.getAll)
+  .then(self.Collabs.getAll)
 
 };
 

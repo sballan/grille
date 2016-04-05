@@ -18,31 +18,28 @@ const getAll = function(g, repo) {
       state: "all"
     }
   };
-  const getRemainingPages = self.utils.getRemainingPages.bind(context);
+  const getRemainingPages = self.Core.getRemainingPages.bind(context);
 
   return Promise.resolve(context.githubFunc(context.config))
     .then(getRemainingPages)
     .then(function(rawIssues) {
-      console.log("raw issues")
-      return self.parse.issues(rawIssues, repo)
+      return self.Parse.issues(rawIssues, repo)
     })
     .then(function(allIssues) {
       g.repo.issues = allIssues
       return g.repo.save()
     })
-    .then(function(repo) {
-      return self;
-    })
+    .then(()=>self)
 
 };
 
-const getOne = function(req, issue) {
+const getOne = function(repo, issue) {
   const self = !!g ? g : this;
   repo = repo || self.repo;
   self.repo = repo;
   issue = issue || self.issue;
   self.issue = issue;
-  
+
   const context = {
     client: self.client,
     githubFunc: Promise.promisify(self.client.issues.repoIssue),
@@ -56,28 +53,25 @@ const getOne = function(req, issue) {
       state: "all"
     }
   };
-  const getRemainingPages = self.utils.getRemainingPages.bind(context);
-  
+  const getRemainingPages = self.Core.getRemainingPages.bind(context);
+
   return Promise.resolve(context.githubFunc(context.config))
     .then(getRemainingPages)
-    .then(self.parse.issues)
+    .then(self.Parse.issues)
     .then(function(issue) {
       if(issue.hasComments) {
-        return self.comments.getAllForIssue(g, repo, issue)
+        return self.Comments.getAllForIssue(g, repo, issue)
       }
       return issue
     })
     .then(function(issue) {
-      self.issues = issue;
-      g.repo.issues = issue
+      g.repo.issues.push(issue);
       return g.repo.save()
     })
-    .then(function(repo) {
-      return self;
-    })
+    .then(()=>self)
 };
 
 module.exports = (context=this)=> ({
   getAll: getAll.bind(context),
   getOne: getOne.bind(context)
-})
+});

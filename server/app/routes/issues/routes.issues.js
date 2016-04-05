@@ -1,7 +1,7 @@
 'use strict';
 const router = require('express').Router();
 const Promise = require('bluebird');
-const Griller = require('../../../middleware/github-griller');
+const Griller = require('../../../modules/griller');
 
 module.exports = router
 
@@ -9,7 +9,7 @@ router.param('issueId', function(req, res, next, id) {
   req.griller = new Griller(req, res, next);
   return req.griller.attach('Issue', id)
     .then(function() {
-      console.log(`Issue #${req.issue.issueNumber} was attached.`)
+      console.log(`Issue #${req.theIssue.issueNumber} was attached.`)
       next()
     })
 });

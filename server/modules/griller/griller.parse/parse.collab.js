@@ -1,4 +1,4 @@
-const Utils = require('../griller.utils.js');
+const Core = require('../griller.core.js');
 const Promise = require('bluebird');
 
 const collab = function(body) {
@@ -14,7 +14,7 @@ const collab = function(body) {
   // collab.site_admin = body.site_admin;
   //collab.organizations_url = body.organizations_url;
   collab.repos_url = body.repos_url;
-  return Utils.dbParse('User', collab);
+  return Core.dbParse('User', collab);
 };
 
 const collabs = function(body) {

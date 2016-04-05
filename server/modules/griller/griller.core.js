@@ -35,7 +35,7 @@ const dbParse = function(schema, raw, populate=null) {
 };
 
 const dbFind = function (schema, query, populate) {
-  if(populate) return mongoose.model(schema).find(query).deepPopulate(populate)
+  if(populate) return mongoose.model(schema).find(query).deepPopulate(populate);
   return mongoose.model(schema).find(query)
 
 };
@@ -49,7 +49,8 @@ const dbFindOne = function (schema, query, populate) {
 
 module.exports = {
   getRemainingPages,
+  dbParse,
   dbFind,
-  dbFindOne,
-  dbParse
+  dbFindOne
+
 };

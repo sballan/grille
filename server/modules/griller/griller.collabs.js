@@ -15,11 +15,11 @@ const getAll = function(g, repo=g.repo) {
       page: 1
     }
   };
-  const getRemainingPages = self.utils.getRemainingPages.bind(context);
+  const getRemainingPages = self.Core.getRemainingPages.bind(context);
 
   return context.githubFunc(context.config)
     .then(getRemainingPages)
-    .then(self.parse.collabs)
+    .then(self.Parse.collabs)
     .then(function(allCollabs) {
       self.collabs = allCollabs;
       repo.collabs = allCollabs
@@ -38,4 +38,4 @@ const getOne = function(req, issue) {
 module.exports = (context=this)=> ({
   getAll: getAll.bind(context),
   getOne: getOne.bind(context)
-})
+});

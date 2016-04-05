@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const Utils = require('../griller.utils.js');
+const Core = require('../griller.core.js');
 
 const repo = function(body) {
   if(!body) return null;
@@ -17,11 +17,11 @@ const repo = function(body) {
   repo.url = body.url;
   repo.collaborators_url = body.collaborators_url;
 
-  return Utils.dbParse('User', repo.owner)
+  return Core.dbParse('User', repo.owner)
     .then(function(dbUser) {
       repo.owner = dbUser;
 
-      return Utils.dbParse('Repo', repo, 'owner issues collabs')
+      return Core.dbParse('Repo', repo, 'owner issues collabs')
     })
 
 };

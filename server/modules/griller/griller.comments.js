@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  repo = repo || self.repo
+  repo = repo || self.repo;
   const context = {
     client: self.client,
     githubFunc: Promise.promisify(self.client.issues.repoComments),
@@ -17,15 +17,15 @@ const getAll = function(g, repo) {
       per_page: 100
     }
   };
-  const getRemainingPages = self.utils.getRemainingPages.bind(context);
+  const getRemainingPages = self.Core.getRemainingPages.bind(context);
 
   return Promise.resolve(context.githubFunc(context.config))
       .then(getRemainingPages)
       .then(function(g) {
-        return self.parse.comments(g, repo)
+        return self.Parse.comments(g, repo)
       })
       .then(function(allComments) {
-        self.comments = allComments
+        self.comments = allComments;
         return self;
       })
 };
@@ -47,25 +47,25 @@ const getAllForIssue = function(g, repo, issue) {
       per_page: 100
     }
   };
-  const getRemainingPages = self.utils.getRemainingPages.bind(context);
+  const getRemainingPages = self.Core.getRemainingPages.bind(context);
 
   return Promise.resolve(context.githubFunc(context.config))
       .then(getRemainingPages)
       .then(function(g) {
-        return self.parse.comments(g, repo, issue)
+        return self.Parse.comments(g, repo, issue)
       })
       .then(function(issueComments) {
         self.issueComments = self.issueComments || [];
-        self.issueComments.push(...issueComments)
-        self.issue.comments = issueComments
+        self.issueComments.push(...issueComments);
+        self.issue.comments = issueComments;
         return self.issue.save()
       })
       .then(function() {
         return self;
       })
-}
+};
 
 module.exports = (context=this)=> ({
   getAll: getAll.bind(context),
   getAllForIssue: getAllForIssue.bind(context)
-})
+});

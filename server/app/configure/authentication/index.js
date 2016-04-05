@@ -17,7 +17,7 @@ var ENABLED_AUTH_STRATEGIES = [
 
 module.exports = function (app) {
 
-    // First, our session middleware will set/read sessions from the request.
+    // First, our session modules will set/read sessions from the request.
     // Our sessions will get stored in Mongo using the same connection from
     // mongoose. Check out the sessions collection in your MongoCLI.
     app.use(session({

@@ -1,4 +1,4 @@
-const Utils = require('../griller.utils.js');
+const Core = require('../griller.core.js');
 const Promise = require('bluebird');
 
 const issue = function(body, repo) {
@@ -39,20 +39,20 @@ const issue = function(body, repo) {
 
   if (body.pull_request) issue.isPullRequest = true;
 
-  return Utils.dbParse('User', issue.user)
+  return Core.dbParse('User', issue.user)
     .then(function(dbUser) {
       issue.user = dbUser;
 
-      if(issue.assignee) return Utils.dbParse('User', issue.assignee)
+      if(issue.assignee) return Core.dbParse('User', issue.assignee);
       return Promise.resolve()
     })
     .then(function(dbUser) {
       issue.assignee = dbUser;
-      return Utils.dbParse('Label', issue.labels)
+      return Core.dbParse('Label', issue.labels)
     })
     .then(function(dbLabels) {
       issue.labels = dbLabels;
-      return Utils.dbParse('Issue', issue, 'comments labels')
+      return Core.dbParse('Issue', issue, 'comments labels')
     })
 
 };
