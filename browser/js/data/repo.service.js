@@ -18,7 +18,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             localKey: 'issueId'
           }
         },
-        
+
         hasMany: {
           users: {
             localField: 'collabs',
@@ -45,7 +45,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
     // Repo.fixRelations = DS.defaults.deserialize.bind(DS.defaults);
     Repo.getFullView = function(id) {
       console.log("got to getFullView Resolve")
-      return DS.find('repos', id, {suffix: '/fullView'});
+      return DS.find('repos', id, {suffix: '/fullView', bypassCache:true});
     };
     return Repo;
 

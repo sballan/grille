@@ -4,30 +4,16 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo=g.repo) {
   const self = !!g ? g : this;
-  repo = repo || self.repo;
-  const context = {
-    client: self.client,
-    githubFunc: Promise.promisify(self.client.repos.getCollaborators),
-    config: {
-      user: repo.owner.username,
-      repo: repo.name,
-      per_page: 100,
-      page: 1
-    }
-  };
-  const getRemainingPages = self.Core.getRemainingPages.bind(context);
+  self.repo = self.repo || repo;
 
-  return context.githubFunc(context.config)
-    .then(getRemainingPages)
+
+  return self.Core.githubGet(self, {}, self.client.repos.getCollaborators)
     .then(self.Parse.collabs)
     .then(function(allCollabs) {
-      self.collabs = allCollabs;
-      repo.collabs = allCollabs
-      return repo.save();
+      self.repo.collabs = allCollabs
+      return self.repo.save();
     })
-    .then(function() {
-      return self;
-    })
+    .then(()=>self)
 
 };
 

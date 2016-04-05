@@ -57,9 +57,9 @@ var repoSchema = new mongoose.Schema({
 //})
 
 repoSchema.methods.getAllLabels = function() {
-  return Promise.map(this.issues, issue => issue.deepPopulate('labels'))
-  .then(function(issues) {
-    return _.uniqBy(issues.map(issue => _.flatten(issue.labels)), 'name color');
+  return this.deepPopulate('issues issue.labels')
+  .then(function(repo) {
+    return _.uniqBy(repo.issues.map(issue => _.flatten(issue.labels)), 'name color');
   })
 }
 

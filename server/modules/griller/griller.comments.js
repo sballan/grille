@@ -4,65 +4,42 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  repo = repo || self.repo;
-  const context = {
-    client: self.client,
-    githubFunc: Promise.promisify(self.client.issues.repoComments),
-    config: {
-      user: repo.owner.username,
-      repo: repo.name,
-      sort: 'updated',
-      direction:'desc',
-      page: 1,
-      per_page: 100
-    }
-  };
-  const getRemainingPages = self.Core.getRemainingPages.bind(context);
+  self.repo = self.repo || repo;
 
-  return Promise.resolve(context.githubFunc(context.config))
-      .then(getRemainingPages)
-      .then(function(g) {
-        return self.Parse.comments(g, repo)
-      })
-      .then(function(allComments) {
-        self.comments = allComments;
-        return self;
-      })
+  let config = { direction:'desc' };
+
+  return self.Core.githubGet(self, config, self.client.issues.repoComments)
+    .then(function(rawComments) {
+      return self.Parse.comments(rawComments, self.repo)
+    })
+    .then(function(allComments) {
+      self.comments = allComments;
+
+      return self;
+    })
 };
 
 const getAllForIssue = function(g, repo, issue) {
   const self = !!g ? g : this;
-  repo = repo || self.repo;
-  issue = issue || self.issue;
-  const context = {
-    client: self.client,
-    githubFunc: Promise.promisify(self.client.issues.getComments),
-    config: {
-      user: repo.owner.username,
-      repo: repo.name,
-      number: issue.issueNumber,
-      sort: 'updated',
-      direction:'desc',
-      page: 1,
-      per_page: 100
-    }
-  };
-  const getRemainingPages = self.Core.getRemainingPages.bind(context);
+  self.repo = self.repo || repo;
+  self.issue = self.issue || issue;
 
-  return Promise.resolve(context.githubFunc(context.config))
-      .then(getRemainingPages)
-      .then(function(g) {
-        return self.Parse.comments(g, repo, issue)
-      })
-      .then(function(issueComments) {
-        self.issueComments = self.issueComments || [];
-        self.issueComments.push(...issueComments);
-        self.issue.comments = issueComments;
-        return self.issue.save()
-      })
-      .then(function() {
-        return self;
-      })
+  let config = {
+    number: issue.issueNumber,
+    direction:'desc'
+  };
+
+  return self.Core.githubGet(self, config, self.client.issues.getComments)
+    .then(function(rawComments) {
+      return self.Parse.comments(rawComments, self.repo, self.issue)
+    })
+    .then(function(issueComments) {
+      self.issueComments = self.issueComments || [];
+      self.issueComments.push(...issueComments);
+      self.issue.comments = issueComments;
+      return self.issue.save()
+    })
+    .then(()=> self)
 };
 
 module.exports = (context=this)=> ({

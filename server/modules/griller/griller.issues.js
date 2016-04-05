@@ -4,8 +4,7 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  repo = repo || self.repo;
-  console.log("This is the repo", repo);
+  self.repo = self.repo || repo;
 
   let config = {
     sort: 'updated',
@@ -14,7 +13,7 @@ const getAll = function(g, repo) {
 
   return self.Core.githubGet(self, config, self.client.issues.repoIssues)
     .then(function(rawIssues) {
-      return self.Parse.issues(rawIssues, repo)
+      return self.Parse.issues(rawIssues, self.repo)
     })
     .then(function(allIssues) {
       g.repo.issues = allIssues;
@@ -26,32 +25,19 @@ const getAll = function(g, repo) {
 
 const getOne = function(repo, issue) {
   const self = !!g ? g : this;
-  repo = repo || self.repo;
-  self.repo = repo;
-  issue = issue || self.issue;
-  self.issue = issue;
+  self.repo = self.repo || repo;
+  self.issue = self.issue || issue;
 
-  const context = {
-    client: self.client,
-    githubFunc: Promise.promisify(self.client.issues.repoIssue),
-    config: {
-      user: repo.owner.username,
-      repo: repo.name,
-      number: issue.issueNumber,
-      per_page: 100,
-      page: 1,
-      sort: 'updated',
-      state: "all"
-    }
+  let config= {
+    number: issue.issueNumber,
+    state: "all"
   };
-  const getRemainingPages = self.Core.getRemainingPages.bind(context);
 
-  return Promise.resolve(context.githubFunc(context.config))
-    .then(getRemainingPages)
+  return self.Core.githubGet(self, config, self.client.issues.repoIssue)
     .then(self.Parse.issues)
     .then(function(issue) {
       if(issue.hasComments) {
-        return self.Comments.getAllForIssue(g, repo, issue)
+        return self.Comments.getAllForIssue(g)
       }
       return issue
     })

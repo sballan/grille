@@ -18,22 +18,31 @@ const getRemainingPages = function(gitRes, concatData) {
           return getRemainingPages.call(self, newRes, concatData)
         })
   } else {
-    return concatData;
+    return Promise.resolve(concatData);
   }
 };
 
 const checkDefaults = function(obj1, obj2) {
+  console.log('githubGet:',obj1, obj2);
   if(obj1 === null) return undefined;
   if(obj1 === undefined) return obj2;
   return obj1;
 };
 
 const githubGet = function(g, config, func) {
-  config.user = checkDefaults(config.user, g.repo.owner.username);
-  config.repo = checkDefaults(config.repo, g.repo.name);
+  if(g.repo) {
+    config.user = checkDefaults(config.user, g.repo.owner.username);
+    config.repo = checkDefaults(config.repo, g.repo.name);
+  }
   config.per_page = checkDefaults(config.per_page, 100);
   config.page = checkDefaults(config.page, 1);
+  config.sort = checkDefaults(config.sort, 'updated');
 
+  for(let e in config) {
+    if(!config[e]) delete config[e];
+  }
+
+  console.log("config:");
   const context = {
     client: g.client,
     githubFunc: Promise.promisify(func),
@@ -43,7 +52,7 @@ const githubGet = function(g, config, func) {
   const getPages = getRemainingPages.bind(context);
 
   return Promise.resolve(context.githubFunc(config))
-      .then(getPages)
+    .then(getPages)
 };
 
 const dbParse = function(schema, raw, populate=null) {

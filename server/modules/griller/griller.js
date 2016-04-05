@@ -23,7 +23,7 @@ GithubGriller.prototype = {
     return self.Core.dbFindOne(schema, {_id: id}, populate)
       .then(function(dbModel) {
         if(!dbModel) return Promise.reject("Model not found");
-        self.req[`the${schema}`] = dbModel;
+        self[_.lowerFirst(schema)] = dbModel;
         return self;
       })
   },
@@ -40,17 +40,12 @@ GithubGriller.prototype = {
 
     return Promise.resolve({})
       .then(function() {
-        if(!self.fullView) {
-          return self.Repos.getOne(self, id)
-        }
-        else return self.Repos.getOneFullView(self, id)
+        return self.Repos.getOne(self, id)
       })
       .then(function(g) {
-        console.log("REPO", g.repo);
-        return g.repo.getAllLabels()
-      })
-      .then(function(labels) {
-        console.log("LABELS", labels);
+        if(g.getFull) {
+          return self.repo.deepPopulate('owner collabs issues issue.labels comments')
+        }
         return self.repo
       })
   },
