@@ -5,8 +5,7 @@ var Lane = mongoose.model('Lane')
 var commentSchema = new mongoose.Schema({
 	body: String,
 	githubID: {
-		type: Number,
-		unique: true
+		type: Number
 	},
 	author: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -20,8 +19,7 @@ var commentSchema = new mongoose.Schema({
 
 var cardSchema = new mongoose.Schema({
 	githubID: {
-		type: Number,
-		unique: true
+		type: Number
 	},
 	//fibonnaci numbers used in agile/scrum
 	storyPoints:{type:Number, enum:[null,1,2,3,5,8,13,20,40,100]},
