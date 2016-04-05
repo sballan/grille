@@ -5,28 +5,19 @@ var Promise = require('bluebird');
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
   repo = repo || self.repo;
-  console.log("This is the repo", repo)
-  const context = {
-    client: self.client,
-    githubFunc: Promise.promisify(self.client.issues.repoIssues),
-    config: {
-      user: repo.owner.username,
-      repo: repo.name,
-      per_page: 100,
-      page: 1,
-      sort: 'updated',
-      state: "all"
-    }
-  };
-  const getRemainingPages = self.Core.getRemainingPages.bind(context);
+  console.log("This is the repo", repo);
 
-  return Promise.resolve(context.githubFunc(context.config))
-    .then(getRemainingPages)
+  let config = {
+    sort: 'updated',
+    state: "all"
+  };
+
+  return self.Core.githubGet(self, config, self.client.issues.repoIssues)
     .then(function(rawIssues) {
       return self.Parse.issues(rawIssues, repo)
     })
     .then(function(allIssues) {
-      g.repo.issues = allIssues
+      g.repo.issues = allIssues;
       return g.repo.save()
     })
     .then(()=>self)

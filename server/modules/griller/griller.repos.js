@@ -7,7 +7,7 @@ const getAll = function(g) {
   const context = {
     client: self.client,
     githubFunc: Promise.promisify(self.client.repos.getAll),
-    config: { per_page: 100, page: 1, sort: 'updated' }
+    config: { repo:null, user:null, per_page: 100, page: 1, sort: 'updated' }
   };
   const getRemainingPages = self.Core.getRemainingPages.bind(context);
 

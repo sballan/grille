@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const  _ = require('lodash');
+const _ = require('lodash');
 const GithubGriller = function(req) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
