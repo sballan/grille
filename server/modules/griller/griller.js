@@ -10,7 +10,7 @@ const GithubGriller = function(req) {
   this.Issues = require('./griller.issues.js')(this);
   this.Comments = require('./griller.comments.js')(this);
   this.Collabs = require('./griller.collabs.js')(this);
-  this.Parse = require('./griller.parse');
+  this.Parse = require('./griller.parse')(this);
   this.Core = require('./griller.core.js');
 
 };

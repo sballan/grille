@@ -33,7 +33,9 @@ const getOneFull = function(g) {
   const self = !!g ? g : this;
 
   return self.Issues.getAll(self)
-  .then(self.Comments.getAll)
+  .then(function() {
+    return self.Comments.getAllForIssues(self, self.repo)
+  })
   .then(self.Collabs.getAll)
 
 };

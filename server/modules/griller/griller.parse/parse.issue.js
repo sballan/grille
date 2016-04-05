@@ -1,7 +1,7 @@
 const Core = require('../griller.core.js');
 const Promise = require('bluebird');
 
-const issue = function(body, repo) {
+const issue = function(body, repo=this.repo) {
   if (!body) return null;
   var issue = {};
   if(repo) issue.repo = repo;
@@ -57,11 +57,25 @@ const issue = function(body, repo) {
 
 };
 
-const issues = function(body, repo=null) {
+const issues = function(body, repo=this.repo) {
+  const self = this;
+  console.log(self)
   console.log("got to parser issues");
   return Promise.map(body, function(item) {
     return issue(item, repo)
-  });
+  })
+  .then(function(dbIssues) {
+    self.repo.issues = dbIssues;
+    return self.repo.save()
+  })
+  .then(function(repo) {
+    return self.repo.deepPopulate('issues');
+  })
+  .then(function(repo) {
+    self.repo = repo;
+    return self.repo.issues;
+
+  })
 };
 
 module.exports = {

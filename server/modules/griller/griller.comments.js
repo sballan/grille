@@ -21,9 +21,9 @@ const getAll = function(g, repo) {
 
 const getAllForIssue = function(g, repo, issue) {
   const self = !!g ? g : this;
-  self.repo = self.repo || repo;
-  self.issue = self.issue || issue;
-
+  self.repo = repo || self.repo;
+  self.issue = issue || self.issue;
+  console.log("------Issue is: ", self.issue)
   let config = {
     number: issue.issueNumber,
     direction:'desc'
@@ -42,7 +42,18 @@ const getAllForIssue = function(g, repo, issue) {
     .then(()=> self)
 };
 
+const getAllForIssues = function(g, repo) {
+  const self = !!g ? g : this;
+  self.repo = self.repo || repo;
+
+  return Promise.map(self.repo.issues, (issue)=> {
+    return getAllForIssue(self, self.repo, issue)
+  })
+  .then(()=>self);
+};
+
 module.exports = (context=this)=> ({
   getAll: getAll.bind(context),
-  getAllForIssue: getAllForIssue.bind(context)
+  getAllForIssue: getAllForIssue.bind(context),
+  getAllForIssues: getAllForIssues.bind(context)
 });

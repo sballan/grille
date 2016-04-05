@@ -1,7 +1,7 @@
 const Core = require('../griller.core.js');
 const Promise = require('bluebird');
 
-const comment = function(body, repo, issue) {
+const comment = function(body, repo=this.repo, issue=this.issue) {
   if(!body) return null;
   var comment = {};
 
@@ -40,7 +40,7 @@ const comment = function(body, repo, issue) {
     })
 };
 
-const comments = function(body, repo=null, issue=null) {
+const comments = function(body, repo=this.repo, issue=this.issue) {
   return Promise.map(body, function(item) {
     return comment(item, repo, issue)
   });
