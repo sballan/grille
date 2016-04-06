@@ -23,7 +23,6 @@ const getRemainingPages = function(gitRes, concatData) {
 };
 
 const checkDefaults = function(obj1, obj2) {
-  console.log('githubGet:',obj1, obj2);
   if(obj1 === null) return undefined;
   if(obj1 === undefined) return obj2;
   return obj1;
@@ -42,7 +41,6 @@ const githubGet = function(g, config, func) {
     if(!config[e]) delete config[e];
   }
 
-  console.log("config:");
   const context = {
     client: g.client,
     githubFunc: Promise.promisify(func),
@@ -62,6 +60,7 @@ const dbParse = function(schema, raw, populate=null) {
       else return mongoose.model(schema).create(raw)
     })
     .then(function(model) {
+      console.log("dbParse")
       if(!!populate) return model.deepPopulate(populate);
       else return model
     })

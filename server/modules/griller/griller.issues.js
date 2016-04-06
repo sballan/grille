@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  self.repo = self.repo || repo;
+  self.repo =  repo || self.repo;
 
   let config = {
     sort: 'updated',
@@ -25,8 +25,8 @@ const getAll = function(g, repo) {
 
 const getOne = function(repo, issue) {
   const self = !!g ? g : this;
-  self.repo = self.repo || repo;
-  self.issue = self.issue || issue;
+  self.repo = repo || self.repo;
+  self.issue = issue || self.issue;
 
   let config= {
     number: issue.issueNumber,

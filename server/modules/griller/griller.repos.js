@@ -31,10 +31,15 @@ const getOne = function(g, id) {
 
 const getOneFull = function(g) {
   const self = !!g ? g : this;
+  console.log("----GetOneFull")
 
   return self.Issues.getAll(self)
   .then(function() {
+    console.log("----GotIssues")
     return self.Comments.getAllForIssues(self, self.repo)
+  })
+  .then(function() {
+    console.log("---GotComments")
   })
   .then(self.Collabs.getAll)
 

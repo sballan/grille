@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  self.repo = self.repo || repo;
+  self.repo = repo || self.repo;
 
   let config = { direction:'desc' };
 
@@ -21,9 +21,9 @@ const getAll = function(g, repo) {
 
 const getAllForIssue = function(g, repo, issue) {
   const self = !!g ? g : this;
-  self.repo = repo || self.repo;
-  self.issue = issue || self.issue;
-  console.log("------Issue is: ", self.issue)
+  repo = self.repo = repo || self.repo;
+  issue = self.issue = issue || self.issue;
+
   let config = {
     number: issue.issueNumber,
     direction:'desc'
@@ -31,22 +31,25 @@ const getAllForIssue = function(g, repo, issue) {
 
   return self.Core.githubGet(self, config, self.client.issues.getComments)
     .then(function(rawComments) {
-      return self.Parse.comments(rawComments, self.repo, self.issue)
+      console.log("about to parse")
+      return self.Parse.comments(rawComments, self.repo, issue)
     })
     .then(function(issueComments) {
       self.issueComments = self.issueComments || [];
       self.issueComments.push(...issueComments);
-      self.issue.comments = issueComments;
-      return self.issue.save()
+      issue.comments = issueComments;
+      console.log("about to save")
+      return issue.save()
     })
     .then(()=> self)
 };
 
 const getAllForIssues = function(g, repo) {
   const self = !!g ? g : this;
-  self.repo = self.repo || repo;
+  self.repo = repo || self.repo;
 
-  return Promise.map(self.repo.issues, (issue)=> {
+  return Promise.map(self.repo.issues, (issue, index)=> {
+    console.log("issue number ", index)
     return getAllForIssue(self, self.repo, issue)
   })
   .then(()=>self);

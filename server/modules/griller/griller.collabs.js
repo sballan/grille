@@ -2,9 +2,9 @@
 var Promise = require('bluebird');
 
 // Returns req
-const getAll = function(g, repo=g.repo) {
+const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  self.repo = self.repo || repo;
+  self.repo = repo || self.repo;
 
 
   return self.Core.githubGet(self, {}, self.client.repos.getCollaborators)
