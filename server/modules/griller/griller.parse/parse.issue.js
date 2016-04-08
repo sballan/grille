@@ -59,22 +59,17 @@ const issue = function(body, repo=this.repo) {
 
 const issues = function(body, repo=this.repo) {
   const self = this;
-  console.log(self)
-  console.log("got to parser issues");
+
   return Promise.map(body, function(item) {
     return issue(item, repo)
   })
   .then(function(dbIssues) {
     self.repo.issues = dbIssues;
-    return self.repo.save()
-  })
-  .then(function(repo) {
-    return self.repo.deepPopulate('issues');
+    return self.Core.dbSave(self.repo, 'issues')
   })
   .then(function(repo) {
     self.repo = repo;
     return self.repo.issues;
-
   })
 };
 
