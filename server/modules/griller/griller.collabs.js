@@ -10,8 +10,8 @@ const getAll = function(g, repo) {
   return self.Core.githubGet(self, {}, self.client.repos.getCollaborators)
     .then(self.Parse.collabs)
     .then(function(allCollabs) {
-      self.repo.collabs = allCollabs
-      return self.repo.save();
+      self.repo.collabs = allCollabs;
+      return self.Core.dbSave(self.repo, 'owner issues issues.comments collabs');
     })
     .then(()=>self)
 

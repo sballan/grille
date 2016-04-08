@@ -31,16 +31,19 @@ const getAllForIssue = function(g, repo, issue) {
 
   return self.Core.githubGet(self, config, self.client.issues.getComments)
     .then(function(rawComments) {
-      console.log("about to parse")
+      console.log("about to parse");
       return self.Parse.comments(rawComments, self.repo, issue)
     })
     .then(function(issueComments) {
       self.issueComments = self.issueComments || [];
       self.issueComments.push(...issueComments);
       issue.comments = issueComments;
-      console.log("about to save")
-      return issue.save()
+      console.log("about to save");
+      return self.Core.dbSave(issue, 'comments');
     })
+    // .then((issue)=> {
+    //   return issue.deepPopulate('comments')
+    // })
     .then(()=> self)
 };
 

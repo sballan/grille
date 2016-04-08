@@ -17,7 +17,7 @@ const getAll = function(g, repo) {
     })
     .then(function(allIssues) {
       g.repo.issues = allIssues;
-      return g.repo.save()
+      return self.Core.dbSave(g.repo, 'issues')
     })
     .then(()=>self)
 
@@ -37,13 +37,13 @@ const getOne = function(repo, issue) {
     .then(self.Parse.issues)
     .then(function(issue) {
       if(issue.hasComments) {
-        return self.Comments.getAllForIssue(g)
+        return self.Comments.getAllForIssue(self)
       }
       return issue
     })
     .then(function(issue) {
-      g.repo.issues.push(issue);
-      return g.repo.save()
+      self.repo.issues.push(issue);
+      return self.Core.dbSave(repo, 'issues')
     })
     .then(()=>self)
 };

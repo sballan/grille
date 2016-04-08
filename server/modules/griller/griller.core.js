@@ -1,7 +1,8 @@
-'use strict'
-var Promise = require('bluebird');
-var mongoose = require('mongoose');
-var chalk = require('chalk');
+'use strict';
+const Promise = require('bluebird');
+const mongoose = require('mongoose');
+const _ = require('lodash');
+const chalk = require('chalk');
 
 // A generic function for getting the remaining pages of a github request. Expects a github client, a config object, and a function to get data from github
 const getRemainingPages = function(gitRes, concatData) {
@@ -60,10 +61,24 @@ const dbParse = function(schema, raw, populate=null) {
       else return mongoose.model(schema).create(raw)
     })
     .then(function(model) {
-      console.log("dbParse")
+      console.log("dbParse");
       if(!!populate) return model.deepPopulate(populate);
       else return model
     })
+};
+
+const dbSave = function(document, populate) {
+  if(!document.save) return Promise.reject('Only documents can be dbSaved.')
+  return document.save()
+    .then((dbDoc)=> {
+      if(populate) return dbDoc.deepPopulate(populate);
+      return dbDoc;
+    })
+    .then((dbDoc)=> {
+      _.merge(document, dbDoc);
+      return document;
+    })
+
 };
 
 const dbFind = function (schema, query, populate) {
@@ -83,6 +98,7 @@ module.exports = {
   getRemainingPages,
   githubGet,
   dbParse,
+  dbSave,
   dbFind,
   dbFindOne
 

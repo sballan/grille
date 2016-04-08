@@ -44,7 +44,7 @@ GithubGriller.prototype = {
       })
       .then(function(g) {
         if(g.getFull) {
-          return self.repo.deepPopulate('owner collabs issues issue.labels comments')
+          return self.repo.deepPopulate('owner collabs issues issues.labels issues.comments')
         }
         return self.repo
       })
