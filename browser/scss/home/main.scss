@@ -24,53 +24,6 @@ hr {
   }
 }
 
-#commentsList{
-    list-style-type: none;
-    // display: inline-block;
-    // max-width:90%;
-}
-
-#comments {
-    border: 2px solid grey;
-    border-radius: 3px;
-}
-
-#AddAComment {
-    width:100%;
-    margin:auto;
-    padding-bottom: 0px;
-}
-
-#deleteCommentButton {
-    border-radius: 15px;
-    padding: 0px 5px 0px 5px;
-    // float: right;
-}
-
-.section {
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-
-md-content {
-    form {
-        ul {
-            padding-left:10px
-        }
-    }
-}
-
-.list {
-	// border-right-width: 5px;
- //    border-right-style: solid;
- //    border-right-color: rgba(0,34,21,.2);
-	list-style: none outside none;
-
-	padding: 10px;
-    height:calc(100vh - 40px);
-    overflow: scroll;
-}
-
 .item {
 	padding: 5px 10px;
 	margin: 5px 0;
@@ -114,97 +67,6 @@ md-content {
     white-space: nowrap;
 }
 
-textarea{
-    resize:none;
-    width: 100%;
-    border-style: none;
-}
-
-.cardModalSubmitButton {
-    margin:auto;
-    border-bottom: 0px;
-}
-.editCardModalButtons {
-    padding-bottom:0px;
-}
-.modalCardDivider {
-    width: 100%;
-    border-top: 1px solid #cdcdcd;
-    border-bottom: 1px solid white;
-    margin: 20px 0;
-    margin-top: 2px;
-    margin-bottom: 0px;
-}
-.modalCardUser{
-    display:inline-block;
-    background-color: #d3d3d3;
-    border-radius: 3px;
-}
-.commentsList {
-    margin-bottom: 0px;
-    padding-left: 0px;
-}
-.modalCardBody {
-    padding-left: 5px;
-}
-
-//Edit Card Comments
-.commentHistory {
-    top:-25px;
-    color: #337ab7;
-}
-.commentDescription{
-    height:0px;
-}
-.editCardModalTitle {
-    font-weight:bold;
-    text-align:center;
-    font-size: 18px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-.cardNumber{
-    padding-bottom: 0%;
-    text-align:left;
-    color:#66A266;
-    font-size:.875em;
-}
-.SaveCancelButtons{
-    padding-top:1px;
-    padding-bottom:1px;
-    float:right;
-}
-.commentText{
-    max-width: 84%; //68, 84
-    resize: both;
-    border-bottom: solid 1px #F5F5F5;
-}
-.smallerWidth{
-    width: 68%;
-}
-
-.dropdown-menu{
-    position: absolute;
-    min-width: 60px;
-}
-.sprint-dropdown > .dropdown-menu{
-    min-width: 30%;
-}
-.expand-sprint-dropdown > .dropdown-menu{
-    min-width: 30%;
-}
-.story-pointer{
-    background-color: white;
-    cursor:pointer;
-}
-.individual-point{
-    width:100%;
-}
-
-.dropdown-menu>li>a {
-    color:#428bca;
-    cursor:pointer;
-}
 .dropdown ul.dropdown-menu {
     box-shadow:none;
 }
@@ -234,44 +96,7 @@ textarea{
     padding-right: 0px;
     width:100%;
 }
-.icon-size{
-    vertical-align: center;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    height:.5em;
-    width:.5em;
-}
 
-.issueDescription {
-    padding-bottom: 0px;
-}
-.editCardModalWindow {
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 5px;
-}
-.editCommentCardNumber {
-  padding-bottom: 0%;
-  text-align: left;
-  color: #66A266;
-  font-size: 20px;
-}
-
-.addIssueHeadings{
-    font-size: 24px;
-}
-
-//Sprints
-.card-sprint{
-    padding-bottom: 0%;
-    text-align: right;
-    color:#68228B;
-    font-size:.875em;
-    cursor:pointer;
-}
-.addSprintHeadings{
-    font-size: 18px;
-}
 
 table input {
     width:45%;
@@ -291,32 +116,6 @@ table input {
 a:hover{
     text-decoration: none;
 }
-.sprint-dropdown{
-    text-align:right;
-}
-.dropdown-menu > li >a {
-    padding-left: 0px;
-    padding-right:0px;
-}
-.card-text{
-    width:90%;
-    overflow: hidden;
-}
-.card-text-icon{
-    width:10%;
-}
-.card-expansion{
-    height:100%;
-}
-.expand-sprint-dropdown{
-    width: 100%;
-    text-align: left;
-}
-
-.collab-img {
-    height: 18px;
-    border-radius: 15px;
-}
 
 .dropdown-menu, .individual-point, .link-point {
     z-index: 50;
@@ -328,9 +127,6 @@ a:hover{
    -webkit-transform: translate3d(0, 0, 0);
 }
 
-.card-body{
-    max-width:100%;
-}
 .cursorily{
     cursor:pointer;
 }
