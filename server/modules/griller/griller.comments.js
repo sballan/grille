@@ -31,14 +31,12 @@ const getAllForIssue = function(g, repo, issue) {
 
   return self.Core.githubGet(self, config, self.client.issues.getComments)
     .then(function(rawComments) {
-      console.log("about to parse");
       return self.Parse.comments(rawComments, self.repo, issue)
     })
     .then(function(issueComments) {
       self.issueComments = self.issueComments || [];
       self.issueComments.push(...issueComments);
       issue.comments = issueComments;
-      console.log("about to save");
       return self.Core.dbSave(issue, 'comments');
     })
     // .then((issue)=> {
@@ -52,7 +50,6 @@ const getAllForIssues = function(g, repo) {
   self.repo = repo || self.repo;
 
   return Promise.map(self.repo.issues, (issue, index)=> {
-    console.log("issue number ", index)
     return getAllForIssue(self, self.repo, issue)
   })
   .then(()=>self);

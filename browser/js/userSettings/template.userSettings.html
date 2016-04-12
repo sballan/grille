@@ -1,36 +1,26 @@
-<div class="boardPage landingFont">
-	<h4 class="centerText"> Welcome to Grille! Please click on a raw repo (GitHub project) to select into your GrilleBoard list</h4>
-	<div class="tableHeight">
-		<table class="tableStyle" align="center">
-			<td class="colStyle">
-			    <h3 class="centerText blueText textUnderline">GrilleBoards</h3>
+<div layout="column">
 
-				<ul class="listStyle">
-					<li class="blueText">  Please select a Grille to manage</li>
-					<!-- home(repo) works too :) -->
-					<li class="blueText"
-              ui-sref="home({owner:repo.owner.username, repoId:repo._id})"
-              ng-class="{ highlighted: hover }"
-              ng-mouseenter="hover = true"
-              ng-mouseleave="hover = false"
-              ng-repeat="repo in repos | filter: {active: true}">
-						<button class="listBtnStyle">{{ repo.owner.username + '/' + repo.name }}</button>
-					</li>
+  <div layout="row">
+    <h2>Registered Repos</h2>
+    <md-button class="md-primary md-raised" ng-click="showAddRepo($event)"  >
+      Add Repo
+    </md-button>
+  </div>
 
-				</ul>
-			</td>
-			<td class="colStyle">
-				<h3 class="centerText textUnderline">RawBoards</h3>
-				<div ng-show="rawSelected">
-					<ul class="listStyle">
-						<label>Search: <input size="35" ng-model="searchText"></label>
-						<li ng-repeat="repo in repos | filter: {name: searchText, active: false}" ng-show="$index < 15">
-							<button class="listBtnStyle" ng-click="setActive(repo)">{{ repo.owner.username + '/' + repo.name }}</button>
-						</li>
+  <div layout="row">
+    <md-list>
+      <md-list-item class="md-offset md-2-line"
+                    ng-repeat="repo in repos | filter:{active:true}"
+                    ng-click="$state.go('home', {owner:repo.owner.username, repoId:repo._id})">
+        <div class="md-list-item-text md-primary" >
+          <h3>{{repo.name}}
+            <span class="glyphicon glyphicon-cog"></span>
+          </h3>
+          <p>{{repo.owner.username}}</p>
+        </div>
+      </md-list-item>
 
-					</ul>
-				</div>
-			</td>
-		</table>
-	</div>
+    </md-list>
+
+  </div>
 </div>
