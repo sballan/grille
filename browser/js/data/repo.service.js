@@ -9,6 +9,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
           users: {
             localField: 'owner',
             localKey: 'ownerId',
+            parent: true
           }
         },
 
@@ -16,10 +17,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
           issues: {
             localField: 'issues',
             localKey: 'issueId'
-          }
-        },
-
-        hasMany: {
+          },
           users: {
             localField: 'collabs',
             localKey: 'collabId',
