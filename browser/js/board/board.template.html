@@ -1,0 +1,32 @@
+// Approach 1
+<div ng-repeat="lane in lanes"
+       ui-sortable="lane"
+       class="apps-container screen floatleft"
+       ng-model="lane.issues">
+    <div class="app" ng-repeat="issues in lane.issues">
+      <grille-card issues="issues"></grille-card>
+    </div>
+  </div>
+  <div style="clear: both;"></div>
+
+// Approach 2
+
+<div ng-repeat="lane in lanes"
+     ui-sortable="lane"
+     class="apps-container screen floatleft"
+     ng-model="lane.issues">
+
+  <grille-lane lane="lane"></grille-lane>
+</div>
+<div style="clear: both;"></div>
+
+
+
+<div class="floatright">
+  <button type="button" ng-click="logModels()">Log Models</button>
+  <ul class="list logList">
+    <li ng-repeat="entry in sortingLog" class="logItem">
+      {{entry}}
+    </li>
+  </ul>
+</div>

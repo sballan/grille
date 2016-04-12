@@ -1,7 +1,7 @@
-app.directive('grilleCard',
+app.directive('grilleBoard',
   function() {
     return {
       restrict: 'E',
-      templateUrl: '/js/card/card.template.html'
+      templateUrl: '/js/board.template.html'
     }
   });
