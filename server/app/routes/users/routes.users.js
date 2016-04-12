@@ -6,17 +6,17 @@ const controller = require('./users.controller');
 module.exports = router;
 
 router.param('userId', function(req, res, next, id) {
+  console.log("before userId")
   req.griller = req.griller || new Griller(req);
-  req.griller.attach('User', {_id: id})
-    .then(next)
-    .catch(next)
+  return req.griller.attach('User', {_id: id})
+    .then(()=>{console.log("Success!"); next()})
 });
 
-router.get('/', controller.getAll);
-
 router.use('/:userId/repos', require('../repos'));
+router.use('/:userId/repos/:repoId', require('../repos'));
 
 router.get('/:userId', controller.getOne);
 
+router.get('/', controller.getAll);
 
 

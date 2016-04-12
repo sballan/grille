@@ -1,6 +1,5 @@
 'use strict';
 const router = require('express').Router();
-const Promise = require('bluebird');
 const Griller = require('../../../modules/griller');
 const controller = require('./repos.controller');
 
@@ -13,32 +12,18 @@ router.param('repoId', function(req, res, next, id) {
       console.log(`Repo ${g.repo.name} was attached.`);
       next()
     })
+    .catch(next)
 });
+router.get('/:repoId/fullView', controller.getOneFullView);
+router.use('/:repoId/issues', require('../issues'));
 
-router.get('/', controller.getAll);
 
 router.get('/:repoId', controller.getOne);
 
-router.get('/:repoId/fullView', function(req, res, next) {
-  req.griller.getFull = true;
-  req.griller.getOneRepo()
-    .then(function(repo) {
-      console.log("HEY WE DID IT")
-      if(repo) res.send(repo);
-      else res.sendStatus(404);
-    })
-});
+router.put('/:repoId', controller.updateOne);
 
-router.put('/:repoId', function(req, res, next) {
-  req.griller.repo.set(req.body);
-  req.griller.repo.save()
-  .then(function(repo) {
-    res.json(repo)
-  })
-  .then(null, next)
+router.get('/', controller.getAll);
 
-});
 
-router.use('/:repoId/issues', require('../issues'));
 
 

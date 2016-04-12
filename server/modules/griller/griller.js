@@ -26,6 +26,7 @@ GithubGriller.prototype = {
         self[_.lowerFirst(schema)] = dbModel;
         return self;
       })
+      .catch()
   },
   getAllRepos: function() {
     return this.Repos.getAll()

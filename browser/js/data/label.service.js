@@ -10,6 +10,7 @@ angular.module('Grille')
           issues: {
             localField: 'issue',
             localKey: 'issueId',
+            parent: true
           }
         }
       }

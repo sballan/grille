@@ -10,7 +10,8 @@ angular.module('Grille')
         belongsTo: {
           repo: {
             localField: 'repos',
-            localKey: 'repoId'
+            localKey: 'repoId',
+            parent: true
           }
         }
       }

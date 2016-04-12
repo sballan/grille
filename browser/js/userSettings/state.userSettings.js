@@ -15,8 +15,8 @@ app.config(function ($stateProvider){
 			// 		})
 			// 	})
 			// },
-			repos: function(Repo){
-				return Repo.findAll()
+			repos: function(DS){
+				return DS.findAll('repos');
 			}
 		}
 	});

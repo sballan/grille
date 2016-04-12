@@ -17,11 +17,6 @@ navbar {
     height:100%;
   }
 
-  fullstack-logo {
-    margin-right: 20px;
-    width: 40px;
-  }
-
   a {
     color: black;
     font-size: 16px;
@@ -79,7 +74,6 @@ navbar {
   }
 
   .app-name{
-
     display: inline-block;
     padding-left: 0%;
     margin-bottom: 0px;
@@ -87,27 +81,12 @@ navbar {
     font-size: 16px;
   }
 
-  .boardName{
-    float: right;
-    text-align: left;
-    margin-top: 0.25%;
-    padding-left: 1%;
-    padding-right: 1%;
-    color: #3366cc;
-    font-style: italic;
-    background-color: #cccccc;
-    border-radius: 5px;
-    text-transform: lowercase;
-    line-height: 25px;
-    min-height: 25px;
-  }
-
   .boardMenu{
     padding-top: 20px;
   }
 
   .navbar-static-top{
-    margin-bottom:0px;
+    margin-bottom:0;
   }
 
   .navbar-header{
@@ -120,7 +99,6 @@ navbar {
   }
 
   .md-button{
-    color:none;
     margin: 0.2% 0;
   }
 

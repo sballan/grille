@@ -12,7 +12,6 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             parent: true
           }
         },
-
         hasMany: {
           issues: {
             localField: 'issues',
