@@ -13,7 +13,6 @@ var schema = new mongoose.Schema({
         require: true,
         unique: true
     },
-
     email: {
         type: String
     },
@@ -46,16 +45,6 @@ var encryptPassword = function (plainText, salt) {
     return hash.digest('hex');
 };
 
-schema.pre('save', function (next) {
-
-    if (this.isModified('password')) {
-        this.salt = this.constructor.generateSalt();
-        this.password = this.constructor.encryptPassword(this.password, this.salt);
-    }
-
-    next();
-
-});
 
 //OP: yay! does this work?
 schema.virtual('githubAccess').get(function(){
@@ -70,10 +59,9 @@ schema.virtual('githubAccess').get(function(){
         token: self.accessToken
     });
     return github;
-})
+});
 
-schema.statics.generateSalt = generateSalt;
-schema.statics.encryptPassword = encryptPassword;
+
 
 schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
