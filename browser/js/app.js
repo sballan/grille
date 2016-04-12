@@ -92,7 +92,7 @@ app.run(function (DS, $state) {
 
 
 // This app.run is for controlling access to specific states.
-app.run(function ($rootScope, AuthService, $state, $window, BoardFactory) {
+app.run(function ($rootScope, AuthService, $state, $window) {
 
   $rootScope.$on('$stateChangeError', function(e, n, np, p, pp, err) {
     console.error('State Change Error:', err);
@@ -107,7 +107,7 @@ app.run(function ($rootScope, AuthService, $state, $window, BoardFactory) {
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
 
     if (toState.name === 'userSettings') {
-      BoardFactory.removeCurrentBoard();
+      // TODO REMOVE CURRENT BOARD
     }
 
     if (toState.external) {

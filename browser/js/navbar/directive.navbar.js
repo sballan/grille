@@ -1,4 +1,4 @@
-app.directive('navbar', ['$rootScope', '$uibModal', 'AuthService', 'AUTH_EVENTS', '$state', 'GitHubFactory', 'BoardFactory', function($rootScope, $uibModal, AuthService, AUTH_EVENTS, $state, GitHubFactory, BoardFactory) {
+app.directive('navbar', [function() {
 
   return {
     restrict: 'E',

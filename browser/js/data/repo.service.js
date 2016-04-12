@@ -8,7 +8,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         belongsTo: {
           users: {
             localField: 'owner',
-            localKey: 'ownerId',
+            localKey: 'ownerId'
           }
         },
 
@@ -16,16 +16,14 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
           issues: {
             localField: 'issues',
             localKey: 'issueId'
-          }
-        },
-
-        hasMany: {
+          },
           users: {
             localField: 'collabs',
             localKey: 'collabId',
             foreignKey: 'collabRepoId'
           }
         }
+
       },
       methods: {
         activeOn: function() {
@@ -33,6 +31,16 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         },
         activeOff: function() {
           return this.DSUpdate({active: false});
+        },
+        getAllLabels: function() {
+          return DS.findAll('issues', {
+            'repoId':this._id
+          })
+          .then(issues=>{
+            issues.reduce((prev, current)=> {
+              return prev.concat(current.getAllLabels())
+            })
+          })
         }
 
       }

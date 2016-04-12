@@ -9,7 +9,7 @@ angular.module('Grille')
         belongsTo: {
           issues: {
             localField: 'issue',
-            localKey: 'issueId',
+            localKey: 'issueId'
           }
         }
       }

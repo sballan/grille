@@ -24,7 +24,15 @@ angular.module('Grille')
             foreignKey: 'issueId'
           }
         }
+      },
+      methods: {
+        getLabels: function() {
+          return this.labels.map(label=>{
+            return !!label._id ? label._id : label;
+          })
+        }
       }
+
 
     });
 
