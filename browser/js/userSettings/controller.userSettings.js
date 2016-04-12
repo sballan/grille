@@ -16,4 +16,4 @@ app.controller('UserSettingsCtrl', ['$scope', 'Repo', 'repos', function($scope, 
 
 
 
-}])
+}]);
