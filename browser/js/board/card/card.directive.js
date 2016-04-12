@@ -2,6 +2,6 @@ app.directive('grilleCard',
     function() {
       return {
         restrict: 'E',
-        templateUrl: '/js/cards/card.template.html'
+        templateUrl: '/js/card/card.template.html'
       }
     });

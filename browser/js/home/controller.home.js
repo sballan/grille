@@ -4,7 +4,7 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'HomeFactory', 
   $scope.repo = loadGrille;
   $scope.testCard = $scope.repo.issues[5];
   console.log('LOAD GRILLE',loadGrille)
-  // $scope.cards = $scope.repo.cards;
+  // $scope.card = $scope.repo.card;
   // $scope.collaborators = $scope.repo.collaborators
   // $scope.viewLanes = BoardFactory.getViewLanes
 

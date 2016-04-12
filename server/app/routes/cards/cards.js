@@ -41,13 +41,13 @@
 //
 //router.put('/priority/many', function(req, res, next) {
 //
-//	var cards = req.body
+//	var card = req.body
 //
-//	Promise.map(cards, function(card) {
+//	Promise.map(card, function(card) {
 //		return Issue.findOneAndUpdate({githubId: card.githubId}, card, {new: true})
 //	})
-//	.then(function(cards) {
-//		res.send(cards)
+//	.then(function(card) {
+//		res.send(card)
 //	})
 //
 //})
