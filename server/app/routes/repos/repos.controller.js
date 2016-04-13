@@ -25,8 +25,7 @@ const getOne = function(req, res, next) {
 
 const getOneFullView = function(req, res, next) {
   req.griller.getFull = true;
-  getOne(req, res, next)
-    .then(next).catch(next)
+  return getOne(req, res, next)
 };
 
 const updateOne = function(req, res, next) {

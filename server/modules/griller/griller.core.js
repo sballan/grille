@@ -67,7 +67,8 @@ const dbParse = function(schema, raw, populate=null) {
       console.log("18")
       if(!!populate) {
         console.log("19")
-        return model.deepPopulate(populate);
+        // TODO had an error here before that was fixed with Promise.resolve...it's gone now...
+        return model.deepPopulate(populate)
       } else {
         console.log("20")
         return Promise.resolve(model)
