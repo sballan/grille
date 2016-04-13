@@ -4,8 +4,19 @@ app.config(function ($stateProvider){
 		templateUrl:'js/userSettings/template.userSettings.html',
 		controller:'UserSettingsCtrl',
 		resolve: {
-			repos: function(Repo){
-				return Repo.findAll()
+			// inActiveBoards: function(GitHubFactory){
+			// 	return GitHubFactory.getAllRepos()
+			// 	.then(function(repos){
+			// 		console.log("repos:", repos)
+			// 		return repos.filter(function(repo){
+			// 			if (!repo.isActive){
+			// 				return repo;
+			// 			}
+			// 		})
+			// 	})
+			// },
+			repos: function(DS){
+				return DS.findAll('repos');
 			}
 		}
 	});

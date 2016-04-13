@@ -1,22 +1,22 @@
 'use strict';
 const router = require('express').Router();
-const mongoose = require('mongoose');
+const Griller = require('../../../modules/griller');
 const controller = require('./users.controller');
 
-module.exports = router
+module.exports = router;
 
 router.param('userId', function(req, res, next, id) {
-  mongoose.model('User').findById(id)
-  .then(function(user) {
-    req.reqUser = user;
-    next()
-  })
-  .catch(next)
-})
+  console.log("before userId")
+  req.griller = req.griller || new Griller(req);
+  return req.griller.attach('User', {_id: id})
+    .then(()=>{console.log("Success!"); next()})
+});
 
-router.get('/', controller.getAll);
+router.use('/:userId/repos', require('../repos'));
+router.use('/:userId/repos/:repoId', require('../repos'));
+
 router.get('/:userId', controller.getOne);
 
-
+router.get('/', controller.getAll);
 
 

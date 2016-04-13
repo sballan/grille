@@ -55,14 +55,19 @@ const githubGet = function(g, config, func) {
 };
 
 const dbParse = function(schema, raw, populate=null) {
-  return mongoose.model(schema).findOne({githubId: raw.githubId})
+  return mongoose.model(schema).findOne({githubId: raw.githubId}).exec()
     .then(function(model) {
       if(!!model) return model;
       else return mongoose.model(schema).create(raw)
     })
     .then(function(model) {
-      if(!!populate) return model.deepPopulate(populate);
-      else return model
+      if(!model) return Promise.reject('dbParse failed', raw)
+      if(!!populate) {
+        // TODO had an error here before that was fixed with Promise.resolve...it's gone now...
+        return model.deepPopulate(populate)
+      } else {
+        return Promise.resolve(model)
+      }
     })
 };
 

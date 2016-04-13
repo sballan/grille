@@ -8,10 +8,10 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         belongsTo: {
           users: {
             localField: 'owner',
-            localKey: 'ownerId'
+            localKey: 'ownerId',
+            parent: true
           }
         },
-
         hasMany: {
           issues: {
             localField: 'issues',

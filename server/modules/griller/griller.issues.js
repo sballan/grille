@@ -4,9 +4,11 @@ var Promise = require('bluebird');
 // Returns req
 const getAll = function(g, repo) {
   const self = !!g ? g : this;
-  self.repo =  repo || self.repo;
+  repo = self.repo = repo || self.repo;
 
   let config = {
+    user: repo.owner.username,
+    repo: repo.name,
     sort: 'updated',
     state: "all"
   };

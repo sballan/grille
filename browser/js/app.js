@@ -42,17 +42,6 @@ app.run(function (DS, $state) {
     return data;
   };
 
-  DS.defaults.methods.url = function () {
-    if (!this.hasOwnProperty('_id')) { return null; }
-    return '/api/' + this.resourceName + '/' + this._id;
-  };
-
-  // /* stateName and params will get overwritten
-  // at resource definition if different from default */
-  // DS.defaults.methods.stateName = function() {
-  //   return 'auth.' + this.resourceName;
-  // };
-
   DS.defaults.methods.params = function() {
     return { id: this._id };
   };
@@ -88,7 +77,7 @@ app.run(function (DS, $state) {
       else { defineResourceName(instance); }
     }
   });
-})
+});
 
 
 // This app.run is for controlling access to specific states.
@@ -108,6 +97,7 @@ app.run(function ($rootScope, AuthService, $state, $window) {
 
     if (toState.name === 'userSettings') {
       // TODO REMOVE CURRENT BOARD
+
     }
 
     if (toState.external) {

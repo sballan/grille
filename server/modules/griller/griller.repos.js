@@ -5,7 +5,6 @@ var Promise = require('bluebird');
 const getAll = function(g) {
   const self = !!g ? g : this;
   let config = { repo:null, user:null};
-
   return self.Core.githubGet(self, config, self.client.repos.getAll)
     .then(self.Parse.repos)
     .then(function(allRepos) {

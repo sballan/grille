@@ -12,13 +12,7 @@ angular.module('Grille')
             foreignKey: 'userId'
           }
         }
-        // hasMany: {
-        //   repos: {
-        //     localField: 'collabRepos',
-        //     localkey: 'collabRepoId',
-        //     foreignKey: 'collabId'
-        //   }
-        // }
+
       }
 
     });
