@@ -2,7 +2,9 @@
 const Griller = require('../../../modules/griller');
 
 const getAll = function(req, res, next) {
+  console.log("9")
   req.griller = req.griller || new Griller(req);
+  console.log("10")
   return req.griller.getAllRepos()
     .then(function(repos) {
       console.log("about to print repos")
@@ -35,7 +37,7 @@ const updateOne = function(req, res, next) {
       res.json(repo);
       console.log("after res.json")
     })
-    .then(null, next)
+    .catch(next)
 
 };
 

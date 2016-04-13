@@ -47,6 +47,7 @@ const githubGet = function(g, config, func) {
     githubFunc: Promise.promisify(func),
     config: config
   };
+  console.log("13")
 
   const getPages = getRemainingPages.bind(context);
 
@@ -55,14 +56,22 @@ const githubGet = function(g, config, func) {
 };
 
 const dbParse = function(schema, raw, populate=null) {
-  return mongoose.model(schema).findOne({githubId: raw.githubId})
+  return mongoose.model(schema).findOne({githubId: raw.githubId}).exec()
     .then(function(model) {
+      console.log("17")
       if(!!model) return model;
       else return mongoose.model(schema).create(raw)
     })
     .then(function(model) {
-      if(!!populate) return model.deepPopulate(populate);
-      else return model
+      if(!model) return Promise.reject('dbParse failed', raw)
+      console.log("18")
+      if(!!populate) {
+        console.log("19")
+        return model.deepPopulate(populate);
+      } else {
+        console.log("20")
+        return Promise.resolve(model)
+      }
     })
 };
 

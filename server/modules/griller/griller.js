@@ -26,11 +26,12 @@ GithubGriller.prototype = {
         self[_.lowerFirst(schema)] = dbModel;
         return self;
       })
-      .catch()
   },
   getAllRepos: function() {
+    console.log("11")
     return this.Repos.getAll()
     .then(function(g) {
+      console.log("top level")
       return g.repos
     })
   },

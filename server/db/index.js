@@ -3,16 +3,16 @@ var Promise = require('bluebird');
 var path = require('path');
 var chalk = require('chalk');
 
-var DATABASE_URI = require(path.join(__dirname, '../env')).DATABASE_URI;
-
+console.log('04')
 var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-assert.equal(query.exec().constructor, require('bluebird'));
 
+var DATABASE_URI = require(path.join(__dirname, '../env')).DATABASE_URI;
+console.log('05')
 var db = mongoose.connect(DATABASE_URI).connection;
 
 require('./models');
 
+console.log('06')
 var startDbPromise = new Promise(function (resolve, reject) {
     db.on('open', resolve);
     db.on('error', reject);
