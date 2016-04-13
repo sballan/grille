@@ -6,10 +6,10 @@
         <div class='dropper fifty'>
           <md-menu-bar>
             <md-menu>
-             <md-button ng-click="$mdOpenMenu()">
+             <button class="md-button" ng-click="$mdOpenMenu()">
                <img class="navLogo" src="grille-logo.png"></img>
               <span class="app-name">Grille</span> <i ng-show="user" class="fa fa-caret-down"></i>
-             </md-button>
+             </button>
              <md-menu-content ng-show="user">
                   <md-menu-item ng-show="currentBoard()" >
                     <md-button focus-me="false" ng-click="addLane()">Add Lane </md-button>

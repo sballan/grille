@@ -3,7 +3,7 @@ app.controller('UserSettingsCtrl', ['$scope', 'Repo', 'repos', '$state', '$mdDia
   $scope.$state = $state;
   $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
-	console.info("Here is JS-Data:", repos);
+	console.info("Here is JS-Data:", repos.length);
 
 	$scope.setActive = function(repo){
     console.info("Fetched Repo:", repo);
@@ -23,6 +23,8 @@ app.controller('UserSettingsCtrl', ['$scope', 'Repo', 'repos', '$state', '$mdDia
       .targetEvent(ev)
       .ok('Search')
       .cancel('Cancel');
+    console.log("locals", confirm.locals)
+    confirm.locals = {repos: $scope.repos}
     $mdDialog.show(confirm).then(function(result) {
       //Success
     }, function() {
