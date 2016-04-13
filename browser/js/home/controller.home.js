@@ -2,6 +2,7 @@
 app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'Socket', 'loadGrille', function($rootScope, $scope, $uibModal, Socket, loadGrille) {
 
   $scope.repo = loadGrille;
+  console.log("the repo", typeof $scope.repo.getAllLabels)
   $scope.repo.getAllLabels()
     .then(labels=> {
       console.log('LABELS',labels)

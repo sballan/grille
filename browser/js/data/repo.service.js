@@ -37,7 +37,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             'repoId':this._id
           })
           .then(issues=>{
-            issues.reduce((prev, current)=> {
+            return issues.reduce((prev, current)=> {
               return prev.concat(current.getAllLabels())
             })
           })
