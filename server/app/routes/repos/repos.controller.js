@@ -17,6 +17,7 @@ const getOne = function(req, res, next) {
 
   req.griller.getOneRepo()
     .then(function(repo) {
+      console.log("------repo", repo)
       if(repo) res.json(repo);
       else res.sendStatus(404);
     })

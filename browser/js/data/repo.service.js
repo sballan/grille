@@ -37,6 +37,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             'repoId':this._id
           })
           .then(issues=>{
+            if(!issues) return console.info("No Issues in this Repo")
             return issues.reduce((prev, current)=> {
               return prev.concat(current.getAllLabels())
             })
