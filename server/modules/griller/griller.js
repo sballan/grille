@@ -18,9 +18,9 @@ const GithubGriller = function(req) {
 // These functions all return a modified g object.
 GithubGriller.prototype = {
   // Returns Promise
-  attach: function(schema, id, populate='') {
+  attach: function(schema, query, populate='') {
     const self = this;
-    return self.Core.dbFindOne(schema, {_id: id}, populate)
+    return self.Core.dbFindOne(schema, query, populate)
       .then(function(dbModel) {
         if(!dbModel) return Promise.reject("Model not found");
         self[_.lowerFirst(schema)] = dbModel;

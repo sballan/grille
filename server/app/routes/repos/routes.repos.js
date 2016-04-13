@@ -7,7 +7,7 @@ module.exports = router;
 
 router.param('repoId', function(req, res, next, id) {
   req.griller = new Griller(req);
-  return req.griller.attach('Repo', id, 'owner')
+  return req.griller.attach('Repo', {_id: id}, 'owner')
     .then(function(g) {
       console.log(`Repo ${g.repo.name} was attached.`);
       next()

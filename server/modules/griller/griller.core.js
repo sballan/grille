@@ -61,7 +61,6 @@ const dbParse = function(schema, raw, populate=null) {
       else return mongoose.model(schema).create(raw)
     })
     .then(function(model) {
-      console.log("dbParse");
       if(!!populate) return model.deepPopulate(populate);
       else return model
     })
