@@ -7,7 +7,7 @@ app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'Socket', 'load
     .then(labels=> {
       console.log('LABELS',labels)
     });
-  $scope.testCard = $scope.repo.issues[0];
+  //$scope.testCard = $scope.repo.issues[0];
 
 
 

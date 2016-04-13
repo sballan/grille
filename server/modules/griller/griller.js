@@ -38,12 +38,10 @@ GithubGriller.prototype = {
     id = id || repoId || this.req.params.repoId;
     const self = this;
 
-    return Promise.resolve({})
-      .then(function() {
-        return self.Repos.getOne(self, id)
-      })
+    return self.Repos.getOne(self, id)
       .then(function(g) {
         if(g.getFull) {
+          console.log("POPULATING")
           return self.repo.deepPopulate('owner collabs issues issues.labels issues.comments')
         }
         return self.repo

@@ -1,7 +1,9 @@
 'use strict';
+const chalk = require('chalk');
 const router = require('express').Router();
 const Griller = require('../../../modules/griller');
 const controller = require('./users.controller');
+
 
 module.exports = router;
 
@@ -10,7 +12,7 @@ router.param('userId', function(req, res, next, id) {
   return req.griller.attach('User', {_id: id})
     .then(user=>{
       console.log("User", user)
-      console.log(`User ${user.username} was attached`);
+      console.log(chalk.green(`User ${user.username} was attached.`));
       next()
     })
     .catch(next)

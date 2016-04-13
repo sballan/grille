@@ -21,6 +21,7 @@ const getOne = function(g, id) {
 
   return Promise.resolve(repo)
     .then(function(repo) {
+      if(!repo) return Promise.reject("Repo wasn't in database")
       self.repo = repo;
 
       if(self.getFull) return getOneFull(self);

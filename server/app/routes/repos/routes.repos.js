@@ -1,4 +1,5 @@
 'use strict';
+const chalk = require('chalk');
 const router = require('express').Router();
 const Griller = require('../../../modules/griller');
 const controller = require('./repos.controller');
@@ -9,7 +10,7 @@ router.param('repoId', function(req, res, next, id) {
   req.griller = req.griller || new Griller(req);
   return req.griller.attach('Repo', {_id: id}, 'owner')
     .then(function(repo) {
-      console.log(`Repo ${repo.name} was attached.`);
+      console.log(chalk.green(`Repo ${repo.name} was attached.`));
       next()
     })
     .catch(next)

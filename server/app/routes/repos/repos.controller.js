@@ -3,6 +3,7 @@ const Griller = require('../../../modules/griller');
 
 const getAll = function(req, res, next) {
   req.griller = req.griller || new Griller(req);
+
   return req.griller.getAllRepos()
     .then(function(repos) {
       console.log(repos[0].owner);
@@ -12,6 +13,8 @@ const getAll = function(req, res, next) {
 };
 
 const getOne = function(req, res, next) {
+  req.griller = req.griller || new Griller(req);
+
   req.griller.getOneRepo()
     .then(function(repo) {
       if(repo) res.json(repo);
@@ -21,6 +24,8 @@ const getOne = function(req, res, next) {
 };
 
 const getOneFullView = function(req, res, next) {
+  req.griller = req.griller || new Griller(req);
+
   req.griller.getFull = true;
   return getOne(req, res, next)
 };
