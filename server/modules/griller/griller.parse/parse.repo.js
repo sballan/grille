@@ -16,15 +16,12 @@ const _repo = function(body) {
 
   repo.url = body.url;
   repo.collaborators_url = body.collaborators_url;
-  console.log("15")
   return Core.dbParse('User', repo.owner)
     .then(function(dbUser) {
       repo.owner = dbUser;
-      console.log("16")
       return Core.dbParse('Repo', repo, 'owner issues collabs')
     })
     .then(dbRepo =>{
-      console.log("after dbRepo")
       return dbRepo
     })
 
@@ -32,11 +29,9 @@ const _repo = function(body) {
 
 const _repos = function(body) {
   return Promise.map(body, function(item) {
-      console.log('map')
       return _repo(item)
     })
     .then(function(repos) {
-      console.log("21")
       return repos
     })
     .catch((err, err1)=>{console.log(err, err1)})

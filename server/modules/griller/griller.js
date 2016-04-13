@@ -28,10 +28,8 @@ GithubGriller.prototype = {
       })
   },
   getAllRepos: function() {
-    console.log("11")
     return this.Repos.getAll()
     .then(function(g) {
-      console.log("top level")
       return g.repos
     })
   },
