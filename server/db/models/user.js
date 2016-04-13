@@ -6,7 +6,8 @@ var GitHubApi = require('github')
 var schema = new mongoose.Schema({
     username: {
         type: String,
-        unique: true
+        unique: true,
+        require: true
     },
     githubId: {
         type: String,

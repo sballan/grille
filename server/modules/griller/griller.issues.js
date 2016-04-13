@@ -2,13 +2,12 @@
 var Promise = require('bluebird');
 
 // Returns req
-const getAll = function(g, repo) {
+const getAll = function(g, repo=this.repo) {
   const self = !!g ? g : this;
-  repo = self.repo = repo || self.repo;
+  self.repo = repo;
+  // repo = self.repo = repo || self.repo;
 
   let config = {
-    user: repo.owner.username,
-    repo: repo.name,
     sort: 'updated',
     state: "all"
   };
@@ -19,9 +18,13 @@ const getAll = function(g, repo) {
     })
     .then(function(allIssues) {
       g.repo.issues = allIssues;
+      g.issues = allIssues;
+      console.log(`${g.issues.length} Issues attached.`);
       return self.Core.dbSave(g.repo, 'issues')
     })
-    .then(()=>self)
+    .then(()=>{
+      return self
+    })
 
 };
 

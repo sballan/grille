@@ -24,7 +24,7 @@ GithubGriller.prototype = {
       .then(function(dbModel) {
         if(!dbModel) return Promise.reject("Model not found");
         self[_.lowerFirst(schema)] = dbModel;
-        return self;
+        return dbModel;
       })
   },
   getAllRepos: function() {
@@ -50,7 +50,8 @@ GithubGriller.prototype = {
       })
   },
   getAllIssues: function(repo) {
-    return this.Issues.getAll()
+    return this.Issues.getAll(this, repo)
+      .then(g=>g.repo.issues)
   },
   getAllComments: function(repo) {
     return this.Issues.getAll()

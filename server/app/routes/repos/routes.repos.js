@@ -8,13 +8,15 @@ module.exports = router;
 router.param('repoId', function(req, res, next, id) {
   req.griller = req.griller || new Griller(req);
   return req.griller.attach('Repo', {_id: id}, 'owner')
-    .then(function(g) {
-      console.log(`Repo ${g.repo.name} was attached.`);
+    .then(function(repo) {
+      console.log(`Repo ${repo.name} was attached.`);
       next()
     })
     .catch(next)
 });
+
 router.get('/:repoId/fullView', controller.getOneFullView);
+// Route for Issues
 router.use('/:repoId/issues', require('../issues'));
 
 

@@ -6,10 +6,14 @@ const controller = require('./users.controller');
 module.exports = router;
 
 router.param('userId', function(req, res, next, id) {
-  console.log("before userId")
   req.griller = req.griller || new Griller(req);
   return req.griller.attach('User', {_id: id})
-    .then(()=>{console.log("Success!"); next()})
+    .then(user=>{
+      console.log("User", user)
+      console.log(`User ${user.username} was attached`);
+      next()
+    })
+    .catch(next)
 });
 
 router.use('/:userId/repos', require('../repos'));
