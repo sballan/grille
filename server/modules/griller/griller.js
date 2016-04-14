@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const _ = require('lodash');
+
 const GithubGriller = function(req) {
   if(!req) throw Error("Can't make new GithubGriller with out a request object");
 
@@ -15,15 +16,16 @@ const GithubGriller = function(req) {
 
 };
 
-// These functions all return a modified g object.
+// These functions all return Promises
 GithubGriller.prototype = {
-  // Returns Promise
+  // Attaches an unpopulated document from the database.  Useful for making further queries.
   attach: function(schema, query, populate='') {
-    const self = this;
+    if(!schema || !query) return Promise.reject("Missing arguments");
+
     return self.Core.dbFindOne(schema, query, populate)
-      .then(function(dbModel) {
+      .then(dbModel=> {
         if(!dbModel) return Promise.reject("Model not found");
-        self[_.lowerFirst(schema)] = dbModel;
+        this[_.lowerFirst(schema)] = dbModel;
         return dbModel;
       })
   },
@@ -33,26 +35,31 @@ GithubGriller.prototype = {
       return g.repos
     })
   },
+  // Requires either an ID or repo on Griller object.
   getOneRepo: function(id) {
-    var repoId = !!this.repo ? this.repo._id : null;
-    id = id || repoId || this.req.params.repoId;
-    const self = this;
+    if(!id && !this.repo._id) return Promise.reject("No ID and no repo on Griller object.");
 
-    return self.Repos.getOne(self, id)
-      .then(function(g) {
+    id = id || this.repo._id;
+
+    return this.Repos.getOne(this, id)
+      .then(g=> {
         if(g.getFull) {
-          console.log("POPULATING")
+          console.log(`Populating ${g.repo.name}`);
           return self.repo.deepPopulate('owner collabs issues issues.labels issues.comments')
         }
         return self.repo
       })
   },
+  // Requires a repo as an argument or on the Griller object
   getAllIssues: function(repo) {
+    if(!repo && !this.repo) return Promise.reject("No repo argument and no repo on Griller object.");
+
     return this.Issues.getAll(this, repo)
       .then(g=>g.repo.issues)
   },
   getAllComments: function(repo) {
-    return this.Issues.getAll()
+   return Promise.reject("This function hasn't been written yet");
+    // return this.Issues.getAll()
   }
 };
 
