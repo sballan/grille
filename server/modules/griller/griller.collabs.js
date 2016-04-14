@@ -2,18 +2,17 @@
 var Promise = require('bluebird');
 
 // Returns req
-const getAll = function(g, repo) {
-  const self = !!g ? g : this;
-  self.repo = repo || self.repo;
+const getAll = function(G=this, repo=G.repo) {
+  if(!repo) return Promise.reject('No repo argument or on the Griller object');
+  G.repo = repo;
 
-
-  return self.Core.githubGet(self, {}, self.client.repos.getCollaborators)
-    .then(self.Parse.collabs)
-    .then(function(allCollabs) {
-      self.repo.collabs = allCollabs;
-      return self.Core.dbSave(self.repo, 'owner issues issues.comments collabs');
+  return G.Core.githubGet(G, {}, G.client.repos.getCollaborators)
+    .then(G.Parse.collabs)
+    .then(allCollabs=> {
+      G.repo.collabs = allCollabs;
+      return G.Core.dbSave(G.repo, 'owner issues issues.comments collabs');
     })
-    .then(()=>self)
+    .then(()=>G)
 
 };
 
