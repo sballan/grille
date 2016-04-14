@@ -2,39 +2,38 @@ const Promise = require('bluebird');
 const Core = require('../griller.core.js');
 
 const _repo = function(body) {
-  if(!body) return null;
-  var repo = {};
-  repo.githubId = body.id;
-  repo.name = body.name;
-  repo.description = body.description;
+  if(!body) return Promise.reject('Missing body argument for parse.repo');
 
-  repo.owner = {
-    username: body.owner.login,
-    githubId: body.owner.id,
-    url: body.owner.url
+  let repo = {
+    githubId: body.id,
+    name: body.name,
+    description: body.description,
+    url: body.url,
+    collaborators_url: body.collaborators_url,
+    owner: {
+      username: body.owner.login,
+      githubId: body.owner.id,
+      url: body.owner.url
+    }
   };
 
-  repo.url = body.url;
-  repo.collaborators_url = body.collaborators_url;
   return Core.dbParse('User', repo.owner)
-    .then(function(dbUser) {
+    .then(dbUser=> {
       repo.owner = dbUser;
       return Core.dbParse('Repo', repo, 'owner issues collabs')
-    })
-    .then(dbRepo =>{
-      return dbRepo
-    })
+    });
+    // .then(dbRepo =>{
+    //   return dbRepo
+    // })
 
 };
 
 const _repos = function(body) {
+  if(!body) return Promise.reject('Missing body argument for parse.repos');
+
   return Promise.map(body, function(item) {
       return _repo(item)
     })
-    .then(function(repos) {
-      return repos
-    })
-    .catch((err, err1)=>{console.log(err, err1)})
 };
 
 module.exports = {

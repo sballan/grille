@@ -5,17 +5,16 @@ const _ = require('lodash');
 const chalk = require('chalk');
 
 // A generic function for getting the remaining pages of a github request. Expects a github client, a config object, and a function to get data from github
-const getRemainingPages = function(gitRes, concatData) {
+const getRemainingPages = function(gitRes, concatData=[]) {
   const self = this;
   const hasNextPage = self.client.hasNextPage(gitRes.meta.link);
 
-  concatData = concatData || [];
   concatData = concatData.concat(gitRes);
 
   if(hasNextPage) {
     self.config.page++;
     return self.githubFunc(self.config)
-        .then(function(newRes) {
+        .then(newRes=> {
           return getRemainingPages.call(self, newRes, concatData)
         })
   } else {
@@ -23,16 +22,17 @@ const getRemainingPages = function(gitRes, concatData) {
   }
 };
 
+// Private function
 const checkDefaults = function(obj1, obj2) {
   if(obj1 === null) return undefined;
   if(obj1 === undefined) return obj2;
   return obj1;
 };
 
-const githubGet = function(g, config, func) {
-  if(g.repo) {
-    config.user = checkDefaults(config.user, g.repo.owner.username);
-    config.repo = checkDefaults(config.repo, g.repo.name);
+const githubGet = function(G, config, func) {
+  if(G.repo) {
+    config.user = checkDefaults(config.user, G.repo.owner.username);
+    config.repo = checkDefaults(config.repo, G.repo.name);
   }
   config.per_page = checkDefaults(config.per_page, 100);
   config.page = checkDefaults(config.page, 1);
@@ -43,25 +43,27 @@ const githubGet = function(g, config, func) {
   }
 
   const context = {
-    client: g.client,
+    client: G.client,
     githubFunc: Promise.promisify(func),
     config: config
   };
 
   const getPages = getRemainingPages.bind(context);
 
-  return Promise.resolve(context.githubFunc(config))
+  return context.githubFunc(config)
     .then(getPages)
 };
 
-const dbParse = function(schema, raw, populate=null) {
+const dbParse = function(schema, raw, populate=undefined) {
+  if(!schema || !raw) return Promise.reject('Missing schema or raw argument');
+
   return mongoose.model(schema).findOne({githubId: raw.githubId}).exec()
     .then(function(model) {
       if(!!model) return model;
       else return mongoose.model(schema).create(raw)
     })
     .then(function(model) {
-      if(!model) return Promise.reject('dbParse failed', raw)
+      if(!model) return Promise.reject('dbParse failed', raw);
       if(!!populate) {
         // TODO had an error here before that was fixed with Promise.resolve...it's gone now...
         return model.deepPopulate(populate)
@@ -71,29 +73,35 @@ const dbParse = function(schema, raw, populate=null) {
     })
 };
 
-const dbSave = function(document, populate) {
-  if(!document.save) return Promise.reject('Only documents can be dbSaved.')
+const dbSave = function(document, populate=undefined) {
+  if(!document || !document.save) return Promise.reject('Missing or invalid document.');
+
   return document.save()
-    .then((dbDoc)=> {
+    .then(dbDoc=> {
       if(populate) return dbDoc.deepPopulate(populate);
       return dbDoc;
     })
-    .then((dbDoc)=> {
+    .then(dbDoc=> {
+      // Ensure that previously populated fields aren't lost.
       _.merge(document, dbDoc);
       return document;
     })
 
 };
 
-const dbFind = function (schema, query, populate) {
+const dbFind = function (schema, query, populate=undefined) {
+  if(!schema || !query) return Promise.reject('Missing schema or query argument');
+
   if(populate) return mongoose.model(schema).find(query).deepPopulate(populate);
-  return mongoose.model(schema).find(query)
+  return mongoose.model(schema).find(query).exec()
 
 };
 
 const dbFindOne = function (schema, query, populate) {
-  if(populate) return Promise.resolve(mongoose.model(schema).findOne(query).deepPopulate(populate));
-  return Promise.resolve(mongoose.model(schema).findOne(query).exec());
+  if(!schema || !query) return Promise.reject('Missing schema or query argument');
+
+  if(populate) return mongoose.model(schema).findOne(query).deepPopulate(populate);
+  return mongoose.model(schema).findOne(query).exec();
 };
 
 
