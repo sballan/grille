@@ -8,7 +8,7 @@ const getAll = function(G=this) {
   return G.Core.githubGet(G, config, G.client.repos.getAll)
     .then(G.Parse.repos)
     .then(allRepos=> {
-      if(!allRepo) return Promise.reject('allRepos was empty or undefined');
+      if(!allRepos) return Promise.reject('allRepos was empty or undefined');
 
       G.repos = allRepos;
       return G;

@@ -22,7 +22,7 @@ GithubGriller.prototype = {
   attach: function(schema, query, populate='') {
     if(!schema || !query) return Promise.reject("Missing arguments");
 
-    return self.Core.dbFindOne(schema, query, populate)
+    return this.Core.dbFindOne(schema, query, populate)
       .then(dbModel=> {
         if(!dbModel) return Promise.reject("Model not found");
         this[_.lowerFirst(schema)] = dbModel;
@@ -48,9 +48,9 @@ GithubGriller.prototype = {
       .then(g=> {
         if(g.getFull) {
           console.log(`Populating ${g.repo.name}`);
-          return self.repo.deepPopulate('owner collabs issues issues.labels issues.comments')
+          return g.repo.deepPopulate('owner collabs issues issues.labels issues.comments')
         }
-        return self.repo;
+        return g.repo;
       })
   },
   // Requires a repo as an argument or on the Griller object
