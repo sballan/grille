@@ -29,6 +29,9 @@ GithubGriller.prototype = {
         return dbModel;
       })
   },
+  clone: function() {
+    return new GithubGriller(this.req);
+  },
   getAllRepos: function() {
     return this.Repos.getAll()
     .then(function(g) {
@@ -47,7 +50,7 @@ GithubGriller.prototype = {
           console.log(`Populating ${g.repo.name}`);
           return self.repo.deepPopulate('owner collabs issues issues.labels issues.comments')
         }
-        return self.repo
+        return self.repo;
       })
   },
   // Requires a repo as an argument or on the Griller object
