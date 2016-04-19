@@ -19,6 +19,14 @@ router.get('/:repoId/fullView', controller.getOneFullView);
 // Route for Issues
 router.use('/:repoId/issues', require('../issues'));
 
+router.use('/:repoId/labels', function(req, res, next) {
+  req.griller = req.griller || new Griller(req);
+  req.griller._getRepoLabels = true;
+  
+  require('../labels');
+  next()
+});
+
 
 router.get('/:repoId', controller.getOne);
 

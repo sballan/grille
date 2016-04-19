@@ -33,7 +33,7 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
           return this.DSUpdate({active: false});
         },
         getAllLabels: function() {
-          return DS.findAll('issues', {
+          return DS.findAll('labels', {
             'repoId':this._id
           })
           .then(issues=>{

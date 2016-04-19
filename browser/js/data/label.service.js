@@ -13,6 +13,11 @@ angular.module('Grille')
             parent: true
           }
         }
+      },
+      methods: {
+        findAllForRepo: function() {
+          return DS.find('repos', {'repoId': this.issue.repoId}, {suffix: 'labels'})
+        }
       }
 
     });
