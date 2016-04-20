@@ -20,7 +20,6 @@ router.param('issueId', function(req, res, next, id) {
 
 router.get('/', controller.getAll);
 
-router.get('/:issueId/labels', require('../labels'));
 router.get('/:issueId', controller.getOne);
 
 

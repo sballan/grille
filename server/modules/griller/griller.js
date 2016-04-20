@@ -55,7 +55,7 @@ GithubGriller.prototype = {
   },
   // Requires a repo as an argument or on the Griller object
   getAllIssues: function(repo) {
-    if(!repo && !this.repo) return Promise.reject("No repo argument and no repo on Griller object.");
+    if(!repo && !this.repo) return Promise.reject("No repo argument or repo on Griller object.");
 
     return this.Issues.getAll(this, repo)
       .then(g=>g.repo.issues)

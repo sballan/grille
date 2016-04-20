@@ -1,14 +1,16 @@
 'use strict';
-var path = require('path');
-var mongoose = require('mongoose')
-var express = require('express');
-var app = express();
-var Promise = require('bluebird')
-var _ = require('lodash')
+const path = require('path');
+const mongoose = require('mongoose');
+const express = require('express');
+const app = express();
+const Promise = require('bluebird');
+const _ = require('lodash');
+const chalk = require('chalk');
+
 
 
 // var GitHubApi = Promise.promisifyAll(require("github"));
-var GitHubApi = require('github')
+const GitHubApi = require('github')
 
 module.exports = app;
 
@@ -30,12 +32,12 @@ app.use('/test', function(req, res, next) {
   });
   next()
 
-})
+});
 
 app.use('/logout', function(req, res, next) {
-	req.logout()
+	req.logout();
 	res.redirect('/')
-})
+});
 
 /*
  This modules will catch any URLs resembling a file extension
@@ -59,6 +61,6 @@ app.get('/*', function (req, res) {
 
 // Error catching endware.
 app.use(function (err, req, res, next) {
-		console.error(err, typeof next);
+		console.error(chalk.magenta(err), `, Next is of type: ${typeof next}`);
 		res.status(err.status || 500).send(err.message || 'Internal server error.');
 });

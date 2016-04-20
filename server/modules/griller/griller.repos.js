@@ -34,7 +34,7 @@ const getOne = function(G=this, id=G.repo._id) {
 // Private function
 // Returns context dependent G object
 const getOneFull = function(G=this) {
-  if(G.repo) return Promise.reject('No repo on Griller object');
+  if(!G.repo) return Promise.reject('No repo on Griller object');
 
   console.log("----GetOneFull");
   return G.Issues.getAll(G)

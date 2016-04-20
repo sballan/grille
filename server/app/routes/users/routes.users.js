@@ -19,6 +19,7 @@ router.param('userId', function(req, res, next, id) {
 });
 
 router.use('/:userId/repos', require('../repos'));
+// FIXME I think this line is unnecessary, check docs
 //router.use('/:userId/repos/:repoId', require('../repos'));
 
 router.get('/:userId', controller.getOne);

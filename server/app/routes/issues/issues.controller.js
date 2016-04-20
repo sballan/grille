@@ -4,7 +4,7 @@ const Griller = require('../../../modules/griller');
 const getAll = function(req, res, next) {
   req.griller = req.griller || new Griller(req);
   if(!req.griller.repo) res.sendStatus(404);
-  console.log("made it to get All Issues")
+  console.log("made it to get All Issues");
 
   return req.griller.getAllIssues()
     .then(function(issues) {
