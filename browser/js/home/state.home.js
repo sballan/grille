@@ -5,7 +5,8 @@ app.config(function ($stateProvider) {
 				controller: 'HomeCtrl',
 				resolve: {
 						currentRepo: ['$stateParams', 'Repo', function($stateParams, Repo){
-              return Repo.getFullView($stateParams.repoId)
+              return Repo.find($stateParams.repoId)
+                .then(repo=> repo.getFullView());
 						}]
 				}
 		});

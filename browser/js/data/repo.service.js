@@ -35,6 +35,9 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         findAllLabels: function() {
           console.log("ID is HERE", this._id, typeof this._id);
           return DS.find('repos', this._id, {suffix: '/labels', bypassCache:true})
+        },
+        getFullView: function() {
+          return this.DSRefresh({suffix: '/fullView', bypassCache:true})
         }
 
       }
