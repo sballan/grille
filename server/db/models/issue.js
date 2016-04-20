@@ -24,7 +24,6 @@ var issueSchema = new mongoose.Schema({
 		default: -1
 	},
 	milestone: String, //TODO check this out
-	labels: [mongoose.Schema.Types.Mixed],
 
 	created_at: Date,
 	updated_at: Date,

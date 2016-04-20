@@ -9,6 +9,7 @@ angular.module('Grille')
         hasMany: {
           repos: {
             localField: 'repos',
+            localKey: 'repoId',
             foreignKey: 'userId'
           }
         }

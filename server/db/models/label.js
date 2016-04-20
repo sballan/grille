@@ -13,7 +13,8 @@ const labelSchema = new mongoose.Schema({
     },
     url: {
         type: String
-    }
+    },
+    issues: [{type: mongoose.Schema.Types.ObjectId, ref: 'Issue'}]
 });
 
 labelSchema.plugin(require('mongoose-deep-populate')(mongoose));

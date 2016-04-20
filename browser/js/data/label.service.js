@@ -7,10 +7,17 @@ angular.module('Grille')
       name: 'labels',
       relations: {
         belongsTo: {
+          repos: {
+            localField: 'repo',
+            localKey: 'repoId',
+            parent: true
+          }
+        },
+        hasMany: {
           issues: {
             localField: 'issue',
             localKey: 'issueId',
-            parent: true
+            foreignKey: 'labelId'
           }
         }
       }

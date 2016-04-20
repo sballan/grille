@@ -9,7 +9,7 @@ angular.module('Grille')
         belongsTo: {
           users: {
             localField: 'owner',
-            localKey: 'ownerId',
+            localKey: 'ownerId'
           },
           repos : {
             localField: 'repo',

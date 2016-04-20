@@ -9,8 +9,8 @@ angular.module('Grille')
       relations: {
         belongsTo: {
           repo: {
-            localField: 'repos',
-            localKey: 'repoId',
+            localField: 'collabRepos',
+            localKey: 'collabRepoId',
             parent: true
           }
         }

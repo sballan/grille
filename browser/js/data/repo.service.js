@@ -21,6 +21,11 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
             localField: 'collabs',
             localKey: 'collabId',
             foreignKey: 'collabRepoId'
+          },
+          labels: {
+            localField: 'labels',
+            localKey: 'labelId',
+            foreignKey: ''
           }
         }
 

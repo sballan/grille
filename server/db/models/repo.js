@@ -13,6 +13,7 @@ var repoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+  
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -25,6 +26,11 @@ var repoSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Issue'
     }],
+    labels: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Label'
+    }],
+  
     columnColor: {
       type: String,
       default: 'EEEEEE'
@@ -35,26 +41,6 @@ var repoSchema = new mongoose.Schema({
     teams_url: String,
     hooks_url: String
 });
-
-//repoSchema.post('init', function(doc) {
-//    Lane.find({
-//            repo: doc._id
-//        })
-//        .then(function(theLanes) {
-//
-//            if (!theLanes.length) {
-//                var lanes = ['Backlog', 'Ready', 'Active', 'Done'];
-//                lanes.forEach(function(laneTitle) {
-//                    Lane.create({
-//                        title: laneTitle,
-//                        active: true,
-//                        repo: doc._id
-//                    });
-//                })
-//            }
-//
-//        })
-//})
 
 repoSchema.methods.getAllLabels = function() {
   return this.deepPopulate('issues issue.labels')
