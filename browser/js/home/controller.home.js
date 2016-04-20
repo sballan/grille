@@ -1,12 +1,14 @@
 
-app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'Socket', 'loadGrille', function($rootScope, $scope, $uibModal, Socket, loadGrille) {
+app.controller('HomeCtrl', ['$rootScope', '$scope', '$uibModal', 'Socket', 'currentRepo', function($rootScope, $scope, $uibModal, Socket, currentRepo) {
 
-  $scope.repo = loadGrille;
-  console.log($scope.repo)
+  $scope.repo = currentRepo;
 
-  $scope.repo.getAllLabels()
+  $scope.repo.findAllLabels()
     .then(labels=> {
       console.log('LABELS',labels)
+    }, function(err) {
+      console.error("DIDN'T FIND LABELS", err)
+
     });
   //$scope.testCard = $scope.repo.issues[0];
 

@@ -42,13 +42,15 @@ var repoSchema = new mongoose.Schema({
     hooks_url: String
 });
 
+
+repoSchema.plugin(require('mongoose-deep-populate')(mongoose));
+
+
 repoSchema.methods.getAllLabels = function() {
-  return this.deepPopulate('issues issue.labels')
+  return this.deepPopulate('issues issue.labels ')
   .then(function(repo) {
     return _.uniqBy(repo.issues.map(issue => _.flatten(issue.labels)), 'name color');
   })
-}
-
-repoSchema.plugin(require('mongoose-deep-populate')(mongoose));
+};
 
 mongoose.model('Repo', repoSchema);

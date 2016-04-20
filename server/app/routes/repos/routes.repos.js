@@ -20,6 +20,13 @@ router.get('/:repoId/fullView', controller.getOneFullView);
 // Route for Issues
 router.use('/:repoId/issues', require('../issues'));
 
+router.use('/:repoId/labels', function(req, res, next) {
+  console.log("gonna find some labels");
+  req.griller = req.griller || new Griller(req);
+  req.griller._getRepoLabels = true;
+  next()
+}, require('../labels'));
+
 
 router.get('/:repoId', controller.getOne);
 

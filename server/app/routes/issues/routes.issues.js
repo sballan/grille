@@ -1,6 +1,7 @@
 'use strict';
 const router = require('express').Router();
-const Promise = require('bluebird');
+const Promise = require('bluebird');/**/
+const controller = require('./issues.controller');
 const Griller = require('../../../modules/griller');
 
 module.exports = router;
@@ -17,25 +18,11 @@ router.param('issueId', function(req, res, next, id) {
     .catch(next)
 });
 
-router.get('/', function(req, res, next) {
-  req.griller = req.griller || new Griller(req);
-  if(!req.griller.repo) res.sendStatus(404);
-  console.log("made it to get All Issues")
+router.get('/', controller.getAll);
 
-  return req.griller.getAllIssues()
-  .then(function(issues) {
-    res.send(issues)
-  })
-  .catch(next)
-});
+router.get('/:issueId/labels', require('../labels'));
+router.get('/:issueId', controller.getOne);
 
-router.get('/:issueId', function(req, res, next) {
-  req.griller.getOneIssue(null, req.params.issueId)
-      .then(function(issue) {
-        if(issue) res.json(issue);
-        else res.sendStatus(404);
-      });
-});
 
 
 

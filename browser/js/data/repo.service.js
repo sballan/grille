@@ -37,28 +37,20 @@ app.factory('Repo', function ($state, DS, DSHttpAdapter) {
         activeOff: function() {
           return this.DSUpdate({active: false});
         },
-        getAllLabels: function() {
-          return DS.findAll('issues', {
-            'repoId':this._id
-          })
-          .then(issues=>{
-            if(!issues) return console.info("No Issues in this Repo")
-            return issues.reduce((prev, current)=> {
-              return prev.concat(current.getAllLabels())
-            })
-          })
+        findAllLabels: function() {
+          console.log("ID is HERE", this._id, typeof this._id);
+          return DS.find('repos', this._id, {suffix: '/labels', bypassCache:true})
+        },
+        getFullView: function() {
+          return this.DSRefresh({suffix: '/fullView', bypassCache:true})
         }
 
       }
-      // actions: {
-      //   active: {
-      //     method: 'GET'
-      //   }
-      // }
+
     });
     // Repo.fixRelations = DS.defaults.deserialize.bind(DS.defaults);
     Repo.getFullView = function(id) {
-      console.log("got to getFullView Resolve")
+      console.log("got to getFullView Resolve");
       return DS.find('repos', id, {suffix: '/fullView', bypassCache:true});
     };
     return Repo;
