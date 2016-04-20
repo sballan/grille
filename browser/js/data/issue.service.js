@@ -27,7 +27,7 @@ angular.module('Grille')
         }
       },
       methods: {
-        getLabels: function() {
+        getLabelIds: function() {
           return this.labels.map(label=>{
             return !!label._id ? label._id : label;
           })

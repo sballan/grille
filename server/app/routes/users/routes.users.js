@@ -19,7 +19,7 @@ router.param('userId', function(req, res, next, id) {
 });
 
 router.use('/:userId/repos', require('../repos'));
-router.use('/:userId/repos/:repoId', require('../repos'));
+//router.use('/:userId/repos/:repoId', require('../repos'));
 
 router.get('/:userId', controller.getOne);
 
